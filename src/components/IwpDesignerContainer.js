@@ -15,7 +15,8 @@ export default class IwpDesignerContainer extends React.Component {
         super(props);
         this.state = {
             animation: props.animation,
-            focusedObject: undefined
+            focusedFeature: undefined,
+            focusedObject: undefined,
         };
 
         console.log("IwpDesignerContainer:12> Incoming Animation: " , props.animation );
@@ -23,6 +24,7 @@ export default class IwpDesignerContainer extends React.Component {
         // This binding is necessary to make `this` work in the callback
         this.onDesignChange = this.onDesignChange.bind(this);
         this.onObjectClicked = this.onObjectClicked.bind(this);
+        this.onFeatureClicked = this.onFeatureClicked.bind(this);
     }
 
     /** Bubbles up from any design change */
@@ -31,13 +33,14 @@ export default class IwpDesignerContainer extends React.Component {
     }
 
     onObjectClicked(object, event) {
-        console.log("IwpDesignerContainer:28> Object Click Event: event: " , event);
+        console.log("IwpDesignerContainer:28> Object Click Event: object: " , object, " event: " , event);
+        this.setState( { focusedObject: object, focusedFeature: undefined })
     }
 
     onFeatureClicked(feature, event) {
         console.log("IwpDesignerContainer:39> Feature Click Event: feature: " , feature, "  event: " , event);
+        this.setState( { focusedObject: undefined, focusedFeature: feature })
     }
-
 
 
     render() {
@@ -63,6 +66,8 @@ export default class IwpDesignerContainer extends React.Component {
                     <Col md={9}>
 
                         <IwpEditorPanel animation={this.props.animation}
+                                        focusedFeature={this.state.focusedFeature}
+                                        focusedObject={this.state.focusedObject}
                                         onDesignChange={this.onDesignChange()}/>
 
                     </Col>

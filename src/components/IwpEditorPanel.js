@@ -24,9 +24,16 @@ export default class IwpEditorPanel extends React.Component {
     render() {
         return (
 
+            <div>
 
-            <h3>IWP Editor Panel</h3>
+                <h3>IWP Editor Panel</h3>
 
+                <p>Focused Feature : {this.props.focusedFeature}</p>
+
+                <p>Focused Object : {this.props.focusedObject}</p>
+
+
+            </div>
 
         );
     }

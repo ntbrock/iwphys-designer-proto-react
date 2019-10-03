@@ -7,8 +7,8 @@ export default class IwpObjectList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            animation: props.animation };
-
+            animation: props.animation
+        };
 
         console.log("IwpDesignerContainer:12> Incoming Animation: " , props.animation );
 
