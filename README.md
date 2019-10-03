@@ -34,6 +34,14 @@ import { Card, CardHeader, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 ```
 
+
+```
+// This binding is necessary to make `this` work in the callback
+        this.evaluate = this.evaluate.bind(this);
+```
+
+
+
 ## Development Log
 
 

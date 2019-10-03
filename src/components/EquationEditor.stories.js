@@ -7,19 +7,14 @@ import { action } from '@storybook/addon-actions';
 import EquationEditor from './EquationEditor';
 
 export const equation = {
-    id: '1',
     expression: '1+1',
-    state: 'CREATED',
-    updatedAt: new Date(2018, 0, 1, 9, 0),
 };
 
 export const actions = {
-    onComputeTask: action('onComputeTask'),
+    onEvaluated: action('onEvaluated'),
 };
 
 storiesOf('EquationEditor', module)
-    .add('default', () => <EquationEditor equation={equation} {...actions} />)
-    .add('error', () => <EquationEditor equation={{ ...equation, state: 'ERROR' }} {...actions} />)
-    .add('success', () => <EquationEditor equation={{ ...equation, state: 'SUCCESS' }} {...actions} />);
+    .add('oneplusone', () => <EquationEditor expression={equation.expression} {...actions} />)
 
 
