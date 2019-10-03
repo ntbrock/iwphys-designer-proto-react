@@ -17,19 +17,13 @@ export default class EquationEditor extends React.Component {
             evaluation: undefined,
             exception: undefined };
 
-        console.log("EquationEditor:16> props: " , props);
-
-
-
         // This binding is necessary to make `this` work in the callback
         this.evaluate = this.evaluate.bind(this);
-
     }
 
     componentDidMount() {
         this.evaluate();
     }
-
 
     evaluate(event) {
 
