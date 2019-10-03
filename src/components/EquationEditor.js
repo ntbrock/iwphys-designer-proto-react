@@ -1,5 +1,6 @@
 import React from 'react';
 import { create, all } from 'mathjs';
+import './EquationEditor.css';
 
 // src/components/EquationEditor.js
 // The first component enables equation editing, inline validation, and output preview

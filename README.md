@@ -41,6 +41,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 ```
 
 
+0951> About to bring in the math.js library
+
+npm install mathjs
+
+1013> Handling math changes, time to do some styling!
+
+https://reactjs.org/docs/faq-styling.html
+
+https://github.com/chenglou/react-motion
+
+
 
 ## Development Log
 
