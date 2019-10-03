@@ -75,7 +75,11 @@ npm install --save reactstrap react react-dom
 
 = Color Picker
 
-- Layout Reactstrap
+= Layout Reactstrap
+
+~ Dynamic content rendering base don in coming Json 1103
+
+
 
 
 
