@@ -14,6 +14,25 @@ npm start
 
 npx -p @storybook/cli sb init
 
+npm run storybook
+
+## Learning
+
+Stateless functional components
+
+https://dev.to/iam_timsmith/class-components-vs-stateless-functional-components-51he
+
+...props expansion
+
+https://reactjs.org/docs/components-and-props.html
+
+Whether you declare a component as a function or a class, it must never modify its own props
+
+```
+import React from 'react';
+import { Card, CardHeader, Badge } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+```
 
 ## Development Log
 

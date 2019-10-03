@@ -8,7 +8,7 @@ import EquationEditor from './EquationEditor';
 
 export const equation = {
     id: '1',
-    equation: '1+1',
+    expression: '1+1',
     state: 'CREATED',
     updatedAt: new Date(2018, 0, 1, 9, 0),
 };

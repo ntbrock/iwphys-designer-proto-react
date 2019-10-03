@@ -14,7 +14,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
 
         <h3>EquationEditor</h3>
-        <EquationEditor equation={equation} />
+        <EquationEditor expression="1+1"/>
 
       </header>
 
