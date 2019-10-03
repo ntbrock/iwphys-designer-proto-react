@@ -59,13 +59,23 @@ https://casesandberg.github.io/react-color/
 npm install react-color --save
 
 
+https://reactstrap.github.io/
+
+
+npm install --save bootstrap
+npm install --save reactstrap react react-dom
+
+
+
 ## Development Log
 
 = Create a text editor field that's connected to math.js library parsing.
 
 = Bring math.js, redner sbould calculate
 
-~ Color Picker
+= Color Picker
+
+- Layout Reactstrap
 
 
 
