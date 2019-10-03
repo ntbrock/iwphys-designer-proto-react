@@ -13,7 +13,8 @@ export default class EquationEditor extends React.Component {
         super(props);
         this.state = {
             expression: props.expression,
-            evaluation: undefined };
+            evaluation: undefined,
+            exception: undefined };
 
         console.log("EquationEditor:16> props: " , props);
 
@@ -29,16 +30,37 @@ export default class EquationEditor extends React.Component {
     }
 
 
-    evaluate() {
-        //console.log("EquationEditor:26> evaluatee, e: ", e ); // this.state: " ,  this.state );
+    evaluate(event) {
 
-        let evaluatedTo = this.math.evaluate(this.props.expression);
+        let newExpression = this.state.expression;
 
-        this.setState((state,props) => ({ evaluation: evaluatedTo }));
+        // Store the new expression if user edits
+        if ( event ) {
+            const target = event.target;
+            console.log("EquationEditor:26> evaluatee, target: ", target); // this.state: " ,  this.state );
 
-        // Notify listener
-        if(this.props.onEvaluated) {  this.props.onEvaluated(evaluatedTo); }
+            this.setState((state,props) => ({ expression: target.value }));
+            newExpression = target.value;
+        }
 
+        // Perform Mathematical Calculation
+
+        try {
+            let evaluatedTo = this.math.evaluate(newExpression);
+
+            this.setState((state, props) => ({evaluation: evaluatedTo, exception: undefined}));
+
+            // Notify listener
+            if (this.props.onEvaluated) {
+                this.props.onEvaluated(evaluatedTo);
+            }
+        } catch(x) {
+
+            this.setState((state, props) => ({evaluation: undefined, exception: x+""}));
+
+            console.log("EquationEditor:58> Exception in calculation: " , x );
+
+        }
     }
 
     render() {
@@ -49,7 +71,8 @@ export default class EquationEditor extends React.Component {
                        readOnly={false}
                        onChange={this.evaluate}/>
 
-                <span>{this.state.evaluation}</span>
+                <span className="equation-evaluation">{this.state.evaluation}</span>
+                <span className="equation-exception">{this.state.exception}</span>
             </div>
         );
     }
