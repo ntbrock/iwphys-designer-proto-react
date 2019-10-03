@@ -29,15 +29,18 @@ export default class IwpInputEditor extends React.Component {
     render() {
         return (
             <div className="iwp-input-editor">
-                <label>Input Name</label>
-                <input type="text"
-                       value={this.state.name}
-                       readOnly={false}
-                       onChange={this.onNameChange}/>
 
-                <label>Input Equation</label>
-                <EquationEditor expression={this.state.expression}/>
-
+                <div>
+                    <label>Input Name</label>
+                    <input type="text"
+                           value={this.state.name}
+                           readOnly={false}
+                           onChange={this.onNameChange}/>
+                </div>
+                <div>
+                    <label>Input Equation</label>
+                    <EquationEditor expression={this.state.expression}/>
+                </div>
             </div>
         );
     }

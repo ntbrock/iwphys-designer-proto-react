@@ -1,8 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './IwpDesigner.css';
 import EquationEditor from "./components/EquationEditor";
 import IwpInputEditor from "./components/IwpInputEditor";
+
+
 
 function App() {
 

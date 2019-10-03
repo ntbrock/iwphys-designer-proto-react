@@ -60,7 +60,7 @@ export default class EquationEditor extends React.Component {
 
     render() {
         return (
-            <div className="equation-editor">
+            <span className="equation-editor">
                 <input type="text"
                        value={this.state.expression}
                        readOnly={false}
@@ -68,7 +68,7 @@ export default class EquationEditor extends React.Component {
 
                 <span className="equation-evaluation">{this.state.evaluation}</span>
                 <span className="equation-exception">{this.state.exception}</span>
-            </div>
+            </span>
         );
     }
 }
