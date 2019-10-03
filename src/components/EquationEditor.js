@@ -17,16 +17,21 @@ export default class EquationEditor extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.evaluate = this.evaluate.bind(this);
+
     }
 
+    componentDidMount() {
+        this.evaluate();
+    }
+    
 
-    evaluate(e) {
-        console.log("EquationEditor:26> evaluatee, e: ", e ); // this.state: " ,  this.state );
+    evaluate() {
+        //console.log("EquationEditor:26> evaluatee, e: ", e ); // this.state: " ,  this.state );
 
-        let evaluatedTo = 2
+        let evaluatedTo = 2;
 
         this.setState((state,props) => ({ evaluation: evaluatedTo }));
-        
+
         // Notify listener
         if(this.props.onEvaluated) {  this.props.onEvaluated(evaluatedTo); }
 

@@ -5,9 +5,6 @@ import EquationEditor from "./components/EquationEditor";
 
 function App() {
 
-  const equation = { id: 1, expression: "1+1", state: "CREATED" }
-
-
   return (
     <div className="App">
       <header className="App-header">
