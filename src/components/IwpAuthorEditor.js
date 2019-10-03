@@ -9,40 +9,50 @@ export default class IwpAuthorEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            author: props.author };
+            name: props.animation.author.name,
+            email: props.animation.author.email,
+            organization: props.animation.author.name,
+            username: props.animation.author.username,
+        };
 
         // This binding is necessary to make `this` work in the callback
-        this.onNameChange = this.onEmailChange.bind(this);
         this.onEmailChange = this.onEmailChange.bind(this);
-        this.onOrganizationChange = this.onEmailChange.bind(this);
-        this.onUsernameChange = this.onEmailChange.bind(this);
+        this.onNameChange = this.onNameChange.bind(this);
+        this.onOrganizationChange = this.onOrganizationChange.bind(this);
+        this.onUsernameChange = this.onUsernameChange.bind(this);
     }
 
-    onNameChange(event) {
-        this.setState( { author : { name : event.target.value } }  );
+
+    onEmailChange(event) {
+        let email = event.target.value;
+        this.setState( { email : email } );
         if(this.props.onDesignChange) {
-            this.props.onDesignChange(this.state)
+            this.props.onDesignChange("author.email", email )
         }
     }
 
-    onEmailChange(event) {
-        this.setState( { author : { email : event.target.value } } );
+
+    onNameChange(event) {
+        let name = event.target.value;
+        this.setState( { name : name } );
         if(this.props.onDesignChange) {
-            this.props.onDesignChange(this.state)
+            this.props.onDesignChange("author.name", name )
         }
     }
 
     onOrganizationChange(event) {
-        this.setState( { author : { organization : event.target.value } } );
+        let organization = event.target.value;
+        this.setState( { organization : organization } );
         if(this.props.onDesignChange) {
-            this.props.onDesignChange(this.state)
+            this.props.onDesignChange("author.organization", organization )
         }
     }
 
     onUsernameChange(event) {
-        this.setState( { author : { username : event.target.value } } );
+        let username = event.target.value;
+        this.setState( { username : username } );
         if(this.props.onDesignChange) {
-            this.props.onDesignChange(this.state)
+            this.props.onDesignChange("author.username", username )
         }
     }
 
@@ -55,7 +65,7 @@ export default class IwpAuthorEditor extends React.Component {
                 <div>
                     <label>Email</label>
                     <input type="text"
-                           value={this.state.author.email}
+                           value={this.state.email}
                            readOnly={false}
                            onChange={this.onEmailChange}/>
                 </div>
@@ -63,7 +73,7 @@ export default class IwpAuthorEditor extends React.Component {
                 <div>
                     <label>Name</label>
                     <input type="text"
-                           value={this.state.author.name}
+                           value={this.state.name}
                            readOnly={false}
                            onChange={this.onNameChange}/>
                 </div>
@@ -71,7 +81,7 @@ export default class IwpAuthorEditor extends React.Component {
                 <div>
                     <label>Organization</label>
                     <input type="text"
-                           value={this.state.author.organization}
+                           value={this.state.organization}
                            readOnly={false}
                            onChange={this.onOrganizationChange}/>
                 </div>
@@ -79,7 +89,7 @@ export default class IwpAuthorEditor extends React.Component {
                 <div>
                     <label>Username</label>
                     <input type="text"
-                           value={this.state.author.username}
+                           value={this.state.username}
                            readOnly={false}
                            onChange={this.onUsernameChange}/>
                 </div>
