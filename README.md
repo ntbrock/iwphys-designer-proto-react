@@ -1,4 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+2019Oct03 IWP6 Create React App Experimentation
+
+## Getting Started
+
+https://github.com/facebook/create-react-app
+
+https://create-react-app.dev/docs/getting-started
+
+npx create-react-app my-app
+cd my-app
+npm start
+
+## Testing Harness
+
+npx -p @storybook/cli sb init
+
+
+## Development Log
+
+
+- Create a text editor field that's connected to math.js library parsing.
+
+- Color Picker
+
+
+
+
+
+
+
+
 
 ## Available Scripts
 

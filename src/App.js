@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Taylor Was Here Hot realoading is so cool!
         </a>
       </header>
     </div>
