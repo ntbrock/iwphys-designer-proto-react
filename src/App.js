@@ -1,24 +1,24 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import EquationEditor from "./components/EquationEditor";
 
 function App() {
+
+  const equation = { id: 1, expression: "1+1", state: "CREATED" }
+
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Taylor Was Here Hot realoading is so cool!
-        </a>
+
+        <h3>EquationEditor</h3>
+        <EquationEditor equation={equation} />
+
       </header>
+
+
     </div>
   );
 }
