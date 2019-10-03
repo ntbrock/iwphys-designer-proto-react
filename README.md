@@ -51,14 +51,21 @@ https://reactjs.org/docs/faq-styling.html
 
 https://github.com/chenglou/react-motion
 
+1032> Adding my first community react component
+
+
+https://casesandberg.github.io/react-color/
+
+npm install react-color --save
 
 
 ## Development Log
 
+= Create a text editor field that's connected to math.js library parsing.
 
-- Create a text editor field that's connected to math.js library parsing.
+= Bring math.js, redner sbould calculate
 
-- Color Picker
+~ Color Picker
 
 
 
