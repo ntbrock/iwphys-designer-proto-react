@@ -1,10 +1,13 @@
 import React from 'react';
+import { create, all } from 'mathjs';
 
 // src/components/EquationEditor.js
 // The first component enables equation editing, inline validation, and output preview
 // Math.js
 
 export default class EquationEditor extends React.Component {
+
+    math = create(all);
 
     constructor(props) {
         super(props);
@@ -15,6 +18,7 @@ export default class EquationEditor extends React.Component {
         console.log("EquationEditor:16> props: " , props);
 
 
+
         // This binding is necessary to make `this` work in the callback
         this.evaluate = this.evaluate.bind(this);
 
@@ -23,12 +27,12 @@ export default class EquationEditor extends React.Component {
     componentDidMount() {
         this.evaluate();
     }
-    
+
 
     evaluate() {
         //console.log("EquationEditor:26> evaluatee, e: ", e ); // this.state: " ,  this.state );
 
-        let evaluatedTo = 2;
+        let evaluatedTo = this.math.evaluate(this.props.expression);
 
         this.setState((state,props) => ({ evaluation: evaluatedTo }));
 
