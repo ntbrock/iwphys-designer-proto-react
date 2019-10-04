@@ -3,6 +3,7 @@ import IwpAuthorEditor from "./editors/IwpAuthorEditor";
 import IwpSaveEditor from "./editors/IwpSaveEditor";
 import IwpDescriptionEditor from "./editors/IwpDescriptionEditor";
 import IwpWindowEditor from "./editors/IwpWindowEditor";
+import IwpTimeEditor from "./editors/IwpTimeEditor";
 import IwpDesignerWelcomeEditor from "./editors/IwpDesignerWelcomeEditor";
 
 
@@ -47,6 +48,9 @@ export default class IwpEditorPanel extends React.Component {
 
             } else if ( focused == "window" ) {
                 editor = <IwpWindowEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+
+            } else if ( focused == "time" ) {
+                editor = <IwpTimeEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
             }
         }

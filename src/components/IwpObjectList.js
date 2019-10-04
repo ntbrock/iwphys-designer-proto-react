@@ -56,6 +56,8 @@ export default class IwpObjectList extends React.Component {
 
                 {/* Build the Dynamic Object List */}
 
+                <ListGroupItem tag="a" href="#" feature="time" onClick={this.onFeatureClicked}>Time</ListGroupItem>
+
                 <ListGroupItem tag="a" href="#" feature="inputs" onClick={this.onFeatureClicked}>Inputs</ListGroupItem>
 
                 <ListGroupItem tag="a" href="#" feature="outputs" onClick={this.onFeatureClicked}>Outputs</ListGroupItem>
