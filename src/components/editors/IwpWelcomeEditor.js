@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class IwpDesignerWelcomeEditor extends React.Component {
+export default class IwpWelcomeEditor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,10 +16,9 @@ export default class IwpDesignerWelcomeEditor extends React.Component {
 
             <div>
 
+                <h3>Interactive Web Physics 6 Designer</h3>
+
                 <br/>
-
-                <h3>Interactive Web Physics 6 - Designer</h3>
-
                 <p>Click any Feature or Object in the left list to get started editing!</p>
 
                 <p>Inline guidance and help content will go here!</p>
