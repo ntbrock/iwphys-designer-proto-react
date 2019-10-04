@@ -45,6 +45,7 @@ export default class IwpSaveEditor extends React.Component {
         return (
             <div className="iwp-editor iwp-save-editor">
 
+                <br/>
                <div>
                     <Button active={true} color="primary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
                </div>
