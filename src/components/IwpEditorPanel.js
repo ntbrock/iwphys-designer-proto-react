@@ -36,7 +36,7 @@ export default class IwpEditorPanel extends React.Component {
                 editor = <IwpAuthorEditor animation={this.props.animation} onDesignChange={this.props.onDesignChange}/>
             } else if ( focused == "save" ) {
 
-                editor = <IwpSaveEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange}/>
+                editor = <IwpSaveEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} onAnimationSave={this.props.onAnimationSave}/>
 
             }
         }

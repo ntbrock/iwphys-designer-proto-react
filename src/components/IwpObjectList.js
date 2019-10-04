@@ -36,9 +36,9 @@ export default class IwpObjectList extends React.Component {
         console.log("IwpObjectList:35> unsavedChantes: " , this.props.unsavedChanges);
         let saveButton;
         if ( unsavedChangesCount == 0 ) {
-            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onFeatureClicked}>Saved</ListGroupItem>
+            saveButton = <ListGroupItem feature="save" onClick={this.onFeatureClicked}>Saved</ListGroupItem>
         } else {
-            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onFeatureClicked}>Save {unsavedChangesCount} Changes</ListGroupItem>
+            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onFeatureClicked} color="primary" >Save {unsavedChangesCount} Changes</ListGroupItem>
         }
 
         return (

@@ -25,6 +25,7 @@ export default class IwpDesignerContainer extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.onDesignChange = this.onDesignChange.bind(this);
+        this.onAnimationSave = this.onAnimationSave.bind(this);
         this.onObjectClicked = this.onObjectClicked.bind(this);
         this.onFeatureClicked = this.onFeatureClicked.bind(this);
     }
@@ -37,6 +38,13 @@ export default class IwpDesignerContainer extends React.Component {
         });
     }
 
+    onAnimationSave(event) {
+        this.setState({
+            unsavedChanges: {}
+        })
+    }
+
+
     onObjectClicked(object, event) {
         console.log("IwpDesignerContainer:28> Object Click Event: object: " , object, " event: " , event);
         this.setState( { focusedObject: object, focusedFeature: undefined })
@@ -46,6 +54,8 @@ export default class IwpDesignerContainer extends React.Component {
         console.log("IwpDesignerContainer:39> Feature Click Event: feature: " , feature, "  event: " , event);
         this.setState( { focusedObject: undefined, focusedFeature: feature })
     }
+
+
 
 
     render() {
@@ -75,7 +85,8 @@ export default class IwpDesignerContainer extends React.Component {
                                         unsavedChanges={this.state.unsavedChanges}
                                         focusedFeature={this.state.focusedFeature}
                                         focusedObject={this.state.focusedObject}
-                                        onDesignChange={this.onDesignChange}/>
+                                        onDesignChange={this.onDesignChange}
+                                        onAnimationSave={this.onAnimationSave}/>
 
                     </Col>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table } from 'reactstrap';
+import { Button, Table, Jumbotron } from 'reactstrap';
 
 /**
  * Edit Author information
@@ -21,6 +21,9 @@ export default class IwpSaveEditor extends React.Component {
 
     onSaveClick(event) {
         alert("IwpSaveEditor:23> Todo, Push Animation Back to Server");
+
+        // Bubble back up
+        this.props.onAnimationSave(event);
     }
 
 
@@ -28,7 +31,7 @@ export default class IwpSaveEditor extends React.Component {
     render() {
 
         console.log("IwpSaveEditor:30> this.props: ", this.props );
-
+        let changeCount = Object.keys(this.props.unsavedChanges).length;
         let changeRows = Object.keys(this.props.unsavedChanges).map((feature, i) => {
             return ( <tr key={feature}>
                 <td>{i}</td>
@@ -42,12 +45,12 @@ export default class IwpSaveEditor extends React.Component {
         return (
             <div className="iwp-editor iwp-save-editor">
 
-                <h3>Save Changes?</h3>
-
-                <Button active={true} color="primary" onClick={this.onSaveClick}>Save Changes</Button>
+               <div>
+                    <Button active={true} color="primary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
+               </div>
 
                 <br/><br/>
-                
+
                 <h3>List of Changes</h3>
 
                 <Table>
