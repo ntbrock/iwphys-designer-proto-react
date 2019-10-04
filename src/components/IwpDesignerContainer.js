@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import update from 'immutability-helper';
 
 import IwpObjectList from "./IwpObjectList";
 import IwpEditorPanel from "./IwpEditorPanel";
@@ -15,6 +16,7 @@ export default class IwpDesignerContainer extends React.Component {
         super(props);
         this.state = {
             animation: props.animation,
+            unsavedChanges: {},
             focusedFeature: undefined,
             focusedObject: undefined,
         };
@@ -28,8 +30,11 @@ export default class IwpDesignerContainer extends React.Component {
     }
 
     /** Bubbles up from any design change */
-    onDesignChange(event) {
-        console.log("IwpDesignerContainer:19> Design Change: event: " , event);
+    onDesignChange(feature, value) {
+        console.log("IwpDesignerContainer:19> Design Change: event: ", feature, "  value: ", value, " to ss");
+        this.setState({
+            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: value}})
+        });
     }
 
     onObjectClicked(object, event) {
@@ -55,6 +60,7 @@ export default class IwpDesignerContainer extends React.Component {
 
                         <IwpObjectList
                             animation={this.props.animation}
+                            unsavedChanges={this.state.unsavedChanges}
                             onDesignChange={this.onDesignChange}
                             onFeatureClicked={this.onFeatureClicked}
                             onObjectClicked={this.onObjectClicked} />
@@ -68,7 +74,7 @@ export default class IwpDesignerContainer extends React.Component {
                         <IwpEditorPanel animation={this.props.animation}
                                         focusedFeature={this.state.focusedFeature}
                                         focusedObject={this.state.focusedObject}
-                                        onDesignChange={this.onDesignChange()}/>
+                                        onDesignChange={this.onDesignChange}/>
 
                     </Col>
 

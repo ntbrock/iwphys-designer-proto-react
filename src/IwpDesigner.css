@@ -5,4 +5,10 @@
 
 input {
     padding: 0.25rem;
+    width: 400px;
 }
+
+label {
+    width: 150px;
+}
+

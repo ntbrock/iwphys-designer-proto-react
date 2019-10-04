@@ -32,7 +32,7 @@ export default class IwpEditorPanel extends React.Component {
         if ( focused ) {
 
             if ( focused == "author" ) {
-                editor = <IwpAuthorEditor animation={this.props.animation}/>
+                editor = <IwpAuthorEditor animation={this.props.animation} onDesignChange={this.props.onDesignChange}/>
             }
         }
 
