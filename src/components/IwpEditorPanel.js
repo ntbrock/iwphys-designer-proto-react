@@ -1,7 +1,7 @@
 import React from 'react';
-import IwpAuthorEditor from "./IwpAuthorEditor";
-import IwpSaveEditor from "./IwpSaveEditor";
-import IwpDesignerWelcomePanel from "./IwpDesignerWelcomePanel";
+import IwpAuthorEditor from "./editors/IwpAuthorEditor";
+import IwpSaveEditor from "./editors/IwpSaveEditor";
+import IwpDesignerWelcomeEditor from "./editors/IwpDesignerWelcomeEditor";
 
 
 export default class IwpEditorPanel extends React.Component {
@@ -32,9 +32,9 @@ export default class IwpEditorPanel extends React.Component {
 
         if ( focused ) {
 
-            if ( focused == "author" ) {
+            if ( focused === "author" ) {
                 editor = <IwpAuthorEditor animation={this.props.animation} onDesignChange={this.props.onDesignChange}/>
-            } else if ( focused == "save" ) {
+            } else if ( focused === "save" ) {
 
                 editor = <IwpSaveEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} onAnimationSave={this.props.onAnimationSave}/>
 
@@ -42,7 +42,7 @@ export default class IwpEditorPanel extends React.Component {
         }
 
         if ( ! editor ) {
-            editor = <IwpDesignerWelcomePanel animation={this.props.animation}/>
+            editor = <IwpDesignerWelcomeEditor animation={this.props.animation}/>
         }
 
 
