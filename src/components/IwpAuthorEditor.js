@@ -59,7 +59,7 @@ export default class IwpAuthorEditor extends React.Component {
 
     render() {
         return (
-            <div className="iwp-input-editor">
+            <div className="iwp-editor iwp-input-editor">
 
                 <h3>Author</h3>
                 <div>

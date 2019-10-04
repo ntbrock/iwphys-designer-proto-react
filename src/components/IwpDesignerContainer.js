@@ -72,6 +72,7 @@ export default class IwpDesignerContainer extends React.Component {
                     <Col md={9}>
 
                         <IwpEditorPanel animation={this.props.animation}
+                                        unsavedChanges={this.state.unsavedChanges}
                                         focusedFeature={this.state.focusedFeature}
                                         focusedObject={this.state.focusedObject}
                                         onDesignChange={this.onDesignChange}/>
