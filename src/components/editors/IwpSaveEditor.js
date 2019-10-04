@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table, Jumbotron } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 
 /**
  * Edit Author information
