@@ -6,6 +6,7 @@ import IwpWindowEditor from "./editors/IwpWindowEditor";
 import IwpGraphWindowEditor from "./editors/IwpGraphWindowEditor";
 import IwpTimeEditor from "./editors/IwpTimeEditor";
 import IwpWelcomeEditor from "./editors/IwpWelcomeEditor";
+import IwpInputsEditor from "./editors/IwpInputsEditor";
 
 
 export default class IwpEditorPanel extends React.Component {
@@ -55,6 +56,9 @@ export default class IwpEditorPanel extends React.Component {
 
             } else if ( focused == "time" ) {
                 editor = <IwpTimeEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+
+            } else if ( focused == "inputs" ) {
+                editor = <IwpInputsEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
             }
         }
