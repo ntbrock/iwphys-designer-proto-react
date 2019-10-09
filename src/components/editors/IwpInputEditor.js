@@ -1,7 +1,7 @@
 import React from 'react';
 import './IwpInputEditor.css';
 // import EquationEditor from "./EquationEditor";
-import { Card, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardBody, CardTitle, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 
@@ -20,6 +20,7 @@ export default class IwpInputEditor extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.onFormChange = this.onFormChange.bind(this);
+        this.onRemove = this.onRemove.bind(this);
     }
 
     /* Generalized Form Handler for All Inputs */
@@ -54,6 +55,14 @@ export default class IwpInputEditor extends React.Component {
         }
     }
 
+    onRemove(event) {
+        console.log("IwpInputEditor:59> Removal event: " , event);
+
+        if (this.props.onDesignRemove) {
+            this.props.onDesignRemove("objects.input[name="+this.state.input.name+"]", this.state.input);
+        }
+    }
+
 
     // Card Mode
     render() {
@@ -70,6 +79,8 @@ export default class IwpInputEditor extends React.Component {
 
                             &nbsp; &nbsp;
                             <FontAwesomeIcon icon={faArrowsAltV} />
+
+                            <Button style={{float: "right"}} onClick={this.onRemove}>Remove</Button>
                         </CardTitle>
                     </CardBody>
 
@@ -117,25 +128,5 @@ export default class IwpInputEditor extends React.Component {
         );
     }
 
-    // Div Mode
-    /*
-    render() {
-        return (
-            <div className="iwp-input-editor">
 
-                <div>
-                    <label>Input Name</label>
-                    <input type="text"
-                           value={this.state.name}
-                           readOnly={false}
-                           onChange={this.onNameChange}/>
-                </div>
-                <div>
-                    <label>Input Equation</label>
-                    <EquationEditor expression={this.state.expression}/>
-                </div>
-            </div>
-        );
-    }
-    */
 }

@@ -112,7 +112,7 @@ export default class IwpInputsEditor extends React.Component {
 
                 return (
                     <div className="iwp-input-editor-container" key={input.name} input_name={input.name}>
-                        <IwpInputEditor input={input} onDesignChange={this.props.onDesignChange}/>
+                        <IwpInputEditor input={input} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
                     </div>
                 )
 

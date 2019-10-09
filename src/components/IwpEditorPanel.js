@@ -65,7 +65,7 @@ export default class IwpEditorPanel extends React.Component {
                                           onDesignChange={this.props.onDesignChange}
                                           onDesignAdd={this.props.onDesignAdd}
                                           onDesignRemove={this.props.onDesignRemove}
-                                          onDesignReorder={this.onDesignReorder} />
+                                          onDesignReorder={this.props.onDesignReorder} />
 
             }
         }

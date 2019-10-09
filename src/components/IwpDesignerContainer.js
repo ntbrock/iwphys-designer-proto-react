@@ -37,7 +37,7 @@ export default class IwpDesignerContainer extends React.Component {
     onDesignChange(feature, value) {
         console.log("IwpDesignerContainer:19> Design Change: event: ", feature, "  value: ", value, " to ss");
         this.setState({
-            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: value}})
+            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { change: value } }})
         });
     }
 
@@ -55,7 +55,7 @@ export default class IwpDesignerContainer extends React.Component {
             console.log("IwpDesignerContainer:54> new animation: " , animation);
             this.setState({
                 animation: animation,
-                unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: value}})
+                unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { add: value } }})
             })
 
             // TODO update unsaved changes
@@ -68,11 +68,30 @@ export default class IwpDesignerContainer extends React.Component {
     /** Bubbles up from any design change */
     onDesignRemove(feature, value) {
         console.log("IwpDesignerContainer:69> Design Remove: event: ", feature, "  value: ", value, " to ss");
+
+        // Manipulate the Animation to remove the object refernces
+        let animation = this.state.animation;
+        const filteredObjects = animation.objects.filter( o => o.name !== value.name );
+
+        animation.objects = update(animation.objects, {$set: filteredObjects });
+
+
+        this.setState({
+            animation: animation,
+            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { remove: value}} })
+        })
+
+
+
     }
 
     /** Bubbles up from any design reordering */
     onDesignReorder(feature, value) {
         console.log("IwpDesignerContainer:74> onDesignReorder: event: ", feature, "  value: ", value, " to ss");
+
+        this.setState({
+            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { reorder: value}} })
+        })
     }
 
 
