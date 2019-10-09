@@ -30,8 +30,32 @@ label {
     text-align: left;
 }
 
+.iwp-input-editor-container {
+    margin-bottom: 1rem;
+}
 
 .iwp-editor-control-buttons {
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+/**
+ * Colorize the different object type cards
+ */
+.iwp-input-card-header {
+    background-color: #282c34;
+    color: white;
+}
+
+.iwp-input-card-header .card-title {
+    margin: 0.25rem;
+}
+
+/**
+ * Drag Reordering Animation
+ */
+
+.dragging {
+    background-color: red !important;
+
 }

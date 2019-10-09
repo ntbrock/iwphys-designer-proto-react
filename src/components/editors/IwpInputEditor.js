@@ -2,6 +2,8 @@ import React from 'react';
 import './IwpInputEditor.css';
 // import EquationEditor from "./EquationEditor";
 import { Card, CardBody, CardTitle } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 
 
 /**
@@ -62,8 +64,13 @@ export default class IwpInputEditor extends React.Component {
             <div className="iwp-input-editor">
 
                 <Card>
-                    <CardBody>
-                        <CardTitle><strong>Input</strong></CardTitle>
+                    <CardBody className="iwp-input-card-header">
+                        <CardTitle>
+                            <strong>Input</strong>
+
+                            &nbsp; &nbsp;
+                            <FontAwesomeIcon icon={faArrowsAltV} />
+                        </CardTitle>
                     </CardBody>
 
                     <CardBody>

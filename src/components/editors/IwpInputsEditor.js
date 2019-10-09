@@ -1,8 +1,8 @@
 import React from 'react';
-import update from "immutability-helper";
+// import update from "immutability-helper";
 import IwpInputEditor from "./IwpInputEditor";
 import { Button } from 'reactstrap';
-import { dragula } from 'react-dragula';
+import Dragula from 'react-dragula';
 
 /**
  * Edit Author information
@@ -20,15 +20,49 @@ export default class IwpInputsEditor extends React.Component {
 
     }
 
-    componentDidMount() {
-        const container = this;
+    // https://github.com/bevacqua/react-dragula
+    dragulaDecorator = (componentBackingInstance) => {
 
-        console.log("IwpInputsEditor:26> Dragula hunting, this: ", container);
+        if (componentBackingInstance) {
+            let options = {
+/*
+                moves: function (el, source, handle, sibling) {
+                    console.log("IwpInputsEditor:30> moves: el: " , el, "  source: " , source );
+                    return true;
+                }
+*/
+            };
 
-        // TODO find: iwp-drag-container
 
-        // dragula([container]);
-    }
+            console.log("IwpInputsEditor:26> Applied Dragula with options: ", options, "  to componentBackingInstance: " , componentBackingInstance);
+
+
+            Dragula([componentBackingInstance], options).on('drag', function (el) {
+
+                console.log("IwpInputsEditor:37> on Drag: el: ", el);
+                el.className += ' dragging';
+
+            }).on('drop', function (el) {
+                console.log("IwpInputsEditor:37> on Drop: el: ", el);
+
+                el.className = el.className.replace('dragging', '');
+
+
+            }).on('over', function (el, container) {
+
+                console.log("IwpInputsEditor:37> on Over: el: ", el);
+                // container.className += ' ex-over';
+            }).on('out', function (el, container) {
+
+                console.log("IwpInputsEditor:37> on Out: el: ", el);
+                // container.className = container.className.replace('ex-over', '');
+            });
+
+
+
+        }
+    };
+
 
     onAddInput(event) {
 
@@ -55,8 +89,6 @@ export default class IwpInputsEditor extends React.Component {
                 return (
                     <div className="iwp-input-editor-container" key={input.name}>
                         <IwpInputEditor input={input} onDesignChange={this.props.onDesignChange}/>
-                        <br/>
-                        <br/>
                     </div>
                 )
 
@@ -74,7 +106,7 @@ export default class IwpInputsEditor extends React.Component {
                 <Button onClick={this.onAddInput}>Add New Input</Button>
                 </div>
 
-                <div className="iwp-drag-container">
+                <div className="iwp-drag-container container" ref={this.dragulaDecorator}>
 
                     {inputsDom}
 
