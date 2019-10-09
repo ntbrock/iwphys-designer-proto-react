@@ -92,6 +92,11 @@ npm install --save reactstrap react react-dom
 
 = Deployment to static service, https://iwp6.iwphys.org/designer-preview/
 
+## Howto deploy to iwp6
+
+$ npm run build
+
+
 
 - Want to get to a solid editor
 
