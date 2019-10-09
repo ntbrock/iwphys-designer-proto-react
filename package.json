@@ -1,5 +1,6 @@
 {
   "name": "iwphys-designer-proto-react",
+  "homepage" : "https://iwp6.iwphys.org/designer-preview",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

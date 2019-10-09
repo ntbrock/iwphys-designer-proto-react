@@ -78,21 +78,19 @@ npm install --save reactstrap react react-dom
 
 = Layout Reactstrap
 
-~ Dynamic content rendering base don in coming Json 1103
+= Dynamic content rendering base don in coming Json 1103
 
 2019Oct08 Reactivating
 
 = Dragula + Styling
 = Drag to mov Input
 
-~ Add Input at top
-- Communicate ordering back to top.
+= Add Input at top
+= Communicate ordering back to top.
+= Delete Input
+= INputs in React Cards
 
-- Delete Input
-
-
-- INputs in React Cards
-
+= Deployment to static service, https://iwp6.iwphys.org/designer-preview/
 
 
 - Want to get to a solid editor
