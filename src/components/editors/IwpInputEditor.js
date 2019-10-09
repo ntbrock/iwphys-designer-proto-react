@@ -74,13 +74,13 @@ export default class IwpInputEditor extends React.Component {
 
                 <Card>
                     <CardBody className="iwp-input-card-header">
-                        <CardTitle>
+                        <CardTitle className="drag-handle">
                             <strong>Input</strong>
 
                             &nbsp; &nbsp;
                             <FontAwesomeIcon icon={faArrowsAltV} />
 
-                            <Button style={{float: "right"}} onClick={this.onRemove}>Remove</Button>
+                            <Button style={{float: "right"}} onClick={this.onRemove} size="sm">Remove</Button>
                         </CardTitle>
                     </CardBody>
 

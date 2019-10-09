@@ -27,12 +27,10 @@ export default class IwpInputsEditor extends React.Component {
 
         if (componentBackingInstance) {
             let options = {
-/*
+
                 moves: function (el, source, handle, sibling) {
-                    console.log("IwpInputsEditor:30> moves: el: " , el, "  source: " , source );
-                    return true;
+                    return handle.classList.contains('drag-handle');
                 }
-*/
             };
 
 
