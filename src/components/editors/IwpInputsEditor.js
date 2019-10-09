@@ -66,15 +66,20 @@ export default class IwpInputsEditor extends React.Component {
 
     onAddInput(event) {
 
-        console.log("IwpInputEditor:42> onAddInput: event: " , event);
 
         let inputName = "newInput";
-        let inputAttempt = 1;
-        // Make sure Input doesn't conflict
-        while ( this.props.animation.objects.filter( o => o.name === inputName ).length > 0 ) {
-            inputName = "newInput" + inputAttempt++
+
+        // Make sure new name doesn't conflict
+        let uniqueName = false;
+        for ( let inputAttempt = 0; ! uniqueName; inputAttempt++ ) {
+            inputName = "newInput" +  ( inputAttempt > 0 ? inputAttempt : '' ); // Dont' add 0
+            const inputNameAttempt = inputName;
+            uniqueName = this.props.animation.objects.filter( o => o.name === inputNameAttempt ).length === 0;
         }
-        
+
+        console.log("IwpInputEditor:42> onAddInput: Determined Unique INput Name: " , uniqueName);
+
+
         if(this.props.onDesignAdd) {
             this.props.onDesignAdd("objects.input", { objectType: "input", name: inputName, hidden: false, initialValue: 0, text: "", units: "" })
         }
