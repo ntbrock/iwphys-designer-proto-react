@@ -27,6 +27,7 @@ export default class IwpDesignerContainer extends React.Component {
         this.onDesignChange = this.onDesignChange.bind(this);
         this.onDesignAdd = this.onDesignAdd.bind(this);
         this.onDesignRemove = this.onDesignRemove.bind(this);
+        this.onDesignReorder = this.onDesignReorder.bind(this);
         this.onAnimationSave = this.onAnimationSave.bind(this);
         this.onObjectClicked = this.onObjectClicked.bind(this);
         this.onFeatureClicked = this.onFeatureClicked.bind(this);
@@ -47,13 +48,14 @@ export default class IwpDesignerContainer extends React.Component {
         // manipulate animation state, then pass that back down
         let animation = this.state.animation;
 
-        if ( feature === "objects.input" ) {
+        if ( feature.startsWith("objects.input") ) {
 
             animation.objects = update(animation.objects, {$unshift: [value] });
 
             console.log("IwpDesignerContainer:54> new animation: " , animation);
             this.setState({
-               animation: animation
+                animation: animation,
+                unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: value}})
             })
 
             // TODO update unsaved changes
@@ -65,9 +67,13 @@ export default class IwpDesignerContainer extends React.Component {
 
     /** Bubbles up from any design change */
     onDesignRemove(feature, value) {
-        console.log("IwpDesignerContainer:49> Design Remove: event: ", feature, "  value: ", value, " to ss");
+        console.log("IwpDesignerContainer:69> Design Remove: event: ", feature, "  value: ", value, " to ss");
     }
 
+    /** Bubbles up from any design reordering */
+    onDesignReorder(feature, value) {
+        console.log("IwpDesignerContainer:74> onDesignReorder: event: ", feature, "  value: ", value, " to ss");
+    }
 
 
     onAnimationSave(event) {
@@ -123,6 +129,7 @@ export default class IwpDesignerContainer extends React.Component {
                                         onDesignChange={this.onDesignChange}
                                         onDesignAdd={this.onDesignAdd}
                                         onDesignRemove={this.onDesignRemove}
+                                        onDesignReorder={this.onDesignReorder}
                                         onAnimationSave={this.onAnimationSave}/>
 
                     </Col>

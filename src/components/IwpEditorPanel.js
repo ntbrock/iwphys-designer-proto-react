@@ -60,7 +60,12 @@ export default class IwpEditorPanel extends React.Component {
                 editor = <IwpTimeEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
             } else if ( focused === "inputs" ) {
-                editor = <IwpInputsEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} onDesignAdd={this.props.onDesignAdd} onDesignRemove={this.props.onDesignRemove} />
+                editor = <IwpInputsEditor animation={this.props.animation}
+                                          unsavedChanges={this.props.unsavedChanges}
+                                          onDesignChange={this.props.onDesignChange}
+                                          onDesignAdd={this.props.onDesignAdd}
+                                          onDesignRemove={this.props.onDesignRemove}
+                                          onDesignReorder={this.onDesignReorder} />
 
             }
         }

@@ -44,11 +44,10 @@ export default class IwpInputsEditor extends React.Component {
                 // console.log("IwpInputsEditor:37> on Drag: el: ", el);
                 // el.className += ' dragging';
 
-            }).on('drop', function (el, target ) {
-                // console.log("IwpInputsEditor:37> on Drop: el: ", el);
+            }).on('drop', function (el, target) {
+                console.log("IwpInputsEditor:37> on Drop: el: ", el, "target: " , target );
                 // el.className = el.className.replace('dragging', '');
-
-                component.onReorderInputs();
+                component.onReorderInputs(el, target);
 
             });
 
@@ -56,16 +55,30 @@ export default class IwpInputsEditor extends React.Component {
     };
 
 
-    onReorderInputs() {
+    onReorderInputs(element, container) {
 
-        console.log("IwpInputsEditor:59> Determing new INput order: this: ", this);
+        // Reach into the dom to determine the new order?
 
+        const childNodes =  Array.from(container.childNodes);
+
+        console.log("IwpInputsEditor:68> ChildNodes is: " , childNodes);
+
+        const newInputOrder = childNodes.map( input => {
+                const inputName = input.getAttribute("input_name");
+                return inputName;
+            }
+        );
+
+        console.log("IwpInputsEditor:68> Determined new INput Order: " , newInputOrder);
+
+        if(this.props.onDesignReorder) {
+            this.props.onDesignReorder("objects.input", newInputOrder);
+        }
     }
 
 
 
     onAddInput(event) {
-
 
         let inputName = "newInput";
 
@@ -81,7 +94,7 @@ export default class IwpInputsEditor extends React.Component {
 
 
         if(this.props.onDesignAdd) {
-            this.props.onDesignAdd("objects.input", { objectType: "input", name: inputName, hidden: false, initialValue: 0, text: "", units: "" })
+            this.props.onDesignAdd("objects.input[name="+inputName+"]", { objectType: "input", name: inputName, hidden: false, initialValue: 0, text: "", units: "" })
         }
     }
 
@@ -98,7 +111,7 @@ export default class IwpInputsEditor extends React.Component {
                 // console.log("IpwInputsEditor:45> inputs: ", inputs, "  input: " , input);
 
                 return (
-                    <div className="iwp-input-editor-container" key={input.name}>
+                    <div className="iwp-input-editor-container" key={input.name} input_name={input.name}>
                         <IwpInputEditor input={input} onDesignChange={this.props.onDesignChange}/>
                     </div>
                 )
