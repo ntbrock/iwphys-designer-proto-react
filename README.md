@@ -79,10 +79,16 @@ npm install --save reactstrap react react-dom
 
 ~ Dynamic content rendering base don in coming Json 1103
 
+2019Oct08 Reactivating
+
+~ Add / Delete Input
 
 
 
+- Want to get to a solid editor
 
+
+NOTE the Hotel biz center has an AWESOME cannon printer. Can I do my print work here in teh AM? for free?!
 
 
 

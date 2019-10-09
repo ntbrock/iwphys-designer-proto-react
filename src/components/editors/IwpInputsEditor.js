@@ -1,6 +1,8 @@
 import React from 'react';
 import update from "immutability-helper";
 import IwpInputEditor from "./IwpInputEditor";
+import { Button } from 'reactstrap';
+
 
 /**
  * Edit Author information
@@ -10,14 +12,12 @@ export default class IwpInputsEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        const inputs = props.animation.objects.filter( (o) => o.objectType === "input" )
+        console.log("IwpInputsEditor:15> inccoming animation: ", props.animation );
 
-        this.state = {
-            inputs: inputs
-        };
 
         // This binding is necessary to make `this` work in the callback
         this.onFieldChange = this.onFieldChange.bind(this);
+        this.onAddInput = this.onAddInput.bind(this);
 
     }
 
@@ -31,21 +31,34 @@ export default class IwpInputsEditor extends React.Component {
         this.setState( { window : update(this.state.window, {[feature]: {$set: value}}) } );
 
         if(this.props.onDesignChange) {
-            this.props.onDesignChange("objects.window."+feature, value )
+            this.props.onDesignChange("objects.inputs["+feature+"]", value )
+        }
+    }
+
+    onAddInput(event) {
+
+        console.log("IwpInputEditor:42> onAddInput: event: " , event);
+
+        let feature = "input1"; // Todo Make sure INput doesn't conflict
+        if(this.props.onDesignAdd) {
+            this.props.onDesignAdd("objects.input", { objectType: "input", name: feature, hidden: false, initialValue: 0, text: "", units: "" })
         }
     }
 
 
-
     render() {
 
-        let inputsDom = this.state.inputs.map( (feature, i) => {
-                const input = this.state.inputs[i];
+        console.log("IwpInputsEditor:51> props: ", this.props );
+        const inputs = this.props.animation.objects.filter( (o) => o.objectType === "input" );
 
-                console.log("IpwInputsEditor:45> inputs: ", this.state.inputs, "  input: " , input);
+
+        let inputsDom = inputs.map( (feature, i) => {
+                const input = inputs[i];
+
+                console.log("IpwInputsEditor:45> inputs: ", inputs, "  input: " , input);
 
                 return (
-                    <div className="iwp-input-editor-field">
+                    <div className="iwp-input-editor-field" key={input.name}>
                         <IwpInputEditor name={input.name} expression={input.initialValue}/>
                         <br/>
                         <br/>
@@ -60,6 +73,7 @@ export default class IwpInputsEditor extends React.Component {
 
                 <h3>Inputs</h3>
 
+                <Button onClick={this.onAddInput}>Add New Input</Button>
 
                 <div>
 

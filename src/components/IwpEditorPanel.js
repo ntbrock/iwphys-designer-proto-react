@@ -33,6 +33,8 @@ export default class IwpEditorPanel extends React.Component {
 
     render() {
 
+        console.log("IwpEditorPanel:36> Rendering props animation: " , this.props.animation );
+
         let focused = this.props.focusedFeature || this.props.focusedObject;
 
         let editor;
@@ -45,20 +47,20 @@ export default class IwpEditorPanel extends React.Component {
             } else if ( focused === "save" ) {
                 editor = <IwpSaveEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} onAnimationSave={this.props.onAnimationSave}/>
 
-            } else if ( focused == "description" ) {
+            } else if ( focused === "description" ) {
                 editor = <IwpDescriptionEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
-            } else if ( focused == "window" ) {
+            } else if ( focused === "window" ) {
                 editor = <IwpWindowEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
-            } else if ( focused == "graphWindow" ) {
+            } else if ( focused === "graphWindow" ) {
                 editor = <IwpGraphWindowEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
-            } else if ( focused == "time" ) {
+            } else if ( focused === "time" ) {
                 editor = <IwpTimeEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
-            } else if ( focused == "inputs" ) {
-                editor = <IwpInputsEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+            } else if ( focused === "inputs" ) {
+                editor = <IwpInputsEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} onDesignAdd={this.props.onDesignAdd} onDesignRemove={this.props.onDesignRemove} />
 
             }
         }
