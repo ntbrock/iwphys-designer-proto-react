@@ -10,7 +10,7 @@ export default class IwpObjectList extends React.Component {
             animation: props.animation
         };
 
-        console.log("IwpDesignerContainer:12> Incoming Animation: " , props.animation );
+        // console.log("IwpObjectList:13> Incoming Animation: " , props.animation );
 
         // This binding is necessary to make `this` work in the callback
         this.onFeatureClicked = this.onFeatureClicked.bind(this);
@@ -32,7 +32,7 @@ export default class IwpObjectList extends React.Component {
 
         const unsavedChangesCount = Object.keys(this.props.unsavedChanges).length;
 
-        console.log("IwpObjectList:35> unsavedChanges: " , this.props.unsavedChanges);
+        // console.log("IwpObjectList:35> unsavedChanges: " , this.props.unsavedChanges);
         let saveButton;
         if ( unsavedChangesCount === 0 ) {
             saveButton = <ListGroupItem feature="save" onClick={this.onFeatureClicked}>Saved</ListGroupItem>

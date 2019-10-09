@@ -2,7 +2,7 @@ import React from 'react';
 import update from "immutability-helper";
 import IwpInputEditor from "./IwpInputEditor";
 import { Button } from 'reactstrap';
-
+import { dragula } from 'react-dragula';
 
 /**
  * Edit Author information
@@ -12,27 +12,22 @@ export default class IwpInputsEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("IwpInputsEditor:15> inccoming animation: ", props.animation );
+        // console.log("IwpInputsEditor:15> incoming animation: ", props.animation );
 
 
         // This binding is necessary to make `this` work in the callback
-        this.onFieldChange = this.onFieldChange.bind(this);
         this.onAddInput = this.onAddInput.bind(this);
 
     }
 
-    /** TODO Handle Field Changes Generically */
-    onFieldChange(event) {
-        let feature = event.target.attributes['feature'].value;
-        let value = event.target.value;
+    componentDidMount() {
+        const container = this;
 
-        console.log("IwpWindowEditor:29> feature: " , feature, "  value:", value);
+        console.log("IwpInputsEditor:26> Dragula hunting, this: ", container);
 
-        this.setState( { window : update(this.state.window, {[feature]: {$set: value}}) } );
+        // TODO find: iwp-drag-container
 
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("objects.inputs["+feature+"]", value )
-        }
+        // dragula([container]);
     }
 
     onAddInput(event) {
@@ -48,18 +43,17 @@ export default class IwpInputsEditor extends React.Component {
 
     render() {
 
-        console.log("IwpInputsEditor:51> props: ", this.props );
+        // console.log("IwpInputsEditor:46> props: ", this.props );
         const inputs = this.props.animation.objects.filter( (o) => o.objectType === "input" );
 
 
         let inputsDom = inputs.map( (feature, i) => {
                 const input = inputs[i];
 
-                console.log("IpwInputsEditor:45> inputs: ", inputs, "  input: " , input);
-
+                // console.log("IpwInputsEditor:45> inputs: ", inputs, "  input: " , input);
 
                 return (
-                    <div className="iwp-input-editor-field" key={input.name}>
+                    <div className="iwp-input-editor-container" key={input.name}>
                         <IwpInputEditor input={input} onDesignChange={this.props.onDesignChange}/>
                         <br/>
                         <br/>
@@ -80,7 +74,7 @@ export default class IwpInputsEditor extends React.Component {
                 <Button onClick={this.onAddInput}>Add New Input</Button>
                 </div>
 
-                <div>
+                <div className="iwp-drag-container">
 
                     {inputsDom}
 

@@ -1,10 +1,7 @@
 import React from 'react';
 import './IwpInputEditor.css';
-import EquationEditor from "./EquationEditor";
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
-} from 'reactstrap';
+// import EquationEditor from "./EquationEditor";
+import { Card, CardBody, CardTitle } from 'reactstrap';
 
 
 /**
@@ -43,7 +40,7 @@ export default class IwpInputEditor extends React.Component {
             newInput.hidden = event.target.checked;
 
         } else {
-            throw "IwpInputEditor:43> Unrecognized form field named: " + targetName;
+            throw Error("IwpInputEditor:43> Unrecognized form field named: " + targetName);
         }
 
         //-----------------------

@@ -17,7 +17,7 @@ export default class IwpEditorPanel extends React.Component {
             animation: props.animation };
 
 
-        console.log("IwpDesignerContainer:12> Incoming Animation: " , props.animation );
+        // console.log("IwpEditorPanel:20> Incoming Animation: " , props.animation );
 
         // This binding is necessary to make `this` work in the callback
         this.onObjectClicked = this.onObjectClicked.bind(this);
@@ -33,7 +33,7 @@ export default class IwpEditorPanel extends React.Component {
 
     render() {
 
-        console.log("IwpEditorPanel:36> Rendering props animation: " , this.props.animation );
+        // console.log("IwpEditorPanel:36> Rendering props animation: " , this.props.animation );
 
         let focused = this.props.focusedFeature || this.props.focusedObject;
 

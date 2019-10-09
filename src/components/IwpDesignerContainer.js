@@ -21,7 +21,7 @@ export default class IwpDesignerContainer extends React.Component {
             focusedObject: undefined,
         };
 
-        console.log("IwpDesignerContainer:12> Incoming Animation: " , props.animation );
+        // console.log("IwpDesignerContainer:24> Incoming Animation: " , props.animation );
 
         // This binding is necessary to make `this` work in the callback
         this.onDesignChange = this.onDesignChange.bind(this);
@@ -59,7 +59,7 @@ export default class IwpDesignerContainer extends React.Component {
             // TODO update unsaved changes
 
         } else {
-            throw "onDesignAdd: unrecognized feature: '"+feature+ "'";
+            throw Error("onDesignAdd: unrecognized feature: '"+feature+ "'");
         }
     }
 
@@ -78,12 +78,12 @@ export default class IwpDesignerContainer extends React.Component {
 
 
     onObjectClicked(object, event) {
-        console.log("IwpDesignerContainer:28> Object Click Event: object: " , object, " event: " , event);
+        // console.log("IwpDesignerContainer:81> Object Click Event: object: " , object, " event: " , event);
         this.setState( { focusedObject: object, focusedFeature: undefined })
     }
 
     onFeatureClicked(feature, event) {
-        console.log("IwpDesignerContainer:39> Feature Click Event: feature: " , feature, "  event: " , event);
+        // console.log("IwpDesignerContainer:86> Feature Click Event: feature: " , feature, "  event: " , event);
         this.setState( { focusedObject: undefined, focusedFeature: feature })
     }
 
@@ -92,7 +92,7 @@ export default class IwpDesignerContainer extends React.Component {
 
     render() {
 
-        console.log("IwpDesignerController:95> Rendering state animation: " , this.state.animation );
+        // console.log("IwpDesignerController:95> Rendering state animation: " , this.state.animation );
 
         return (
 
