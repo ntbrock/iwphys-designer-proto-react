@@ -82,11 +82,14 @@ npm install --save reactstrap react react-dom
 
 2019Oct08 Reactivating
 
-~ Add / Delete Input
+= Dragula + Styling
+= Drag to mov Input
 
-- Delete INput
+~ Add Input at top
+- Communicate ordering back to top.
 
-- Drag to mov Input
+- Delete Input
+
 
 - INputs in React Cards
 

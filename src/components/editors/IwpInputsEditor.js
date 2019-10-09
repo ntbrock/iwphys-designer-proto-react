@@ -17,11 +17,13 @@ export default class IwpInputsEditor extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.onAddInput = this.onAddInput.bind(this);
-
+        this.onReorderInputs = this.onReorderInputs.bind(this);
     }
 
     // https://github.com/bevacqua/react-dragula
     dragulaDecorator = (componentBackingInstance) => {
+
+        const component = this;
 
         if (componentBackingInstance) {
             let options = {
@@ -39,38 +41,42 @@ export default class IwpInputsEditor extends React.Component {
 
             Dragula([componentBackingInstance], options).on('drag', function (el) {
 
-                console.log("IwpInputsEditor:37> on Drag: el: ", el);
-                el.className += ' dragging';
+                // console.log("IwpInputsEditor:37> on Drag: el: ", el);
+                // el.className += ' dragging';
 
-            }).on('drop', function (el) {
-                console.log("IwpInputsEditor:37> on Drop: el: ", el);
+            }).on('drop', function (el, target ) {
+                // console.log("IwpInputsEditor:37> on Drop: el: ", el);
+                // el.className = el.className.replace('dragging', '');
 
-                el.className = el.className.replace('dragging', '');
+                component.onReorderInputs();
 
-
-            }).on('over', function (el, container) {
-
-                console.log("IwpInputsEditor:37> on Over: el: ", el);
-                // container.className += ' ex-over';
-            }).on('out', function (el, container) {
-
-                console.log("IwpInputsEditor:37> on Out: el: ", el);
-                // container.className = container.className.replace('ex-over', '');
             });
-
-
 
         }
     };
+
+
+    onReorderInputs() {
+
+        console.log("IwpInputsEditor:59> Determing new INput order: this: ", this);
+
+    }
+
 
 
     onAddInput(event) {
 
         console.log("IwpInputEditor:42> onAddInput: event: " , event);
 
-        let feature = "input1"; // Todo Make sure INput doesn't conflict
+        let inputName = "newInput";
+        let inputAttempt = 1;
+        // Make sure Input doesn't conflict
+        while ( this.props.animation.objects.filter( o => o.name === inputName ).length > 0 ) {
+            inputName = "newInput" + inputAttempt++
+        }
+        
         if(this.props.onDesignAdd) {
-            this.props.onDesignAdd("objects.input", { objectType: "input", name: feature, hidden: false, initialValue: 0, text: "", units: "" })
+            this.props.onDesignAdd("objects.input", { objectType: "input", name: inputName, hidden: false, initialValue: 0, text: "", units: "" })
         }
     }
 

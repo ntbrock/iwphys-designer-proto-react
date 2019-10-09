@@ -49,7 +49,7 @@ export default class IwpDesignerContainer extends React.Component {
 
         if ( feature === "objects.input" ) {
 
-            animation.objects = update(animation.objects, {$push: [value] });
+            animation.objects = update(animation.objects, {$unshift: [value] });
 
             console.log("IwpDesignerContainer:54> new animation: " , animation);
             this.setState({

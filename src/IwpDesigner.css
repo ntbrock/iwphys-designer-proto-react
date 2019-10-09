@@ -51,11 +51,3 @@ label {
     margin: 0.25rem;
 }
 
-/**
- * Drag Reordering Animation
- */
-
-.dragging {
-    background-color: red !important;
-
-}
