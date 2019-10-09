@@ -76,7 +76,7 @@ export default class IwpInputsEditor extends React.Component {
 
                 <h3>Inputs</h3>
 
-                <div className="iwp-inputs-editor-control-buttons" style={{margin: "1rem"}}>
+                <div className="iwp-editor-control-buttons">
                 <Button onClick={this.onAddInput}>Add New Input</Button>
                 </div>
 

@@ -14,5 +14,24 @@ label {
 
 
 .iwp-editor-panel {
-    margin: 1rem;
+    margin: 1.5rem;
+}
+
+/** override some reactstrap defaults */
+.iwp-editor-panel .card-body {
+    padding: 0.5rem;
+}
+
+.iwp-editor-panel label {
+    margin: 0.5rem;
+}
+
+.iwp-input-editor {
+    text-align: left;
+}
+
+
+.iwp-editor-control-buttons {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
