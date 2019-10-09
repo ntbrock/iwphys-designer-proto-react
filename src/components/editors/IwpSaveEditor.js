@@ -36,7 +36,7 @@ export default class IwpSaveEditor extends React.Component {
             return ( <tr key={feature}>
                 <td>{i}</td>
                     <td>{feature}</td>
-                    <td>{this.props.unsavedChanges[feature]}</td>
+                    <td>{JSON.stringify(this.props.unsavedChanges[feature])}</td>
                 </tr> )
 
         })

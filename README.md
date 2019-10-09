@@ -83,6 +83,12 @@ npm install --save reactstrap react react-dom
 
 ~ Add / Delete Input
 
+- Delete INput
+
+- Drag to mov Input
+
+- INputs in React Cards
+
 
 
 - Want to get to a solid editor

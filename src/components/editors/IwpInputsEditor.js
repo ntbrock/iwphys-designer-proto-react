@@ -57,13 +57,16 @@ export default class IwpInputsEditor extends React.Component {
 
                 console.log("IpwInputsEditor:45> inputs: ", inputs, "  input: " , input);
 
+
                 return (
                     <div className="iwp-input-editor-field" key={input.name}>
-                        <IwpInputEditor name={input.name} expression={input.initialValue}/>
+                        <IwpInputEditor input={input} onDesignChange={this.props.onDesignChange}/>
                         <br/>
                         <br/>
                     </div>
                 )
+
+
             }
         )
 
@@ -73,7 +76,9 @@ export default class IwpInputsEditor extends React.Component {
 
                 <h3>Inputs</h3>
 
+                <div className="iwp-inputs-editor-control-buttons" style={{margin: "1rem"}}>
                 <Button onClick={this.onAddInput}>Add New Input</Button>
+                </div>
 
                 <div>
 
