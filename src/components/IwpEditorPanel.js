@@ -33,8 +33,6 @@ export default class IwpEditorPanel extends React.Component {
 
     render() {
 
-        // console.log("IwpEditorPanel:36> Rendering props animation: " , this.props.animation );
-
         let focused = this.props.focusedFeature || this.props.focusedObject;
 
         let editor;
@@ -95,15 +93,14 @@ export default class IwpEditorPanel extends React.Component {
             editor = <IwpWelcomeEditor animation={this.props.animation}/>
         }
 
+        // console.log("IwpEditorPanel:36> Rendering props, focused: ", focused, "  editor.props: ", editor.props,  " animation: " , this.props.animation );
 
         return (
 
             <div>
 
                 <h3>IWP Editor Panel</h3>
-
                 <div className="iwp-editor-panel">
-
                 {editor}
                 </div>
 

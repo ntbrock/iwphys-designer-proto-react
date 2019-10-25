@@ -13,16 +13,18 @@ export default class IwpObjectListEditor extends React.Component {
         super(props);
 
         // console.log("IwpInputsEditor:15> incoming animation: ", props.animation );
-
-        this.objectTypeLabel = props.objectTypeLabel; // "Input";
-        this.objectTypeFilter = props.objectTypeFilter;
-        this.editorClassName = "iwp-"+props.objectTypeFilter+"-editor";
-
+        // DEFENSE
+        if ( ! props.objectTypeFilter ) { throw Error("Missing Prop: 'objectTypeFilter'")}
+        if ( ! props.objectTypeLabel ) { throw Error("Missing Prop: 'objectTypeLabel'")}
 
         // This binding is necessary to make `this` work in the callback
         this.onAdd = this.onAdd.bind(this);
         this.onReorder = this.onReorder.bind(this);
     }
+
+    editorClassName = () => {
+        return "iwp-"+this.props.objectTypeFilter+"-editor"
+    };
 
     // https://github.com/bevacqua/react-dragula
     dragulaDecorator = (componentBackingInstance) => {
@@ -67,18 +69,18 @@ export default class IwpObjectListEditor extends React.Component {
         // console.log("IwpObjectsEditor:71> Determined new Object Order: " , newInputOrder);
 
         if(this.props.onDesignReorder) {
-            this.props.onDesignReorder("objects."+this.objectTypeFilter, newObjectOrder);
+            this.props.onDesignReorder("objects."+this.props.objectTypeFilter, newObjectOrder);
         }
     }
 
     onAdd(event) {
 
-        let objectName = "new"+this.objectTypeLabel;
+        let objectName = "new"+this.props.objectTypeLabel;
 
         // Make sure new name doesn't conflict
         let uniqueName = false;
         for ( let inputAttempt = 0; ! uniqueName; inputAttempt++ ) {
-            objectName = "new" + this.objectTypeLabel +  ( inputAttempt > 0 ? inputAttempt : '' ); // Dont' add 0
+            objectName = "new" + this.props.objectTypeLabel +  ( inputAttempt > 0 ? inputAttempt : '' ); // Dont' add 0
             const inputNameAttempt = objectName;
             uniqueName = this.props.animation.objects.filter( o => o.name === inputNameAttempt ).length === 0;
         }
@@ -90,21 +92,23 @@ export default class IwpObjectListEditor extends React.Component {
 
             // TODO - Pull The new attriobutes in a more generalized way?
 
-            this.props.onDesignAdd("objects."+this.objectTypeFilter+"[name="+objectName+"]",
-                { objectType: this.objectTypeFilter, name: objectName, hidden: false, initialValue: 0, text: "", units: "" })
+            this.props.onDesignAdd("objects."+this.props.objectTypeFilter+"[name="+objectName+"]",
+                { objectType: this.props.objectTypeFilter, name: objectName, hidden: false, initialValue: 0, text: "", units: "" })
         }
     }
 
 
     render() {
-        const objects = this.props.animation.objects.filter( (o) => o.objectType === this.objectTypeFilter );
+        const objects = this.props.animation.objects.filter( (o) => o.objectType === this.props.objectTypeFilter );
+
+        console.log("IwpObjectListEditor:102> Render ", this.props.objectTypeFilter, " object.length: ", objects.length );
 
         let objectsDom = objects.map( (feature, i) => {
             const object = objects[i];
 
             // Dynamically determine subeditor type.
             let subEditor = undefined;
-            if ( this.objectTypeFilter == "input" ) {
+            if ( this.props.objectTypeFilter === "input" ) {
                 subEditor =
                     <IwpInputEditor input={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
             }
@@ -118,12 +122,12 @@ export default class IwpObjectListEditor extends React.Component {
 
 
         return (
-            <div className={this.editorClassName}>
+            <div className={this.editorClassName()}>
 
-                <h3>{this.objectTypeLabel}s</h3>
+                <h3>{this.props.objectTypeLabel}s</h3>
 
                 <div className="iwp-editor-control-buttons">
-                <Button onClick={this.onAdd}>Add New {this.objectTypeLabel}</Button>
+                <Button onClick={this.onAdd}>Add New {this.props.objectTypeLabel}</Button>
                 </div>
 
                 <div className="iwp-drag-container container" ref={this.dragulaDecorator}>
