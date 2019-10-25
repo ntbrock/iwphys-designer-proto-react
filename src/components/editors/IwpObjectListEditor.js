@@ -2,6 +2,7 @@ import React from 'react';
 // import update from "immutability-helper";
 import IwpInputEditor from "./IwpInputEditor";
 import IwpOutputEditor from "./IwpOutputEditor";
+import IwpSolidEditor from "./IwpSolidEditor";
 
 import { Button } from 'reactstrap';
 import Dragula from 'react-dragula';
@@ -39,6 +40,11 @@ export default class IwpObjectListEditor extends React.Component {
         } else if ( this.props.objectTypeFilter === "output" ) {
             return (
                 <IwpOutputEditor output={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
+            )
+
+        } else if ( this.props.objectTypeFilter === "solid" ) {
+            return (
+                <IwpSolidEditor solid={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
             )
 
         } else {
