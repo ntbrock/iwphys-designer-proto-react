@@ -6,7 +6,7 @@ import IwpWindowEditor from "./editors/IwpWindowEditor";
 import IwpGraphWindowEditor from "./editors/IwpGraphWindowEditor";
 import IwpTimeEditor from "./editors/IwpTimeEditor";
 import IwpWelcomeEditor from "./editors/IwpWelcomeEditor";
-import IwpInputsEditor from "./editors/IwpInputsEditor";
+import IwpObjectListEditor from "./editors/IwpObjectListEditor";
 
 
 export default class IwpEditorPanel extends React.Component {
@@ -60,13 +60,34 @@ export default class IwpEditorPanel extends React.Component {
                 editor = <IwpTimeEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
 
             } else if ( focused === "inputs" ) {
-                editor = <IwpInputsEditor animation={this.props.animation}
+                editor = <IwpObjectListEditor animation={this.props.animation}
+                                          objectTypeLabel="Input"
+                                          objectTypeFilter="input"
                                           unsavedChanges={this.props.unsavedChanges}
                                           onDesignChange={this.props.onDesignChange}
                                           onDesignAdd={this.props.onDesignAdd}
                                           onDesignRemove={this.props.onDesignRemove}
                                           onDesignReorder={this.props.onDesignReorder} />
 
+            } else if ( focused === "outputs" ) {
+                editor = <IwpObjectListEditor animation={this.props.animation}
+                                          objectTypeLabel="Output"
+                                          objectTypeFilter="output"
+                                          unsavedChanges={this.props.unsavedChanges}
+                                          onDesignChange={this.props.onDesignChange}
+                                          onDesignAdd={this.props.onDesignAdd}
+                                          onDesignRemove={this.props.onDesignRemove}
+                                          onDesignReorder={this.props.onDesignReorder} />
+
+            } else if ( focused === "solids" ) {
+                editor = <IwpObjectListEditor animation={this.props.animation}
+                                          objectTypeLabel="Solid"
+                                          objectTypeFilter="solid"
+                                          unsavedChanges={this.props.unsavedChanges}
+                                          onDesignChange={this.props.onDesignChange}
+                                          onDesignAdd={this.props.onDesignAdd}
+                                          onDesignRemove={this.props.onDesignRemove}
+                                          onDesignReorder={this.props.onDesignReorder}/>
             }
         }
 
