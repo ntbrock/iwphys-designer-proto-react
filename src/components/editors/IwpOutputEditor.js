@@ -7,16 +7,14 @@ import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 
 
 /**
- * Single Input Editor
+ * Single Output Editor
  */
 
-export default class IwpInputEditor extends React.Component {
-
+export default class IwpOutputEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            input: props.input };
+        this.state = { output: props.output };
 
         // This binding is necessary to make `this` work in the callback
         this.onFormChange = this.onFormChange.bind(this);
@@ -25,24 +23,26 @@ export default class IwpInputEditor extends React.Component {
 
     /* Generalized Form Handler for All Inputs */
     onFormChange(event) {
-        let newInput = this.state.input;
+        let newOutput = this.state.output;
         //----------------------
         // Generalized for all form fields
         const targetName = event.target.name;
-        newInput[targetName] = event.target.value;
+        newOutput[targetName] = event.target.value;
 
-        this.setState( { input: newInput } );
+        //-----------------------
+
+        this.setState( { output: newOutput } );
 
         if (this.props.onDesignChange) {
-            this.props.onDesignChange("objects.input[name="+newInput.name+"]", newInput);
+            this.props.onDesignChange("objects.output[name="+newOutput.name+"]", newOutput);
         }
     }
 
     onRemove(event) {
-        console.log("IwpInputEditor:59> Removal event: " , event);
+        console.log("IwpOutputEditor:59> Removal event: " , event);
 
         if (this.props.onDesignRemove) {
-            this.props.onDesignRemove("objects.input[name="+this.state.input.name+"]", this.state.input);
+            this.props.onDesignRemove("objects.output[name="+this.state.output.name+"]", this.state.output);
         }
     }
 
@@ -50,15 +50,15 @@ export default class IwpInputEditor extends React.Component {
     // Card Mode
     render() {
         // Shorthand
-        const input = this.state.input;
+        const output = this.state.output;
 
         return (
-            <div className="iwp-input-editor">
+            <div className="iwp-output-editor">
 
                 <Card>
-                    <CardBody className="iwp-input-card-header">
+                    <CardBody className="iwp-output-card-header">
                         <CardTitle className="drag-handle">
-                            <strong>Input</strong>
+                            <strong>Output</strong>
 
                             &nbsp; &nbsp;
                             <FontAwesomeIcon icon={faArrowsAltV} />
@@ -69,30 +69,26 @@ export default class IwpInputEditor extends React.Component {
 
                     <CardBody>
                         <div>
-                            <label>Input Name</label>
+                            <label>Output Name</label>
                             <input type="text"
                                    name="name"
-                                   value={input.name}
+                                   value={output.name}
                                    readOnly={false}
                                    onChange={this.onFormChange}/>
                         </div>
                         <div>
-                            <label>Input Text</label>
+                            <label>Text</label>
                             <input type="text"
                                    name="text"
-                                   value={input.text}
+                                   value={output.text}
                                    readOnly={false}
                                    onChange={this.onFormChange}/>
                         </div>
 
                         <div>
-                            <label>Input Equation</label>
+                            <label>Output Calculator</label>
 
-                            <input type="text"
-                                   name="initialValue"
-                                   value={input.initialValue}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
+                            TODO CalculatorEditor {JSON.stringify(output.calculator)}
 
                             {/*<EquationEditor expression={input.initialValue}/>*/}
                         </div>
@@ -100,7 +96,7 @@ export default class IwpInputEditor extends React.Component {
                             <label>Units</label>
                             <input type="text"
                                    name="units"
-                                   value={input.units}
+                                   value={output.units}
                                    readOnly={false}
                                    onChange={this.onFormChange}/>
                         </div>
@@ -110,7 +106,7 @@ export default class IwpInputEditor extends React.Component {
                             <input
                                 name="hidden"
                                 type="checkbox"
-                                checked={input.hidden}
+                                checked={output.hidden}
                                 onChange={this.onFormChange} />
                         </div>
 

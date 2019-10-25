@@ -42,10 +42,29 @@ label {
 /**
  * Colorize the different object type cards
  */
+
 .iwp-input-card-header {
+    background-color: rgb(0,204,0);
+    color: white;
+}
+
+.iwp-output-card-header {
+    background-color: rgb(255,0,51);
+    color: white;
+}
+
+.iwp-solid-card-header {
+    background-color: rgb(0,0,255);
+    color: white;
+}
+
+.iwp-undefined-card-header {
     background-color: #282c34;
     color: white;
 }
+
+
+
 
 .iwp-input-card-header .card-title {
     margin: 0.25rem;

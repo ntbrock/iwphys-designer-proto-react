@@ -1,6 +1,8 @@
 import React from 'react';
 // import update from "immutability-helper";
 import IwpInputEditor from "./IwpInputEditor";
+import IwpOutputEditor from "./IwpOutputEditor";
+
 import { Button } from 'reactstrap';
 import Dragula from 'react-dragula';
 
@@ -25,6 +27,25 @@ export default class IwpObjectListEditor extends React.Component {
     editorClassName = () => {
         return "iwp-"+this.props.objectTypeFilter+"-editor"
     };
+
+    // Dynamically determine subeditor type.
+    constructSubEditor = (object) => {
+
+        if ( this.props.objectTypeFilter === "input" ) {
+            return (
+                <IwpInputEditor input={object} onDesignChange={this.props.onDesignChange}
+                                onDesignRemove={this.props.onDesignRemove}/>
+            )
+        } else if ( this.props.objectTypeFilter === "output" ) {
+            return (
+                <IwpOutputEditor output={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
+            )
+
+        } else {
+            throw Error("IwpObjectListEditor:37> Unsupported objectTypeFilter: "+this.props.objectTypeFilter )
+        }
+    };
+
 
     // https://github.com/bevacqua/react-dragula
     dragulaDecorator = (componentBackingInstance) => {
@@ -105,13 +126,7 @@ export default class IwpObjectListEditor extends React.Component {
 
         let objectsDom = objects.map( (feature, i) => {
             const object = objects[i];
-
-            // Dynamically determine subeditor type.
-            let subEditor = undefined;
-            if ( this.props.objectTypeFilter === "input" ) {
-                subEditor =
-                    <IwpInputEditor input={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
-            }
+            let subEditor = this.constructSubEditor(object);
 
             return (
                 <div className={this.editorClassName+"-container"} key={object.name} object-name={object.name}>
