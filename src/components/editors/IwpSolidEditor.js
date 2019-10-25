@@ -4,12 +4,20 @@ import { SketchPicker } from 'react-color';
 import {Button, Card, CardBody, CardTitle} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowsAltV} from "@fortawesome/free-solid-svg-icons";
+import IwpCalculatorEditor from "./IwpCalculatorEditor";
 
 export default class IwpSolidEditor extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {solid: props.solid};
+
+        if (! props.designRoute) {
+            throw Error("IwpCalculatorEditor called with no designRoute prop")
+        }
+        if (! props.onDesignChange) {
+            throw Error("IwpCalculatorEditor called with no onDesignChange prop")
+        }
 
         // This binding is necessary to make `this` work in the callback
         this.onNameChange = this.onNameChange.bind(this);
@@ -30,6 +38,11 @@ export default class IwpSolidEditor extends React.Component {
 
 
     render() {
+
+        //shorthand
+        const solid = this.state.solid;
+
+
         return (
             <div className="iwp-solid-editor">
                 <form id="iwp-output-{this.state.output.name}">
@@ -50,27 +63,26 @@ export default class IwpSolidEditor extends React.Component {
                         <div>
                             <label>Name</label>
                             <input type="text"
-                                   value={this.state.solid.name}
+                                   value={solid.name}
                                    readOnly={false}
                                    onChange={this.onNameChange}/>
                         </div>
 
                         <div>
-                            <label>Xpath</label>
 
-                            <pre>
-                            Calculator
-                            </pre>
+                            <label>X Path</label>
+                            <div className="iwp-editor-card-field">
+                                <IwpCalculatorEditor designRoute={this.props.designRoute+".xpath.calculator"} calculator={solid.xpath.calculator} onDesignChange={this.props.onDesignChange} />
+                            </div>
 
                         </div>
 
 
                         <div>
-                            <label>YPath</label>
-
-                            <pre>
-                             Calculator
-                            </pre>
+                            <label>Y Path</label>
+                            <div className="iwp-editor-card-field">
+                                <IwpCalculatorEditor designRoute={this.props.designRoute+".ypath.calculator"} calculator={solid.ypath.calculator} onDesignChange={this.props.onDesignChange} />
+                            </div>
 
                         </div>
 

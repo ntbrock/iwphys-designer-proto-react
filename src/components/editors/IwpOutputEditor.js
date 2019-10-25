@@ -96,9 +96,7 @@ export default class IwpOutputEditor extends React.Component {
                         <div>
                             <label>Calculator</label>
                             <div className="iwp-editor-card-field">
-
                             <IwpCalculatorEditor designRoute={this.props.designRoute+".calculator"} calculator={output.calculator} onDesignChange={this.props.onDesignChange} />
-
                             </div>
 
                         </div>

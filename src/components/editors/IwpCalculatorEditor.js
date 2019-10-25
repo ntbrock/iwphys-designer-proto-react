@@ -30,10 +30,14 @@ export default class IwpCalculatorEditor extends React.Component {
         //----------------------
         // Generalized for all form fields
         const targetName = event.target.name;
-        newCalculator[targetName] = event.target.value;
 
+        // Targetnames remain globally unique so radiobuttons don't step on each other.
+        const targetParts = targetName.split(".")
+        const subTargetName = targetParts[targetParts.length - 1];
 
-        console.log("IwpCalculatorEditor:36> onFormChange: targetName : ", targetName, "  value: " , event.target.value);
+        newCalculator[subTargetName] = event.target.value;
+
+        console.log("IwpCalculatorEditor:36> onFormChange: targetName : ", targetName, "  subTargetName: " , subTargetName , " value: " , event.target.value);
 
         this.setState( { calculator: newCalculator } );
 
@@ -89,12 +93,12 @@ export default class IwpCalculatorEditor extends React.Component {
 
                 <div className="iwp-editor-card-field">
                     <label>
-                        <input type="radio" name="calcType" value="parametric" onChange={this.onFormChange} checked={calc.calcType==="parametric"  }/>
+                        <input type="radio" name={this.props.designRoute+".calcType"} value="parametric" onChange={this.onFormChange} checked={calc.calcType==="parametric"  }/>
                         &nbsp; Parametric
                     </label>
 
                     <label>
-                        <input type="radio" name="calcType" value="euler" onChange={this.onFormChange}  checked={calc.calcType==="euler" }/>
+                        <input type="radio" name={this.props.designRoute+".calcType"} value="euler" onChange={this.onFormChange}  checked={calc.calcType==="euler" }/>
                         &nbsp; Euler
                     </label>
                 </div>
