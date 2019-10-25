@@ -54,8 +54,8 @@ export default class IwpInputEditor extends React.Component {
 
         return (
             <div className="iwp-input-editor">
-
-                <Card>
+                <form id="iwp-output-{this.state.output.name}">
+                <Card className="iwp-editor-card">
                     <CardBody className="iwp-input-card-header">
                         <CardTitle className="drag-handle">
                             <strong>Input</strong>
@@ -116,6 +116,7 @@ export default class IwpInputEditor extends React.Component {
 
                     </CardBody>
                 </Card>
+                </form>
             </div>
         );
     }

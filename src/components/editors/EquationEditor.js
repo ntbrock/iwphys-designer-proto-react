@@ -41,8 +41,11 @@ export default class EquationEditor extends React.Component {
         // Perform Mathematical Calculation
 
         try {
-            let evaluatedTo = this.math.evaluate(newExpression);
-
+            let evaluatedTo = 0;
+            // Zero out empty expressions
+            if ( newExpression ) {
+                evaluatedTo = this.math.evaluate(newExpression);
+            }
             this.setState((state, props) => ({evaluation: evaluatedTo, exception: undefined}));
 
             // Notify listener

@@ -4,6 +4,7 @@ import './IwpInputEditor.css';
 import { Card, CardBody, CardTitle, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import IwpCalculatorEditor from "./IwpCalculatorEditor";
 
 
 /**
@@ -54,8 +55,8 @@ export default class IwpOutputEditor extends React.Component {
 
         return (
             <div className="iwp-output-editor">
-
-                <Card>
+                <form id="iwp-output-{this.state.output.name}">
+                <Card className="iwp-editor-card">
                     <CardBody className="iwp-output-card-header">
                         <CardTitle className="drag-handle">
                             <strong>Output</strong>
@@ -86,11 +87,13 @@ export default class IwpOutputEditor extends React.Component {
                         </div>
 
                         <div>
-                            <label>Output Calculator</label>
+                            <label>Calculator</label>
+                            <div className="iwp-editor-card-field">
 
-                            TODO CalculatorEditor {JSON.stringify(output.calculator)}
+                            <IwpCalculatorEditor calculator={output.calculator} onDesignChange={this.props.onDesignChange} />
 
-                            {/*<EquationEditor expression={input.initialValue}/>*/}
+                            </div>
+
                         </div>
                         <div>
                             <label>Units</label>
@@ -112,6 +115,7 @@ export default class IwpOutputEditor extends React.Component {
 
                     </CardBody>
                 </Card>
+                </form>
             </div>
         );
     }

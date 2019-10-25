@@ -3,14 +3,22 @@
  * Each Subcomponent Css defined side by side in Components
  */
 
-input {
+
+.iwp-editor-card input[type=text] {
     padding: 0.25rem;
     width: 400px;
 }
 
-label {
+.iwp-editor-card label {
+    vertical-align: top;
     width: 150px;
 }
+
+.iwp-editor-card .iwp-editor-card-field {
+    display: inline-block;
+    width: 400px;
+}
+
 
 
 .iwp-editor-panel {
@@ -25,6 +33,10 @@ label {
 .iwp-editor-panel label {
     margin: 0.5rem;
 }
+
+/**
+ * For Complex inputs in the editor cards next to labels.
+ */
 
 .iwp-input-editor {
     text-align: left;

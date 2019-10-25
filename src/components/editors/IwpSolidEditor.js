@@ -32,8 +32,8 @@ export default class IwpSolidEditor extends React.Component {
     render() {
         return (
             <div className="iwp-solid-editor">
-
-                <Card>
+                <form id="iwp-output-{this.state.output.name}">
+                <Card className="iwp-editor-card">
                     <CardBody className="iwp-solid-card-header">
                         <CardTitle className="drag-handle">
                             <strong>Input</strong>
@@ -48,16 +48,50 @@ export default class IwpSolidEditor extends React.Component {
                     <CardBody>
 
                         <div>
-                            <label>Solid Name</label>
+                            <label>Name</label>
                             <input type="text"
                                    value={this.state.solid.name}
                                    readOnly={false}
                                    onChange={this.onNameChange}/>
                         </div>
 
+                        <div>
+                            <label>Xpath</label>
+
+                            <pre>
+                            Calculator
+                            </pre>
+
+                        </div>
+
 
                         <div>
-                            <label>Solid Color</label>
+                            <label>YPath</label>
+
+                            <pre>
+                             Calculator
+                            </pre>
+
+                        </div>
+
+                        <div>
+                            <label>Shape</label>
+
+                            <pre>
+                            Shape Type
+                            vectors
+                            width
+                            height
+                            graphable
+                            trails?
+                            vectors?
+                            </pre>
+
+                        </div>
+
+
+                        <div>
+                            <label>Color</label>
                             <input type="text"
                                    value={this.state.solid.color}
                                    readOnly={true}
@@ -69,9 +103,7 @@ export default class IwpSolidEditor extends React.Component {
                     </CardBody>
                 </Card>
 
-
-
-
+                </form>
 
             </div>
         );
