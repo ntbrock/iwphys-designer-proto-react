@@ -16,8 +16,18 @@
 
 .iwp-editor-card .iwp-editor-card-field {
     display: inline-block;
-    width: 400px;
+    width: 550px; /** TODO Need flowing layout */
 }
+
+/* Equation editor SubLabels */
+.iwp-editor-card  .iwp-editor-card-field label {
+    width: 110px;
+}
+/* Equation editor widths */
+.iwp-editor-card  .iwp-editor-card-field .equation-editor input[type=text] {
+    width: 300px;
+}
+
 
 
 

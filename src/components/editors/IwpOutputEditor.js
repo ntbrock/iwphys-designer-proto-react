@@ -17,6 +17,13 @@ export default class IwpOutputEditor extends React.Component {
         super(props);
         this.state = { output: props.output };
 
+        if (! props.designRoute) {
+            throw Error("IwpCalculatorEditor called with no designRoute prop")
+        }
+        if (! props.onDesignChange) {
+            throw Error("IwpCalculatorEditor called with no onDesignChange prop")
+        }
+
         // This binding is necessary to make `this` work in the callback
         this.onFormChange = this.onFormChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
@@ -35,7 +42,7 @@ export default class IwpOutputEditor extends React.Component {
         this.setState( { output: newOutput } );
 
         if (this.props.onDesignChange) {
-            this.props.onDesignChange("objects.output[name="+newOutput.name+"]", newOutput);
+            this.props.onDesignChange(this.props.designRoute, newOutput);
         }
     }
 
@@ -43,7 +50,7 @@ export default class IwpOutputEditor extends React.Component {
         console.log("IwpOutputEditor:59> Removal event: " , event);
 
         if (this.props.onDesignRemove) {
-            this.props.onDesignRemove("objects.output[name="+this.state.output.name+"]", this.state.output);
+            this.props.onDesignRemove(this.props.designRoute, this.state.output);
         }
     }
 
@@ -90,7 +97,7 @@ export default class IwpOutputEditor extends React.Component {
                             <label>Calculator</label>
                             <div className="iwp-editor-card-field">
 
-                            <IwpCalculatorEditor calculator={output.calculator} onDesignChange={this.props.onDesignChange} />
+                            <IwpCalculatorEditor designRoute={this.props.designRoute+".calculator"} calculator={output.calculator} onDesignChange={this.props.onDesignChange} />
 
                             </div>
 

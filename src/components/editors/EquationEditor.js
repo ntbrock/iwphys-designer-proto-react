@@ -13,6 +13,7 @@ export default class EquationEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: props.name,
             expression: props.expression,
             evaluation: undefined,
             exception: undefined };
@@ -56,16 +57,25 @@ export default class EquationEditor extends React.Component {
 
             this.setState((state, props) => ({evaluation: undefined, exception: x+""}));
 
-            console.log("EquationEditor:58> Exception in calculation: " , x );
+            // console.log("EquationEditor:58> Exception in calculation: " , x );
 
         }
+
+        // Bubble Event up component stack
+        console.log("EquationEditor:65> On Form Change: for event: ", event, "  onFormChange: ", this.props.onFormChange );
+
+        if ( this.props.onFormChange && event ) {
+            this.props.onFormChange(event);
+        }
+
     }
 
     render() {
         return (
             <span className="equation-editor">
                 <input type="text"
-                       value={this.state.expression}
+                       name={this.props.name}
+                       value={this.state.expression ? this.state.expression : 0 }
                        readOnly={false}
                        onChange={this.evaluate}/>
 

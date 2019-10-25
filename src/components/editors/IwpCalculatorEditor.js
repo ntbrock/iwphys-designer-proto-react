@@ -11,6 +11,15 @@ export default class IwpCalculatorEditor extends React.Component {
         super(props);
         this.state = {calculator: props.calculator};
 
+
+        if (! props.designRoute) {
+            throw Error("IwpCalculatorEditor called with no designRoute prop")
+        }
+
+        if (! props.onDesignChange) {
+            throw Error("IwpCalculatorEditor called with no onDesignChange prop")
+        }
+
         // This binding is necessary to make `this` work in the callback
         this.onFormChange = this.onFormChange.bind(this);
     }
@@ -23,12 +32,17 @@ export default class IwpCalculatorEditor extends React.Component {
         const targetName = event.target.name;
         newCalculator[targetName] = event.target.value;
 
+
+        console.log("IwpCalculatorEditor:36> onFormChange: targetName : ", targetName, "  value: " , event.target.value);
+
         this.setState( { calculator: newCalculator } );
 
         if (this.props.onDesignChange) {
-            console.log("IwpCalculatorEditor:28> TODO How do we bubble this onDesignChange event up? We need to know our parent object? ")
+            this.props.onDesignChange(this.props.designRoute+".calculator", newCalculator);
         }
+
     }
+
 
     render() {
         // Shorthand
@@ -38,7 +52,7 @@ export default class IwpCalculatorEditor extends React.Component {
         if ( calc.calcType === "parametric") {
 
             equationForm = (
-                <EquationEditor expression={calc.value}/>
+                <EquationEditor name="value" expression={calc.value} onFormChange={this.onFormChange}/>
             )
 
         } else if ( calc.calcType === "euler" ) {
@@ -47,13 +61,16 @@ export default class IwpCalculatorEditor extends React.Component {
                 <div>
 
                     <div>
-                        Init Disp: <EquationEditor expression={calc.displacement}/>
+                        <label>Init Disp</label>
+                        <EquationEditor name="displacement" expression={calc.displacement} onFormChange={this.onFormChange}/>
                     </div>
                     <div>
-                    Init Vel: <EquationEditor expression={calc.velocity}/>
+                        <label>Init Vel</label>
+                        <EquationEditor name="velocity" expression={calc.velocity} onFormChange={this.onFormChange}/>
                     </div>
                     <div>
-                        Accel: <EquationEditor expression={calc.acceleration}/>
+                        <label>Accel</label>
+                        <EquationEditor name="acceleration" expression={calc.acceleration} onFormChange={this.onFormChange}/>
                     </div>
                 </div>
 

@@ -34,17 +34,23 @@ export default class IwpObjectListEditor extends React.Component {
 
         if ( this.props.objectTypeFilter === "input" ) {
             return (
-                <IwpInputEditor input={object} onDesignChange={this.props.onDesignChange}
+                <IwpInputEditor input={object}
+                                designRoute={"objects.input[name="+object.name+"]"}
+                                onDesignChange={this.props.onDesignChange}
                                 onDesignRemove={this.props.onDesignRemove}/>
             )
         } else if ( this.props.objectTypeFilter === "output" ) {
             return (
-                <IwpOutputEditor output={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
+                <IwpOutputEditor output={object}
+                                 designRoute={"objects.input[name="+object.name+"]"}
+                                 onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
             )
 
         } else if ( this.props.objectTypeFilter === "solid" ) {
             return (
-                <IwpSolidEditor solid={object} onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
+                <IwpSolidEditor solid={object}
+                                designRoute={"objects.input[name="+object.name+"]"}
+                                onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
             )
 
         } else {
