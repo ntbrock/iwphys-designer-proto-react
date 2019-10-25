@@ -32,6 +32,7 @@ export default class IwpCalculatorEditor extends React.Component {
         const targetName = event.target.name;
 
         // Targetnames remain globally unique so radiobuttons don't step on each other.
+        // TODO Note the solid subobject recursion is slightly different.
         const targetParts = targetName.split(".")
         const subTargetName = targetParts[targetParts.length - 1];
 

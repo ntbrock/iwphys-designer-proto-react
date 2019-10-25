@@ -62,7 +62,7 @@ export default class EquationEditor extends React.Component {
         }
 
         // Bubble Event up component stack
-        console.log("EquationEditor:65> On Form Change: for event: ", event, "  onFormChange: ", this.props.onFormChange );
+        // console.log("EquationEditor:65> On Form Change: for event: ", event, "  onFormChange: ", this.props.onFormChange );
 
         if ( this.props.onFormChange && event ) {
             this.props.onFormChange(event);

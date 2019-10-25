@@ -20,20 +20,67 @@ export default class IwpSolidEditor extends React.Component {
         }
 
         // This binding is necessary to make `this` work in the callback
-        this.onNameChange = this.onNameChange.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
+        this.onFormChange = this.onFormChange.bind(this);
     }
 
-    onNameChange(event) {
-
-        this.setState( { name: event.target.value } );
-
-    }
 
     onColorChange(color, event) {
 
         console.log("IwpSolidEdiitor:28> Received color: " , color);
-        this.setState( { color: color.hex } );
+
+        let newSolid = this.state.solid;
+
+        newSolid.color.red = color.rgb.r;
+        newSolid.color.green = color.rgb.g;
+        newSolid.color.blue = color.rgb.b;
+        newSolid.color.alpha = color.rgb.a;
+
+        this.setState( { solid: newSolid } );
+
+        if (this.props.onDesignChange) {
+            this.props.onDesignChange(this.props.designRoute, newSolid);
+        }
+    }
+
+
+    /* Generalized Form Handler for All Solids */
+    onFormChange(event) {
+        let newSolid = this.state.solid;
+        //----------------------
+        // Generalized for all form fields
+        const targetPath = event.target.name.split(".");
+
+        // TODO Refactor this to use immutable helper 'update'
+        // TODO The calculators use a different ID sesparator
+        let solidFeature = newSolid;
+        let targetName = targetPath.shift();
+
+        let iterations = 5;
+        while( targetPath.length > 0 && iterations > 0 ) {
+            solidFeature = solidFeature[targetName];
+            targetName = targetPath.shift();
+            iterations--;
+        }
+
+        // Finally, once we've walked, write the target value
+        solidFeature[targetName] = event.target.value;
+
+        console.log("IwpSolidEditor:43> Finally Assigning TargetNAme: " , targetName, "  TargetPath: " ,  event.target.value,   "  Resulting newSolid:", newSolid );
+
+        // newSolid[targetName] = event.target.value;
+
+        //-----------------------
+        // These can be properties nested with a .
+
+
+        //
+
+        this.setState( { solid: newSolid } );
+
+        if (this.props.onDesignChange) {
+            this.props.onDesignChange(this.props.designRoute, newSolid);
+        }
     }
 
 
@@ -45,11 +92,11 @@ export default class IwpSolidEditor extends React.Component {
 
         return (
             <div className="iwp-solid-editor">
-                <form id="iwp-output-{this.state.output.name}">
+                <form id="iwp-solid-{this.state.solid.name}">
                 <Card className="iwp-editor-card">
                     <CardBody className="iwp-solid-card-header">
                         <CardTitle className="drag-handle">
-                            <strong>Input</strong>
+                            <strong>Solid</strong>
 
                             &nbsp; &nbsp;
                             <FontAwesomeIcon icon={faArrowsAltV} />
@@ -63,9 +110,9 @@ export default class IwpSolidEditor extends React.Component {
                         <div>
                             <label>Name</label>
                             <input type="text"
+                                   name="name"
                                    value={solid.name}
-                                   readOnly={false}
-                                   onChange={this.onNameChange}/>
+                                   onChange={this.onFormChange}/>
                         </div>
 
                         <div>
@@ -89,28 +136,56 @@ export default class IwpSolidEditor extends React.Component {
                         <div>
                             <label>Shape</label>
 
-                            <pre>
-                            Shape Type
-                            vectors
-                            width
-                            height
-                            graphable
-                            trails?
-                            vectors?
-                            </pre>
+                            <div className="iwp-editor-card-field">
 
+                                <input type="text" name="shape.shapeType" value={solid.shape.shapeType} onChange={this.onFormChange}/> TODO:ddl
+
+                                <br/>
+
+
+                                <label>Height</label>
+                                <IwpCalculatorEditor designRoute={this.props.designRoute+".shape.height"} calculator={solid.shape.height.calculator} onDesignChange={this.props.onDesignChange} />
+
+                                <br/>
+
+                                <label>Width</label>
+                                <IwpCalculatorEditor designRoute={this.props.designRoute+".shape.width"} calculator={solid.shape.width.calculator} onDesignChange={this.props.onDesignChange} />
+
+                                <br/>
+
+                                <label>
+                                    Graphable?
+                                </label>
+                                <input type="text" name="shape.isGraphable" value={solid.shape.isGraphable} onChange={this.onFormChange}/>
+
+                                <br/>
+
+                                <label>
+                                    Draw Trails?
+                                </label>
+                                <input type="text" name="shape.drawTrails" value={solid.shape.drawTrails} onChange={this.onFormChange}/>
+
+                                <br/>
+
+                                <label>
+                                    Draw Vectors?
+                                </label>
+                                <input type="text" name="shape.drawVectors" value={solid.shape.drawVectors} onChange={this.onFormChange}/>
+
+                                <br/>
+                                <i>Shape TODO: GraphOptions, Vectors, (Complex SubTables)</i>
+
+
+                                <label>Color</label>
+
+                                <input type="text"
+                                       value={this.state.solid.color.red + " " + this.state.solid.color.green + " " + this.state.solid.color.blue }
+                                       readOnly={true}
+                                       onChange={this.onColorChange}/>
+                                <SketchPicker color={this.state.solid.color} onChangeComplete={this.onColorChange}/>
+
+                            </div>
                         </div>
-
-
-                        <div>
-                            <label>Color</label>
-                            <input type="text"
-                                   value={this.state.solid.color}
-                                   readOnly={true}
-                                   onChange={this.onColorChange}/>
-                            <SketchPicker color={this.state.solid.color} onChangeComplete={this.onColorChange}/>
-                        </div>
-
 
                     </CardBody>
                 </Card>
