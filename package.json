@@ -8,6 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.5",
     "bootstrap": "^4.3.1",
+    "deep-diff": "^1.0.2",
     "draft-js": "^0.11.1",
     "immutability-helper": "^3.0.1",
     "mathjs": "^6.2.2",

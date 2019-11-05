@@ -1,12 +1,15 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import update from 'immutability-helper';
-
+import diff from 'deep-diff';
 import IwpObjectList from "./IwpObjectList";
 import IwpEditorPanel from "./IwpEditorPanel";
 
 /**
  * Focused OBject is what's being editied. When user clicks, the focused object changes.
+ *
+ * 2019Nov05 Brockman Implementing the animationOriginal -vs- stateAnimation with difference tracking.
+ *
  *
  */
 
@@ -34,40 +37,71 @@ export default class IwpDesignerContainer extends React.Component {
     }
 
     /** Bubbles up from any design change */
-    onDesignChange(feature, value) {
-        console.log("IwpDesignerContainer:19> Design Change: event: ", feature, "  value: ", value, " to ss");
+    onDesignChange(designRoute, value) {
+        console.log("IwpDesignerContainer:41> Design Change: designRoute: ", designRoute, "  value: ", value, "  {[designRoute]: value}: ", {[designRoute]: value} );
+
+        // Mutate the animation
+
+
+        console.log("IwpDesignerContainer:50> Old: " + JSON.stringify(this.state.animation) );
+
+        const newAnimation = update(this.state.animation, {[designRoute]: value});
+
+        console.log("IwpDesignerContainer:51> New: " + JSON.stringify(newAnimation) );
+
+        const d = diff(this.state.animation, newAnimation);
+
+        console.log("IwpDesignerContainer:52> Diff Animation: " , d );
+
         this.setState({
-            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { change: value } }})
+            animation: newAnimation,
+            unsavedChanges: update(this.state.unsavedChanges, {[designRoute]: {$set: { change: value } }})
         });
     }
 
-    /** Bubbles up from any design change */
-    onDesignAdd(feature, value) {
-        console.log("IwpDesignerContainer:43> Design Add: feature: ", feature, "  value: ", value, " to ss");
+    /*
+    newAnimation.objects = newAnimation.objects.map((object) => {
+
+        if( object.objectType==="solid" && object.name === "red") {
+
+            console.log("IwpDesignerController:45> Animation Object: Overideing Calculator Height: 10 ", object);
+
+            // MANUAL Override for a demo.  DO NOT CHECK THIS IN!!
+            object.shape.height.calculator.value = "10";
+
+        }
+        return object;
+    });
+    */
+
+
+    /** Bubbles up from any design Addition */
+    onDesignAdd(designRoute, value) {
+        console.log("IwpDesignerContainer:43> Design Add: designRoute: ", designRoute, "  value: ", value, " to ss");
 
         // manipulate animation state, then pass that back down
         let animation = this.state.animation;
 
-        if ( feature.startsWith("objects.input") ) {
+        if ( designRoute.startsWith("objects.input") ) {
 
             animation.objects = update(animation.objects, {$unshift: [value] });
 
             console.log("IwpDesignerContainer:54> new animation: " , animation);
             this.setState({
                 animation: animation,
-                unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { add: value } }})
+                unsavedChanges: update(this.state.unsavedChanges, {[designRoute]: {$set: { add: value } }})
             })
 
             // TODO update unsaved changes
 
         } else {
-            throw Error("onDesignAdd: unrecognized feature: '"+feature+ "'");
+            throw Error("onDesignAdd: unrecognized designRoute: '"+designRoute+ "'");
         }
     }
 
     /** Bubbles up from any design change */
-    onDesignRemove(feature, value) {
-        console.log("IwpDesignerContainer:69> Design Remove: event: ", feature, "  value: ", value, " to ss");
+    onDesignRemove(designRoute, value) {
+        console.log("IwpDesignerContainer:69> Design Remove: event: ", designRoute, "  value: ", value, " to ss");
 
         // Manipulate the Animation to remove the object refernces
         let animation = this.state.animation;
@@ -78,7 +112,7 @@ export default class IwpDesignerContainer extends React.Component {
 
         this.setState({
             animation: animation,
-            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { remove: value}} })
+            unsavedChanges: update(this.state.unsavedChanges, {[designRoute]: {$set: { remove: value}} })
         })
 
 
@@ -86,11 +120,11 @@ export default class IwpDesignerContainer extends React.Component {
     }
 
     /** Bubbles up from any design reordering */
-    onDesignReorder(feature, value) {
-        console.log("IwpDesignerContainer:74> onDesignReorder: event: ", feature, "  value: ", value, " to ss");
+    onDesignReorder(designRoute, value) {
+        console.log("IwpDesignerContainer:74> onDesignReorder: event: ", designRoute, "  value: ", value, " to ss");
 
         this.setState({
-            unsavedChanges: update(this.state.unsavedChanges, {[feature]: {$set: { reorder: value}} })
+            unsavedChanges: update(this.state.unsavedChanges, {[designRoute]: {$set: { reorder: value}} })
         })
     }
 
@@ -130,6 +164,7 @@ export default class IwpDesignerContainer extends React.Component {
 
                         <IwpObjectList
                             animation={this.state.animation}
+                            animation0={this.props.animation}
                             unsavedChanges={this.state.unsavedChanges}
                             onDesignChange={this.onDesignChange}
                             onFeatureClicked={this.onFeatureClicked}
@@ -142,6 +177,7 @@ export default class IwpDesignerContainer extends React.Component {
                     <Col md={9}>
 
                         <IwpEditorPanel animation={this.state.animation}
+                                        animation0={this.props.animation}
                                         unsavedChanges={this.state.unsavedChanges}
                                         focusedFeature={this.state.focusedFeature}
                                         focusedObject={this.state.focusedObject}

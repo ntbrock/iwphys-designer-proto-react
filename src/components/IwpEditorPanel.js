@@ -7,6 +7,7 @@ import IwpGraphWindowEditor from "./editors/IwpGraphWindowEditor";
 import IwpTimeEditor from "./editors/IwpTimeEditor";
 import IwpWelcomeEditor from "./editors/IwpWelcomeEditor";
 import IwpObjectListEditor from "./editors/IwpObjectListEditor";
+import IwpJsonViewEditor from "./editors/IwpJsonViewEditor";
 
 
 export default class IwpEditorPanel extends React.Component {
@@ -38,6 +39,8 @@ export default class IwpEditorPanel extends React.Component {
         let editor;
 
         if ( focused ) {
+
+            // TODO Refactor combine all these into a 'settings' Editor.
 
             if ( focused === "author" ) {
                 editor = <IwpAuthorEditor animation={this.props.animation} onDesignChange={this.props.onDesignChange}/>
@@ -86,6 +89,10 @@ export default class IwpEditorPanel extends React.Component {
                                           onDesignAdd={this.props.onDesignAdd}
                                           onDesignRemove={this.props.onDesignRemove}
                                           onDesignReorder={this.props.onDesignReorder}/>
+            } else if ( focused === "json" ) {
+                editor = <IwpJsonViewEditor animation={this.props.animation} animation0={this.props.animation0} />
+
+
             }
         }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import update from 'immutability-helper';
 
 /**
  * Edit Author information
@@ -9,52 +10,38 @@ export default class IwpAuthorEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: props.animation.author.name,
-            email: props.animation.author.email,
-            organization: props.animation.author.name,
-            username: props.animation.author.username,
+            author: update(props.animation.author,{ cloned: { $set: true }}) // 1600 Attempt to CLONE for local editing.
         };
 
+        console.log("IwpAuthorEditor:15> Constructor: this.state = ", this.state.author );
+
         // This binding is necessary to make `this` work in the callback
-        this.onEmailChange = this.onEmailChange.bind(this);
-        this.onNameChange = this.onNameChange.bind(this);
-        this.onOrganizationChange = this.onOrganizationChange.bind(this);
-        this.onUsernameChange = this.onUsernameChange.bind(this);
+        this.onFormChange = this.onFormChange.bind(this);
     }
 
+    /* Generalized Form Handler for All Inputs */
+    onFormChange(event) {
+        const targetName = event.target.name;
 
-    onEmailChange(event) {
-        let email = event.target.value;
-        this.setState( { email : email } );
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("author.email", email )
+        if ( true ) {
+            let newAuthor = this.state.author;
+            //----------------------
+            // Generalized for all form fields
+            // Mutate our Local State
+
+            newAuthor[targetName] = event.target.value;
+            this.setState({author: newAuthor});
         }
-    }
 
-
-    onNameChange(event) {
-        let name = event.target.value;
-        this.setState( { name : name } );
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("author.name", name )
+        // Send the Design Change up
+        const designRoute = 'author';
+        const designCommand = { [targetName] : { $set : event.target.value } };
+        if (this.props.onDesignChange) {
+            this.props.onDesignChange(designRoute, designCommand);
         }
+
     }
 
-    onOrganizationChange(event) {
-        let organization = event.target.value;
-        this.setState( { organization : organization } );
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("author.organization", organization )
-        }
-    }
-
-    onUsernameChange(event) {
-        let username = event.target.value;
-        this.setState( { username : username } );
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("author.username", username )
-        }
-    }
 
 
     render() {
@@ -65,33 +52,37 @@ export default class IwpAuthorEditor extends React.Component {
                 <div>
                     <label>Email</label>
                     <input type="text"
-                           value={this.state.email}
+                           name="email"
+                           value={this.state.author.email}
                            readOnly={false}
-                           onChange={this.onEmailChange}/>
+                           onChange={this.onFormChange}/>
                 </div>
 
                 <div>
                     <label>Name</label>
                     <input type="text"
-                           value={this.state.name}
+                           name="name"
+                           value={this.state.author.name}
                            readOnly={false}
-                           onChange={this.onNameChange}/>
+                           onChange={this.onFormChange}/>
                 </div>
 
                 <div>
                     <label>Organization</label>
                     <input type="text"
-                           value={this.state.organization}
+                           name="organization"
+                           value={this.state.author.organization}
                            readOnly={false}
-                           onChange={this.onOrganizationChange}/>
+                           onChange={this.onFormChange}/>
                 </div>
 
                 <div>
                     <label>Username</label>
                     <input type="text"
-                           value={this.state.username}
+                           name="username"
+                           value={this.state.author.username}
                            readOnly={false}
-                           onChange={this.onUsernameChange}/>
+                           onChange={this.onFormChange}/>
                 </div>
 
             </div>

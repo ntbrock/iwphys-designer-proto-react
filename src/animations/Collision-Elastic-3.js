@@ -1,14 +1,15 @@
 /**
  *  2019Oct03 QUick + Dirty way of getting animation json into my designer prototype
  * @returns {{author: {organization: string, name: string, email: string, username: string}, objects: *[]}}
+ * 2019Nov05 Making Animation Structure more Sophisticated, tracking change and source.
  */
 export default function collisionElastic3() {
     return {
         "author": {
-            "email": "",
-            "name": "",
-            "organization": "",
-            "username": "winters@ncssm.edu"
+            "email": "winters@ncssm.edu",
+            "name": "Loren Winters",
+            "organization": "NCSSM",
+            "username": "winters1999"
         },
         "objects": [{
             "start": 0,
@@ -371,5 +372,6 @@ export default function collisionElastic3() {
             "hidden": false,
             "objectType": "output"
         }]
+
     };
 }

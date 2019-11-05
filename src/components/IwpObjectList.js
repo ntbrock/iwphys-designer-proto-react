@@ -45,7 +45,11 @@ export default class IwpObjectList extends React.Component {
 
             <ListGroup>
 
+                <ListGroupItem tag="a" href="#" feature="preview" onClick={this.onFeatureClicked}>Preview Animation</ListGroupItem>
+
                 {saveButton}
+
+                <ListGroupItem tag="a" href="#" feature="json" onClick={this.onFeatureClicked}>Debug JSON</ListGroupItem>
 
                 <ListGroupItem tag="a" href="#" feature="author" onClick={this.onFeatureClicked}>Author</ListGroupItem>
 
@@ -65,11 +69,9 @@ export default class IwpObjectList extends React.Component {
 
                 <ListGroupItem tag="a" href="#" feature="solids" onClick={this.onFeatureClicked}>Solids</ListGroupItem>
 
-                <ListGroupItem tag="a" href="#" feature="preview" onClick={this.onFeatureClicked}>Preview Animation</ListGroupItem>
 
                 <ListGroupItem tag="a" href="#" feature="dataTable" onClick={this.onFeatureClicked}>Data Table</ListGroupItem>
 
-                <ListGroupItem tag="a" href="#" feature="json" onClick={this.onFeatureClicked}>View JSON</ListGroupItem>
 
 
             </ListGroup>
