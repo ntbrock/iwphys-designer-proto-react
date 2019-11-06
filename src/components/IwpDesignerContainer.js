@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import update from 'immutability-helper';
 // import diff from 'deep-diff';
-import IwpObjectList from "./IwpObjectList";
+import IwpSidebarPanel from "./IwpSidebarPanel";
 import IwpEditorPanel from "./IwpEditorPanel";
 
 /**
@@ -23,8 +23,7 @@ export default class IwpDesignerContainer extends React.Component {
             animationZero: JSON.parse(JSON.stringify(props.animation)),
             animationUpdates: [],
             animationRerenderIncrement: 0,  // If objects are added and sub-components to be redrawn, increment this.
-            focusedFeature: undefined,
-            focusedObject: undefined,
+            focusedEditor: undefined
         };
 
         // console.log("IwpDesignerContainer:24> Incoming Animation: " , props.animation );
@@ -35,8 +34,7 @@ export default class IwpDesignerContainer extends React.Component {
         this.onDesignRemove = this.onDesignRemove.bind(this);
         this.onDesignReorder = this.onDesignReorder.bind(this);
         this.onAnimationSave = this.onAnimationSave.bind(this);
-        this.onObjectClicked = this.onObjectClicked.bind(this);
-        this.onFeatureClicked = this.onFeatureClicked.bind(this);
+        this.onSidebarClicked = this.onSidebarClicked.bind(this);
     }
 
     // https://stackoverflow.com/questions/7176908/how-to-get-index-of-object-by-its-property-in-javascript
@@ -53,11 +51,9 @@ export default class IwpDesignerContainer extends React.Component {
     /* Design: Design Routes can be objects for communicating special modifiers */
     /* 2019Nov06 Design Route as an Array! */
     onDesignChange(designRoute, designUpdate) {
-        console.log("IwpDesignerContainer:41> Design Change: designRoute: ", designRoute, "  designUpdate: ", designUpdate, "  {[designRoute]: designUpdate}: ", {[designRoute]: designUpdate} );
-
+        // console.log("IwpDesignerContainer:41> Design Change: designRoute: ", designRoute, "  designUpdate: ", designUpdate, "  {[designRoute]: designUpdate}: ", {[designRoute]: designUpdate} );
         // Mutate the animation
-
-        console.log("IwpDesignerContainer:45> State.animation: ", this.state.animation );
+        // console.log("IwpDesignerContainer:45> State.animation: ", this.state.animation );
 
         // This should become defined by the below router
         let animationUpdate = undefined;
@@ -117,6 +113,7 @@ export default class IwpDesignerContainer extends React.Component {
 
 
     /** Bubbles up from Additions that happen in IwpObjectList Editor */
+    /* Could lkely be combine with remove since we're doing the immutability update in the compponent */
     onDesignAdd(designRoute, designUpdate) {
         console.log("IwpDesignerContainer:43> Design Add: designRoute: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
 
@@ -144,8 +141,7 @@ export default class IwpDesignerContainer extends React.Component {
 
     /** Bubbles up from any design change */
     onDesignRemove(designRoute, designUpdate) {
-        console.log("IwpDesignerContainer:69> Design Remove: event: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
-
+        // console.log("IwpDesignerContainer:69> Design Remove: event: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
 
         // This should become defined by the below router
         let animationUpdate = undefined;
@@ -174,7 +170,7 @@ export default class IwpDesignerContainer extends React.Component {
 
     /** Bubbles up from any design reordering - Changig this to by index -vs- by name to amtch the rest */
     onDesignReorder(designRoute, orderUpdate) {
-        console.log("IwpDesignerContainer:74> onDesignReorder: event: ", designRoute, "  orderUpdate: ", orderUpdate, " ");
+        // console.log("IwpDesignerContainer:74> onDesignReorder: event: ", designRoute, "  orderUpdate: ", orderUpdate, " ");
 
         // onDesignReorder
         let animationUpdate = undefined;
@@ -191,7 +187,7 @@ export default class IwpDesignerContainer extends React.Component {
                 this.state.animation.objects.map( (object,objectOrder) => {
 
                     let newOrder = ( orderUpdate.find( o => o.objectName === object.name ) );
-                    console.log("IwpDesignerConatiner:196> newOrder: ", newOrder );
+                    // console.log("IwpDesignerConatiner:196> newOrder: ", newOrder );
                     if ( newOrder && newOrder.newObjectOrder !== undefined ) {
                         // Use new ordering
                         return reordered[+newOrder.newObjectOrder] = object;
@@ -257,15 +253,9 @@ export default class IwpDesignerContainer extends React.Component {
     }
 
 
-
-    onObjectClicked(object, event) {
-        // console.log("IwpDesignerContainer:81> Object Click Event: object: " , object, " event: " , event);
-        this.setState( { focusedObject: object, focusedFeature: undefined })
-    }
-
-    onFeatureClicked(feature, event) {
+    onSidebarClicked(editor, event) {
         // console.log("IwpDesignerContainer:86> Feature Click Event: feature: " , feature, "  event: " , event);
-        this.setState( { focusedObject: undefined, focusedFeature: feature })
+        this.setState( { focusedEditor: editor })
     }
 
 
@@ -283,14 +273,13 @@ export default class IwpDesignerContainer extends React.Component {
                     <Col md={3}>
                         <h3>IWP Designer</h3>
 
-                        <IwpObjectList
+                        <IwpSidebarPanel
                             animation={this.state.animation}
                             animationZero={this.state.animationZero}
                             animationUpdates={this.state.animationUpdates}
                             animationRerenderIncrement={this.state.animationRerenderIncrement}
                             onDesignChange={this.onDesignChange}
-                            onFeatureClicked={this.onFeatureClicked}
-                            onObjectClicked={this.onObjectClicked} />
+                            onSidebarClicked={this.onSidebarClicked} />
 
                     </Col>
 
@@ -302,8 +291,7 @@ export default class IwpDesignerContainer extends React.Component {
                                         animationZero={this.state.animationZero}
                                         animationUpdates={this.state.animationUpdates}
                                         animationRerenderIncrement={this.state.animationRerenderIncrement}
-                                        focusedFeature={this.state.focusedFeature}
-                                        focusedObject={this.state.focusedObject}
+                                        focusedEditor={this.state.focusedEditor}
                                         onDesignChange={this.onDesignChange}
                                         onDesignAdd={this.onDesignAdd}
                                         onDesignRemove={this.onDesignRemove}

@@ -1,13 +1,9 @@
 import React from 'react';
-import IwpAuthorEditor from "./editors/IwpAuthorEditor";
 import IwpSaveEditor from "./editors/IwpSaveEditor";
-import IwpDescriptionEditor from "./editors/IwpDescriptionEditor";
-import IwpWindowEditor from "./editors/IwpWindowEditor";
-import IwpGraphWindowEditor from "./editors/IwpGraphWindowEditor";
-import IwpTimeEditor from "./editors/IwpTimeEditor";
 import IwpWelcomeEditor from "./editors/IwpWelcomeEditor";
 import IwpObjectListEditor from "./editors/IwpObjectListEditor";
 import IwpJsonViewEditor from "./editors/IwpJsonViewEditor";
+import IwpSettingsEditor from "./editors/IwpSettingsEditor";
 
 
 export default class IwpEditorPanel extends React.Component {
@@ -37,7 +33,7 @@ export default class IwpEditorPanel extends React.Component {
 
     render() {
 
-        let focused = this.props.focusedFeature || this.props.focusedObject;
+        let focused = this.props.focusedEditor;
 
         let editor;
 
@@ -45,23 +41,14 @@ export default class IwpEditorPanel extends React.Component {
 
             // TODO Refactor combine all these into a 'settings' Editor.
 
-            if ( focused === "author" ) {
-                editor = <IwpAuthorEditor animation={this.props.animation} onDesignChange={this.props.onDesignChange}/>
 
-            } else if ( focused === "save" ) {
-                editor = <IwpSaveEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} onAnimationSave={this.props.onAnimationSave}/>
-
-            } else if ( focused === "description" ) {
-                editor = <IwpDescriptionEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
-
-            } else if ( focused === "window" ) {
-                editor = <IwpWindowEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
-
-            } else if ( focused === "graphWindow" ) {
-                editor = <IwpGraphWindowEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
-
-            } else if ( focused === "time" ) {
-                editor = <IwpTimeEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
+            if ( focused === "save" ) {
+                editor = <IwpSaveEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates}
+                                        onDesignChange={this.props.onDesignChange}
+                                        onAnimationSave={this.props.onAnimationSave}/>
+            } else if ( focused === "settings" ) {
+                // Collapsed Author, Time, Description, etc down into a single editor
+                editor = <IwpSettingsEditor {...this.props} />
 
             } else if ( focused === "inputs" ) {
                 editor = <IwpObjectListEditor objectTypeLabel="Input"
