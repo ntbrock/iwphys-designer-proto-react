@@ -1,84 +1,90 @@
 import React from 'react';
-// import update from 'immutability-helper';
+import update from 'immutability-helper';
 
 /**
- * Edit Author information
+ * Author Editor
+ * 2019Nov06 Refactored
  */
-export default class IwpAuthorEditor extends React.Component {
 
+export default class IwpAuthorEditor extends React.Component {
 
     constructor(props) {
         super(props);
 
+        // -------------- Be sure to update these constants -----------------------
+
+        let objectType = "author";
+        let editorClass = "IwpAuthorEditor";
+
+        // -------------- ------------------ -----------------------
+
+        // Author has no order
+        let object = props.animation.author;
+
         this.state = {
-            // 2019Nov06_0820 Build the design route consistently on construction of component.
-            designRoute: [ "author" ],
-            author: JSON.parse(JSON.stringify(props.animation.author))
+            editorClass: editorClass,
+            objectType: objectType,
+            object: object,
+            designRoute: [ "author" ]
         };
 
-        console.log("IwpAuthorEditor:15> Constructor: this.state = ", this.state.author );
-
         // This binding is necessary to make `this` work in the callback
-        this.onFormChange = this.onFormChange.bind(this);
+        this.onFieldChange = this.onFieldChange.bind(this);
     }
 
-    onFormChange(event) {
-        const targetName = event.target.name;
 
-        // Local State Management
-        let newAuthor = this.state.author;
-        newAuthor[targetName] = event.target.value;
-        this.setState({author: newAuthor});
+    /** Handle Field Changes Super Generically 2019Nov06 */
+    onFieldChange(event) {
+        const designCommand = { [event.target.name] : { $set : event.target.value } };
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
+
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
 
         // Bubble Design Change Event
-        const designCommand = { [targetName] : { $set : event.target.value } };
-        if (this.props.onDesignChange) {
-            this.props.onDesignChange(this.state.designRoute, designCommand);
-        }
-
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
 
 
 
     render() {
+        // eslint-disable-next-line no-unused-vars
+        const objectType = this.state.objectType;
+
         return (
-            <div className="iwp-editor iwp-input-editor">
+            <div className="iwp-editor iwp-{objectType}-editor">
 
                 <h3>Author</h3>
                 <div>
                     <label>Email</label>
                     <input type="text"
                            name="email"
-                           value={this.state.author.email}
-                           readOnly={false}
-                           onChange={this.onFormChange}/>
+                           value={this.state.object.email}
+                           onChange={this.onFieldChange} />
                 </div>
 
                 <div>
                     <label>Name</label>
                     <input type="text"
                            name="name"
-                           value={this.state.author.name}
-                           readOnly={false}
-                           onChange={this.onFormChange}/>
+                           value={this.state.object.name}
+                           onChange={this.onFieldChange} />
                 </div>
 
                 <div>
                     <label>Organization</label>
                     <input type="text"
                            name="organization"
-                           value={this.state.author.organization}
-                           readOnly={false}
-                           onChange={this.onFormChange}/>
+                           value={this.state.object.organization}
+                           onChange={this.onFieldChange} />
                 </div>
 
                 <div>
                     <label>Username</label>
                     <input type="text"
                            name="username"
-                           value={this.state.author.username}
-                           readOnly={false}
-                           onChange={this.onFormChange}/>
+                           value={this.state.object.username}
+                           onChange={this.onFieldChange} />
                 </div>
 
             </div>

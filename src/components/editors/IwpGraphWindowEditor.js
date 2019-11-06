@@ -2,100 +2,111 @@ import React from 'react';
 import update from "immutability-helper";
 
 /**
- * Edit Author information
+ * GraphWindow Editor
+ * 2019Nov06 Refactored
  */
 export default class IwpGraphWindowEditor extends React.Component {
 
     constructor(props) {
         super(props);
 
-        const graphWindow = props.animation.objects.filter( (o) => o.objectType === "graphWindow" )[0]
+        // -------------- Be sure to update these constants -----------------------
+
+        let objectType = "graphWindow";
+        let editorClass = "IwpGraphWindowEditor";
+
+        // -------------- ------------------ -----------------------
+
+        // Self-determine order
+        let objectOrder = props.animation.objects.findIndex( o => o.objectType === objectType );
+        let object = props.animation.objects[objectOrder];
 
         this.state = {
-            graphWindow: graphWindow
+            editorClass: editorClass,
+            objectType: objectType,
+            object: object,
+            designRoute: [ "objects", "order", objectOrder ]
         };
 
         // This binding is necessary to make `this` work in the callback
         this.onFieldChange = this.onFieldChange.bind(this);
-
     }
 
-    /** Handle Field Changes Generically */
+
+    /** Handle Field Changes Super Generically 2019Nov06 */
     onFieldChange(event) {
-        let feature = event.target.attributes['feature'].value;
-        let value = event.target.value;
+        const designCommand = { [event.target.name] : { $set : event.target.value } };
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
 
-        console.log("IwpGraphWindowEditor:29> feature: " , feature, "  value:", value);
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
 
-        this.setState( { graphWindow : update(this.state.graphWindow, {[feature]: {$set: value}}) } );
-
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("objects.graphWindow."+feature, value )
-        }
+        // Bubble Design Change Event
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
 
 
 
     render() {
+        // eslint-disable-next-line no-unused-vars
+        const objectType = this.state.objectType;
+
         return (
-            <div className="iwp-graphWindow-editor">
+            <div className="iwp-{objectType}-editor">
 
                 <h3>Graph Window</h3>
                 <div>
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Min</label>
                         <input type="text"
-                               value={this.state.graphWindow.xmin}
-                               readOnly={false}
-                               feature="xmin"
+                               value={this.state.object.xmin}
+                               name="xmin"
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Max</label>
                         <input type="text"
-                               value={this.state.graphWindow.xmax}
-                               readOnly={false}
-                               feature="xmax"
+                               value={this.state.object.xmax}
+                               name="xmax"
                                onChange={this.onFieldChange}/>
                         </div>
 
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Grid</label>
                         <input type="text"
-                               value={this.state.graphWindow.xgrid}
-                               readOnly={false}
-                               feature="xgrid"
+                               value={this.state.object.xgrid}
+                               name="xgrid"
                                onChange={this.onFieldChange}/>
                         </div>
 
                     <br/>
 
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
 
                     <label>Y Min</label>
                         <input type="text"
-                               value={this.state.graphWindow.ymin}
+                               value={this.state.object.ymin}
                                readOnly={false}
-                               feature="ymin"
+                               name="ymin"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
 
                     <label>Y Max</label>
                         <input type="text"
-                               value={this.state.graphWindow.ymax}
+                               value={this.state.object.ymax}
                                readOnly={false}
-                               feature="ymax"
+                               name="ymax"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
 
                     <label>Y Grid</label>
                         <input type="text"
-                               value={this.state.graphWindow.ygrid}
+                               value={this.state.object.ygrid}
                                readOnly={false}
-                               feature="ygrid"
+                               name="ygrid"
                                onChange={this.onFieldChange}/>
                     </div>
 

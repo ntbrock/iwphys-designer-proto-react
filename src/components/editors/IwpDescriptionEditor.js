@@ -1,8 +1,10 @@
 import React from 'react';
-import {Editor, EditorState, ContentState} from 'draft-js';
+// Rich Text in descriptions would be a cool upgrade one day!
+// import {Editor, EditorState, ContentState} from 'draft-js';
+import update from "immutability-helper";
 
 /**
- * Edit Author information
+ * Description Editor
  */
 export default class IwpDescriptionEditor extends React.Component {
 
@@ -10,40 +12,53 @@ export default class IwpDescriptionEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        const description = props.animation.objects.filter( (o) => o.objectType === "description" )[0]
+        // -------------- Be sure to update these constants -----------------------
+
+        let objectType = "description";
+        let editorClass = "IwpDescriptionEditor";
+
+        // -------------- ------------------ -----------------------
+
+        // Self-determine order
+        let objectOrder = props.animation.objects.findIndex( o => o.objectType === objectType );
+        let object = props.animation.objects[objectOrder];
 
         this.state = {
-            description: description,
-            text: description.text,
-            editorState: EditorState.createWithContent( ContentState.createFromText(description.text))
+            editorClass: editorClass,
+            objectType: objectType,
+            object: object,
+            designRoute: [ "objects", "order", objectOrder ]
         };
 
-        this.onChange = (editorState) => this.setState({editorState});
-
         // This binding is necessary to make `this` work in the callback
-        this.onTextChange = this.onTextChange.bind(this);
+        this.onFieldChange = this.onFieldChange.bind(this);
     }
 
 
-    onTextChange(event) {
-        let text = event.target.value;
-        this.setState( { text : text } );
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("objects.descripion", text )
-        }
+    /** Handle Field Changes Super Generically 2019Nov06 */
+    onFieldChange(event) {
+        const designCommand = { [event.target.name] : { $set : event.target.value } };
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
+
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
+
+        // Bubble Design Change Event
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
+
 
 
     render() {
+        // eslint-disable-next-line no-unused-vars
+        const objectType = this.state.objectType;
+
         return (
-            <div className="iwp-editor iwp-description-editor">
+            <div className="iwp-editor iwp-{objectType}-editor">
 
                 <h3>Description</h3>
+                <textarea value={this.state.object.text} name="text" onChange={this.onFieldChange} />
 
-                <div style={{borderStyle:'solid', borderWidth: '1px', borderColor: '#cccccc'}}>
-
-                    <Editor editorState={this.state.editorState} onChange={this.onChange}/>
-                </div>
             </div>
         );
     }

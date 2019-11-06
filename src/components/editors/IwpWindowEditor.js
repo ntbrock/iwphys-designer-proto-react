@@ -2,120 +2,122 @@ import React from 'react';
 import update from "immutability-helper";
 
 /**
- * Edit Author information
+ * Window Editor
+ * 2019Nov06 Refactored
  */
 export default class IwpWindowEditor extends React.Component {
 
     constructor(props) {
         super(props);
 
-        const window = props.animation.objects.filter( (o) => o.objectType === "window" )[0]
+        // -------------- Be sure to update these constants -----------------------
 
+        let objectType = "window";
+        let editorClass = "IwpWindowEditor";
+
+        // -------------- ------------------ -----------------------
+
+        // Self-determine order
+        let objectOrder = props.animation.objects.findIndex( o => o.objectType === objectType );
+        let object = props.animation.objects[objectOrder];
 
         this.state = {
-            window: window
+            editorClass: editorClass,
+            objectType: objectType,
+            object: object,
+            designRoute: [ "objects", "order", objectOrder ]
         };
 
         // This binding is necessary to make `this` work in the callback
         this.onFieldChange = this.onFieldChange.bind(this);
-
     }
 
-    /** TODO Handle Field Changes Generically */
+
+    /** Handle Field Changes Super Generically 2019Nov06 */
     onFieldChange(event) {
-        let feature = event.target.attributes['feature'].value;
-        let value = event.target.value;
+        const designCommand = { [event.target.name] : { $set : event.target.value } };
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
 
-        console.log("IwpWindowEditor:29> feature: " , feature, "  value:", value);
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
 
-        this.setState( { window : update(this.state.window, {[feature]: {$set: value}}) } );
-
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("objects.window."+feature, value )
-        }
+        // Bubble Design Change Event
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
-
 
 
     render() {
+        // eslint-disable-next-line no-unused-vars
+        const objectType = this.state.objectType;
+
         return (
-            <div className="iwp-window-editor">
+            <div className="iwp-{objectType}-editor">
 
                 <h3>Window</h3>
                 <div>
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Min</label>
                         <input type="text"
-                               value={this.state.window.xmin}
-                               readOnly={false}
-                               feature="xmin"
+                               value={this.state.object.xmin}
+                               name="xmin"
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Max</label>
                         <input type="text"
-                               value={this.state.window.xmax}
-                               readOnly={false}
-                               feature="xmax"
+                               value={this.state.object.xmax}
+                               name="xmax"
                                onChange={this.onFieldChange}/>
                         </div>
 
-                    <div className="iwp-window-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Grid</label>
                         <input type="text"
-                               value={this.state.window.xgrid}
-                               readOnly={false}
-                               feature="xgrid"
+                               value={this.state.object.xgrid}
+                               name="xgrid"
                                onChange={this.onFieldChange}/>
                         </div>
 
-                    <div className="iwp-window-editor-field">
-
+                    <div className="iwp-{objectType}-editor-field">
                         <label>X Unit</label>
                         <input type="text"
-                               value={this.state.window.xgrid}
-                               readOnly={false}
-                               feature="xunit"
+                               value={this.state.object.xunit}
+                               name="xunit"
                                onChange={this.onFieldChange}/>
                         </div>
 
                     <br/>
 
-                    <div className="iwp-window-editor-field">
-
-                    <label>Y Min</label>
+                    <div className="iwp-{objectType}-editor-field">
+                        <label>Y Min</label>
                         <input type="text"
-                               value={this.state.window.ymin}
-                               readOnly={false}
-                               feature="ymin"
+                               value={this.state.object.ymin}
+                               name="ymin"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-window-editor-field">
 
-                    <label>Y Max</label>
+                    <div className="iwp-{objectType}-editor-field">
+                        <label>Y Max</label>
                         <input type="text"
-                               value={this.state.window.ymax}
-                               readOnly={false}
-                               feature="ymax"
+                               value={this.state.object.ymax}
+                               name="ymax"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-window-editor-field">
 
-                    <label>Y Grid</label>
+                    <div className="iwp-{objectType}-editor-field">
+                        <label>Y Grid</label>
                         <input type="text"
-                               value={this.state.window.ygrid}
-                               readOnly={false}
-                               feature="ygrid"
+                               value={this.state.object.ygrid}
+                               name="ygrid"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-window-editor-field">
 
+                    <div className="iwp-{objectType}-editor-field">
                         <label>Y Unit</label>
                         <input type="text"
-                               value={this.state.window.ygrid}
-                               readOnly={false}
-                               feature="yunit"
+                               value={this.state.object.yunit}
+                               name="yunit"
                                onChange={this.onFieldChange}/>
                     </div>
 

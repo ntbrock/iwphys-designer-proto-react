@@ -2,16 +2,19 @@ import React from 'react';
 import update from "immutability-helper";
 
 /**
- * Edit Author information
+ * Time Editor
+ * 2019Nov06 Refactored
  */
+
 export default class IwpTimeEditor extends React.Component {
 
     constructor(props) {
         super(props);
 
-        // -------------- only thing to edit -----------------------
-        let objectType = "time";
+        // -------------- Be sure to update these constants -----------------------
 
+        let objectType = "time";
+        let editorClass = "IwpTimeEditor";
 
         // -------------- ------------------ -----------------------
 
@@ -20,6 +23,7 @@ export default class IwpTimeEditor extends React.Component {
         let object = props.animation.objects[objectOrder];
 
         this.state = {
+            editorClass: editorClass,
             objectType: objectType,
             object: object,
             designRoute: [ "objects", "order", objectOrder ]
@@ -33,14 +37,13 @@ export default class IwpTimeEditor extends React.Component {
     /** Handle Field Changes Super Generically 2019Nov06 */
     onFieldChange(event) {
         const designCommand = { [event.target.name] : { $set : event.target.value } };
-
-        console.log("IwpTimeEditor:39> onFieldChange, designCommand: " , designCommand );
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
 
         // Local State Management Immutable
         this.setState({object: update(this.state.object, designCommand ) });
 
         // Bubble Design Change Event
-        this.props.onDesignChange('IwpTimeEditor', this.state.designRoute, designCommand);
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
 
 
@@ -52,7 +55,7 @@ export default class IwpTimeEditor extends React.Component {
         return (
             <div className="iwp-{objectType}-editor">
 
-                <h3>Time</h3>
+                <h3>Time Range</h3>
                 <div>
                     <div className="iwp-{objectType}-editor-field">
                         <label>Start</label>
