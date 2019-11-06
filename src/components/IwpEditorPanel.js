@@ -18,7 +18,8 @@ export default class IwpEditorPanel extends React.Component {
         };
 
         // D-Fence
-        if ( ! Array.isArray(this.props.animationUpdates) ) { throw Error("IwpObjectLists Defense: props.animationUpdates was not an array"); }
+        if ( this.props.animationZero === undefined ) { throw Error("IwpEditorPanel Defense: props.animationZero was not passed."); }
+        if ( ! Array.isArray(this.props.animationUpdates) ) { throw Error("IwpEditorPanel Defense: props.animationUpdates was not an array"); }
 
         // console.log("IwpEditorPanel:20> Incoming Animation: " , props.animation );
 
@@ -93,7 +94,9 @@ export default class IwpEditorPanel extends React.Component {
                                               onDesignReorder={this.props.onDesignReorder}/>
 
             } else if ( focused === "json" ) {
-                editor = <IwpJsonViewEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} />
+                editor = <IwpJsonViewEditor animation={this.props.animation}
+                                            animationZero={this.props.animationZero}
+                                            animationUpdates={this.props.animationUpdates} />
 
 
             }

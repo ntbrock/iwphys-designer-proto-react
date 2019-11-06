@@ -30,27 +30,31 @@ export default class IwpObjectListEditor extends React.Component {
     };
 
     // Dynamically determine subeditor type.
-    constructSubEditor = (object) => {
+    constructSubEditor = (object, objectOrder) => {
+
+        // console.log("IwpObjectListEditor:35> Construct Sub Editor for object: " , object,  "  objectOrder: ", objectOrder );
 
         if ( this.props.objectTypeFilter === "input" ) {
             return (
                 <IwpInputEditor input={object}
-                                designRoute={"objects.input[name="+object.name+"]"}
+                                objectOrder={objectOrder}
                                 onDesignChange={this.props.onDesignChange}
                                 onDesignRemove={this.props.onDesignRemove}/>
             )
         } else if ( this.props.objectTypeFilter === "output" ) {
             return (
                 <IwpOutputEditor output={object}
-                                 designRoute={"objects.output[name="+object.name+"]"}
-                                 onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
+                                 objectOrder={objectOrder}
+                                 onDesignChange={this.props.onDesignChange}
+                                 onDesignRemove={this.props.onDesignRemove}/>
             )
 
         } else if ( this.props.objectTypeFilter === "solid" ) {
             return (
                 <IwpSolidEditor solid={object}
-                                designRoute={"objects.solid[name="+object.name+"]"}
-                                onDesignChange={this.props.onDesignChange} onDesignRemove={this.props.onDesignRemove}/>
+                                objectOrder={objectOrder}
+                                onDesignChange={this.props.onDesignChange}
+                                onDesignRemove={this.props.onDesignRemove}/>
             )
 
         } else {
@@ -136,12 +140,11 @@ export default class IwpObjectListEditor extends React.Component {
 
         // console.log("IwpObjectListEditor:102> Render ", this.props.objectTypeFilter, " object.length: ", objects.length );
 
-        let objectsDom = objects.map( (feature, i) => {
-            const object = objects[i];
-            let subEditor = this.constructSubEditor(object);
+        let objectsDom = objects.map( (object, objectOrder) => {
+            let subEditor = this.constructSubEditor(object, objectOrder);
 
             return (
-                <div className={this.editorClassName+"-container"} key={object.name} object-name={object.name}>
+                <div className={this.editorClassName+"-container"} key={objectOrder} object-name={object.name}>
                     {subEditor}
                 </div>
             )

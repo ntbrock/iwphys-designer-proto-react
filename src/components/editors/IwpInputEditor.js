@@ -8,12 +8,19 @@ import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * Single Input Editor contained by the generically typed IwpObjectListEditor
+ * 2019Nov06 Object Order is the new key so that editing the name keep focus.
  */
 
 export default class IwpInputEditor extends React.Component {
 
     constructor(props) {
+        console.log("IwpInputEditor:16> Constructing: props: " , props);
+
         super(props);
+
+        // D-Fence
+        if ( props.objectOrder === undefined ) { throw Error("IwpInputEditor props missing 'objectOrder'")}
+
         this.state = {
             // 2019Nov06_0820 Build the design route consistently on construction of component.
             designRoute: [ "objects", "name", props.input.name ],
@@ -39,6 +46,9 @@ export default class IwpInputEditor extends React.Component {
             this.props.onDesignChange(this.state.designRoute, designCommand);
         }
 
+        // Special Case, AFTER the rename applied, we recalculate our design route so subsequent updates use new route.
+        this.setState({ designRoute: ["objects", "name", newInput.name] });
+
     }
 
 
@@ -46,20 +56,24 @@ export default class IwpInputEditor extends React.Component {
     onRemove(event) {
         console.log("IwpInputEditor:59> Removal event: " , event);
 
+        // TODO - Design Remove
         if (this.props.onDesignRemove) {
-            this.props.onDesignRemove("objects.input[name="+this.state.input.name+"]", this.state.input);
+            this.props.onDesignRemove( this.state.designRoute, this.state.input);
         }
     }
 
 
     // Card Mode
     render() {
+
+        // console.log("IwpInputEditor:58> Rendering: this.state.input: " , this.state.input );
+
         // Shorthand
         const input = this.state.input;
 
         return (
             <div className="iwp-input-editor">
-                <form id="iwp-output-{this.state.output.name}">
+                <form id="iwp-output-order-{this.objectOrder}">
                 <Card className="iwp-editor-card">
                     <CardBody className="iwp-input-card-header">
                         <CardTitle className="drag-handle">
