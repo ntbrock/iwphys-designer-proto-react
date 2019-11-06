@@ -49,15 +49,14 @@ export default class IwpTimeEditor extends React.Component {
 
 
     render() {
-        // eslint-disable-next-line no-unused-vars
         const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-{objectType}-editor">
+            <div className={"iwp-"+objectType+"-editor"}>
 
                 <h3>Time Range</h3>
                 <div>
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Start</label>
                         <input type="text"
                                name="start"
@@ -65,7 +64,7 @@ export default class IwpTimeEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Stop</label>
                         <input type="text"
                                name="stop"
@@ -73,7 +72,7 @@ export default class IwpTimeEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Change</label>
                         <input type="text"
                                name="change"
@@ -83,7 +82,7 @@ export default class IwpTimeEditor extends React.Component {
                     </div>
 
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Fps</label>
                         <input type="text"
                                name="fps"

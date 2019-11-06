@@ -48,11 +48,11 @@ export default class IwpAuthorEditor extends React.Component {
 
 
     render() {
-        // eslint-disable-next-line no-unused-vars
+
         const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-editor iwp-{objectType}-editor">
+            <div className={"iwp-"+objectType+"-editor"}>
 
                 <h3>Author</h3>
                 <div>

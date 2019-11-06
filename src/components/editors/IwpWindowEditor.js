@@ -47,15 +47,14 @@ export default class IwpWindowEditor extends React.Component {
 
 
     render() {
-        // eslint-disable-next-line no-unused-vars
         const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-{objectType}-editor">
+            <div className={"iwp-"+objectType+"-editor"}>
 
                 <h3>Window</h3>
                 <div>
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Min</label>
                         <input type="text"
                                value={this.state.object.xmin}
@@ -63,7 +62,7 @@ export default class IwpWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Max</label>
                         <input type="text"
                                value={this.state.object.xmax}
@@ -71,7 +70,7 @@ export default class IwpWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                         </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Grid</label>
                         <input type="text"
                                value={this.state.object.xgrid}
@@ -79,7 +78,7 @@ export default class IwpWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                         </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Unit</label>
                         <input type="text"
                                value={this.state.object.xunit}
@@ -89,7 +88,7 @@ export default class IwpWindowEditor extends React.Component {
 
                     <br/>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Y Min</label>
                         <input type="text"
                                value={this.state.object.ymin}
@@ -97,7 +96,7 @@ export default class IwpWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Y Max</label>
                         <input type="text"
                                value={this.state.object.ymax}
@@ -105,7 +104,7 @@ export default class IwpWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Y Grid</label>
                         <input type="text"
                                value={this.state.object.ygrid}
@@ -113,7 +112,7 @@ export default class IwpWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>Y Unit</label>
                         <input type="text"
                                value={this.state.object.yunit}

@@ -4,6 +4,7 @@ import './IwpInputEditor.css';
 import { Card, CardBody, CardTitle, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import update from "immutability-helper";
 
 
 /**
@@ -24,56 +25,66 @@ export default class IwpInputEditor extends React.Component {
         if ( props.onDesignChange === undefined ) { throw Error("IwpInputEditor props missing 'onDesignRemove'")}
 
 
+        // -------------- Be sure to update these constants -----------------------
+
+        let objectType = "input";
+        let editorClass = "IwpInputEditor";
+
+        // -------------- ------------------ -----------------------
+
+        // Parent Determines Order
+        let objectOrder = props.objectOrder;
+        let object = props.animation.objects[objectOrder];
+
         this.state = {
-            // 2019Nov06_0820 Build the design route consistently on construction of component.
-            designRoute: [ "objects", "order", props.objectOrder ],
-            input: JSON.parse(JSON.stringify(props.input))
+            editorClass: editorClass,
+            objectType: objectType,
+            objectOrder: objectOrder,
+            object: object,
+            designRoute: [ "objects", "order", objectOrder ]
         };
 
         // This binding is necessary to make `this` work in the callback
-        this.onFormChange = this.onFormChange.bind(this);
+        this.onFieldChange = this.onFieldChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
     }
 
-    onFormChange(event) {
-        const targetName = event.target.name;
 
-        // Local State Management
-        let newInput = this.state.input;
-        newInput[targetName] = event.target.value; // NOte that this mutatess the global state!
-        this.setState({input: newInput});
+    /** Handle Field Changes Super Generically 2019Nov06 */
+    onFieldChange(event) {
+
+        // Special Checkbox Logic
+        let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+
+        console.log("IwpInputEditor:56> onFieldChange: event.target.name: ", event.target.name, "  event.target.value : " , event.target.value, " value: " ,value );
+
+        const designCommand = { [event.target.name] : { $set : value } };
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
+
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
 
         // Bubble Design Change Event
-        const designCommand = { [targetName] : { $set : event.target.value } };
-        this.props.onDesignChange(this.type.name, this.state.designRoute, designCommand);
-
-        // No Longer needed since we're now using object order as key.
-        // Special Case, AFTER the rename applied, we recalculate our design route so subsequent updates use new route.
-        // this.setState({ designRoute: ["objects", "name", newInput.name] });
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
 
-
     onRemove(event) {
-        console.log("IwpInputEditor:59> Removal event: " , event, "  on objectOrder: " , this.props.objectOrder );
-        this.props.onDesignRemove(this.type.name, ["objects"], { $splice: [[this.props.objectOrder, 1]] });
+        // console.log("IwpInputEditor:59> Removal event: " , event, "  on objectOrder: " , this.props.objectOrder );
+        this.props.onDesignRemove(this.state.editorClass, ["objects"], { $splice: [[this.props.objectOrder, 1]] });
     }
 
 
     // Card Mode
     render() {
-
-        // console.log("IwpInputEditor:58> Rendering: this.state.input: " , this.state.input );
-
-        // Shorthand
-        const input = this.state.input;
+        const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-input-editor">
-                <form id="iwp-output-order-{this.objectOrder}">
+            <div className={"iwp-"+objectType+"-editor"}>
+                <form id={"iwp-output-order-"+this.state.objectOrder}>
                 <Card className="iwp-editor-card">
-                    <CardBody className="iwp-input-card-header">
+                    <CardBody className="iwp-card-header">
                         <CardTitle className="drag-handle">
-                            <strong>Input</strong>
+                            <strong>{objectType}</strong>
 
                             &nbsp; &nbsp;
                             <FontAwesomeIcon icon={faArrowsAltV} />
@@ -87,17 +98,15 @@ export default class IwpInputEditor extends React.Component {
                             <label>Input Name</label>
                             <input type="text"
                                    name="name"
-                                   value={input.name}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
+                                   value={this.state.object.name}
+                                   onChange={this.onFieldChange} />
                         </div>
                         <div>
                             <label>Input Text</label>
                             <input type="text"
                                    name="text"
-                                   value={input.text}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
+                                   value={this.state.object.text}
+                                   onChange={this.onFieldChange} />
                         </div>
 
                         <div>
@@ -105,9 +114,8 @@ export default class IwpInputEditor extends React.Component {
 
                             <input type="text"
                                    name="initialValue"
-                                   value={input.initialValue}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
+                                   value={this.state.object.initialValue}
+                                   onChange={this.onFieldChange} />
 
                             {/*<EquationEditor expression={input.initialValue}/>*/}
                         </div>
@@ -115,9 +123,8 @@ export default class IwpInputEditor extends React.Component {
                             <label>Units</label>
                             <input type="text"
                                    name="units"
-                                   value={input.units}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
+                                   value={this.state.object.units}
+                                   onChange={this.onFieldChange} />
                         </div>
                         <div>
                             <label>Hidden</label>
@@ -125,8 +132,8 @@ export default class IwpInputEditor extends React.Component {
                             <input
                                 name="hidden"
                                 type="checkbox"
-                                checked={input.hidden}
-                                onChange={this.onFormChange} />
+                                checked={this.state.object.hidden}
+                                onChange={this.onFieldChange} />
                         </div>
 
                     </CardBody>
@@ -135,6 +142,5 @@ export default class IwpInputEditor extends React.Component {
             </div>
         );
     }
-
 
 }

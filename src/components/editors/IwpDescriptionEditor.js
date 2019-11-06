@@ -50,11 +50,10 @@ export default class IwpDescriptionEditor extends React.Component {
 
 
     render() {
-        // eslint-disable-next-line no-unused-vars
         const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-editor iwp-{objectType}-editor">
+            <div className={"iwp-"+objectType+"-editor"}>
 
                 <h3>Description</h3>
                 <textarea value={this.state.object.text} name="text" onChange={this.onFieldChange} />

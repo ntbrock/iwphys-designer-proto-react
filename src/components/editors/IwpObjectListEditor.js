@@ -15,6 +15,18 @@ export default class IwpObjectListEditor extends React.Component {
     constructor(props) {
         super(props);
 
+
+        // -------------- Be sure to update these constants -----------------------
+
+        let editorClass = "IwpObjectListEditor";
+
+        // -------------- ------------------ -----------------------
+
+        this.state = {
+            editorClass: editorClass,
+        };
+
+
         // console.log("IwpInputsEditor:15> incoming animation: ", props.animation );
         // DEFENSE
         if ( props.onDesignChange === undefined ) { throw Error("Missing Prop: onDesignChange")}
@@ -41,16 +53,18 @@ export default class IwpObjectListEditor extends React.Component {
 
         if ( this.props.objectTypeFilter === "input" ) {
             return (
-                <IwpInputEditor input={object}
+                <IwpInputEditor object={object}
                                 objectOrder={objectOrder}
+                                animation={this.props.animation}
                                 animationRerenderIncrement={this.props.animationRerenderIncrement}
                                 onDesignChange={this.props.onDesignChange}
                                 onDesignRemove={this.props.onDesignRemove}/>
             )
         } else if ( this.props.objectTypeFilter === "output" ) {
             return (
-                <IwpOutputEditor output={object}
+                <IwpOutputEditor object={object}
                                  objectOrder={objectOrder}
+                                 animation={this.props.animation}
                                  animationRerenderIncrement={this.props.animationRerenderIncrement}
                                  onDesignChange={this.props.onDesignChange}
                                  onDesignRemove={this.props.onDesignRemove}/>
@@ -58,8 +72,9 @@ export default class IwpObjectListEditor extends React.Component {
 
         } else if ( this.props.objectTypeFilter === "solid" ) {
             return (
-                <IwpSolidEditor solid={object}
+                <IwpSolidEditor object={object}
                                 objectOrder={objectOrder}
+                                animation={this.props.animation}
                                 animationRerenderIncrement={this.props.animationRerenderIncrement}
                                 onDesignChange={this.props.onDesignChange}
                                 onDesignRemove={this.props.onDesignRemove}/>
@@ -125,7 +140,7 @@ export default class IwpObjectListEditor extends React.Component {
         // Need to fill the arr
         console.log("IwpObjectsEditor:71> Determined new Object Order: " , newObjectOrder);
 
-        this.props.onDesignReorder(["objects"], newObjectOrder);
+        this.props.onDesignReorder(this.state.editorClass, ["objects"], newObjectOrder);
 
     }
 
@@ -148,7 +163,7 @@ export default class IwpObjectListEditor extends React.Component {
         const designRoute = [ "objects" ];
         const newObject = { objectType: this.props.objectTypeFilter, name: objectName, hidden: false, initialValue: 0, text: "", units: "" };
 
-        this.props.onDesignAdd( designRoute, { $unshift: [ newObject ] } );
+        this.props.onDesignAdd( this.state.editorClass, designRoute, { $unshift: [ newObject ] } );
     }
 
 

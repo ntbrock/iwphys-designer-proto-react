@@ -48,15 +48,14 @@ export default class IwpGraphWindowEditor extends React.Component {
 
 
     render() {
-        // eslint-disable-next-line no-unused-vars
         const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-{objectType}-editor">
+            <div className={"iwp-"+objectType+"-editor"}>
 
                 <h3>Graph Window</h3>
                 <div>
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Min</label>
                         <input type="text"
                                value={this.state.object.xmin}
@@ -64,7 +63,7 @@ export default class IwpGraphWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Max</label>
                         <input type="text"
                                value={this.state.object.xmax}
@@ -72,7 +71,7 @@ export default class IwpGraphWindowEditor extends React.Component {
                                onChange={this.onFieldChange}/>
                         </div>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
                         <label>X Grid</label>
                         <input type="text"
                                value={this.state.object.xgrid}
@@ -82,7 +81,7 @@ export default class IwpGraphWindowEditor extends React.Component {
 
                     <br/>
 
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
 
                     <label>Y Min</label>
                         <input type="text"
@@ -91,7 +90,7 @@ export default class IwpGraphWindowEditor extends React.Component {
                                name="ymin"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
 
                     <label>Y Max</label>
                         <input type="text"
@@ -100,7 +99,7 @@ export default class IwpGraphWindowEditor extends React.Component {
                                name="ymax"
                                onChange={this.onFieldChange}/>
                     </div>
-                    <div className="iwp-{objectType}-editor-field">
+                    <div className="iwp-editor-field">
 
                     <label>Y Grid</label>
                         <input type="text"
