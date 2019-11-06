@@ -9,74 +9,83 @@ export default class IwpTimeEditor extends React.Component {
     constructor(props) {
         super(props);
 
-        const time = props.animation.objects.filter( (o) => o.objectType === "time" )[0]
+        // -------------- only thing to edit -----------------------
+        let objectType = "time";
 
+
+        // -------------- ------------------ -----------------------
+
+        // Self-determine order
+        let objectOrder = props.animation.objects.findIndex( o => o.objectType === objectType );
+        let object = props.animation.objects[objectOrder];
 
         this.state = {
-            time: time
+            objectType: objectType,
+            object: object,
+            designRoute: [ "objects", "order", objectOrder ]
         };
 
         // This binding is necessary to make `this` work in the callback
         this.onFieldChange = this.onFieldChange.bind(this);
-
     }
 
-    /** TODO Handle Field Changes Generically */
+
+    /** Handle Field Changes Super Generically 2019Nov06 */
     onFieldChange(event) {
-        let feature = event.target.attributes['feature'].value;
-        let value = event.target.value;
+        const designCommand = { [event.target.name] : { $set : event.target.value } };
 
-        console.log("IwpTimeEditor:29> feature: " , feature, "  value:", value);
+        console.log("IwpTimeEditor:39> onFieldChange, designCommand: " , designCommand );
 
-        this.setState( { time : update(this.state.time, {[feature]: {$set: value}}) } );
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
 
-        if(this.props.onDesignChange) {
-            this.props.onDesignChange("objects.time."+feature, value )
-        }
+        // Bubble Design Change Event
+        this.props.onDesignChange('IwpTimeEditor', this.state.designRoute, designCommand);
     }
 
 
 
     render() {
+        // eslint-disable-next-line no-unused-vars
+        const objectType = this.state.objectType;
+
         return (
-            <div className="iwp-time-editor">
+            <div className="iwp-{objectType}-editor">
 
                 <h3>Time</h3>
                 <div>
-                    <div className="iwp-time-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>Start</label>
                         <input type="text"
-                               value={this.state.time.start}
-                               readOnly={false}
-                               feature="start"
+                               name="start"
+                               value={this.state.object.start}
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-time-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>Stop</label>
                         <input type="text"
-                               value={this.state.time.stop}
-                               readOnly={false}
-                               feature="stop"
+                               name="stop"
+                               value={this.state.object.stop}
                                onChange={this.onFieldChange}/>
                     </div>
 
-                    <div className="iwp-time-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>Change</label>
                         <input type="text"
-                               value={this.state.time.change}
+                               name="change"
+                               value={this.state.object.change}
                                readOnly={false}
-                               feature="change"
                                onChange={this.onFieldChange}/>
                     </div>
 
 
-                    <div className="iwp-time-editor-field">
+                    <div className="iwp-{objectType}-editor-field">
                         <label>Fps</label>
                         <input type="text"
-                               value={this.state.time.fps}
+                               name="fps"
+                               value={this.state.object.fps}
                                readOnly={false}
-                               feature="fps"
                                onChange={this.onFieldChange}/>
                     </div>
 

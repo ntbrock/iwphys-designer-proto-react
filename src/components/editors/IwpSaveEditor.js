@@ -44,8 +44,9 @@ export default class IwpSaveEditor extends React.Component {
             return (
                 <tr key={i}>
                     <td>{i}</td>
+                    <td>{animationUpdate.editorComponent}</td>
                     <td>{animationUpdate.eventMethod}</td>
-                    <td>{JSON.stringify(animationUpdate.designUpdate)}</td>
+                    <td><span style={{fontSize: "80%"}}>{JSON.stringify(animationUpdate.designUpdate)}</span></td>
 
                 </tr>
             )
@@ -81,13 +82,14 @@ export default class IwpSaveEditor extends React.Component {
 
                 <br/><br/>
 
-                <h3>List of Changes</h3>
+                <h3>Unsaved Changes</h3>
 
                 <Table>
                     <thead>
                     <tr>
-                        <th>Change #</th>
-                        <th>Design Route</th>
+                        <th>#</th>
+                        <th>Editor</th>
+                        <th>Event</th>
                         <th>Update</th>
                     </tr>
                     </thead>

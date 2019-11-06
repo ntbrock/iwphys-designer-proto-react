@@ -45,7 +45,7 @@ export default class IwpInputEditor extends React.Component {
 
         // Bubble Design Change Event
         const designCommand = { [targetName] : { $set : event.target.value } };
-        this.props.onDesignChange(this.state.designRoute, designCommand);
+        this.props.onDesignChange(this.type.name, this.state.designRoute, designCommand);
 
         // No Longer needed since we're now using object order as key.
         // Special Case, AFTER the rename applied, we recalculate our design route so subsequent updates use new route.
@@ -55,7 +55,7 @@ export default class IwpInputEditor extends React.Component {
 
     onRemove(event) {
         console.log("IwpInputEditor:59> Removal event: " , event, "  on objectOrder: " , this.props.objectOrder );
-        this.props.onDesignRemove( ["objects"], { $splice: [[this.props.objectOrder, 1]] });
+        this.props.onDesignRemove(this.type.name, ["objects"], { $splice: [[this.props.objectOrder, 1]] });
     }
 
 

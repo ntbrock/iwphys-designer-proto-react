@@ -47,10 +47,12 @@ export default class IwpDesignerContainer extends React.Component {
         return -1;
     }
 
-    /** Bubbles up from any design change */
+    /** Bubbles up from any design change in any sub compoent. Very important function */
     /* Design: Design Routes can be objects for communicating special modifiers */
     /* 2019Nov06 Design Route as an Array! */
-    onDesignChange(designRoute, designUpdate) {
+    onDesignChange(editorComponent, designRoute, designUpdate) {
+        if ( typeof(editorComponent) != "string" ) { throw Error("onDesignChange call made with previous API, first arg is the editorCompponent")}
+
         // console.log("IwpDesignerContainer:41> Design Change: designRoute: ", designRoute, "  designUpdate: ", designUpdate, "  {[designRoute]: designUpdate}: ", {[designRoute]: designUpdate} );
         // Mutate the animation
         // console.log("IwpDesignerContainer:45> State.animation: ", this.state.animation );
@@ -102,7 +104,7 @@ export default class IwpDesignerContainer extends React.Component {
 
         // Store it!
         if ( animationUpdate ) {
-            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignChange", false );
+            this.applyAnimationUpdate(editorComponent, designRoute, animationUpdate, "onDesignChange", false );
         } else {
             throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
         }
@@ -114,8 +116,9 @@ export default class IwpDesignerContainer extends React.Component {
 
     /** Bubbles up from Additions that happen in IwpObjectList Editor */
     /* Could lkely be combine with remove since we're doing the immutability update in the compponent */
-    onDesignAdd(designRoute, designUpdate) {
-        console.log("IwpDesignerContainer:43> Design Add: designRoute: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
+    onDesignAdd(editorComponent, designRoute, designUpdate) {
+        if ( typeof(editorComponent) != "string" ) { throw Error("onDesignChange call made with previous API, first arg is the editorCompponent")}
+        // console.log("IwpDesignerContainer:43> Design Add: designRoute: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
 
         // This should become defined by the below router
         let animationUpdate = undefined;
@@ -133,14 +136,16 @@ export default class IwpDesignerContainer extends React.Component {
 
         // Store it!
         if ( animationUpdate ) {
-            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignAdd", true);
+            this.applyAnimationUpdate(editorComponent, designRoute, animationUpdate, "onDesignAdd", true);
         } else {
             throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
         }
     }
 
     /** Bubbles up from any design change */
-    onDesignRemove(designRoute, designUpdate) {
+    onDesignRemove(editorComponent, designRoute, designUpdate) {
+        if ( typeof(editorComponent) != "string" ) { throw Error("onDesignChange call made with previous API, first arg is the editorCompponent")}
+
         // console.log("IwpDesignerContainer:69> Design Remove: event: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
 
         // This should become defined by the below router
@@ -159,7 +164,7 @@ export default class IwpDesignerContainer extends React.Component {
 
         // Store it!
         if ( animationUpdate ) {
-            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignAdd", true);
+            this.applyAnimationUpdate(editorComponent, designRoute, animationUpdate, "onDesignAdd", true);
         } else {
             throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
         }
@@ -169,7 +174,9 @@ export default class IwpDesignerContainer extends React.Component {
 
 
     /** Bubbles up from any design reordering - Changig this to by index -vs- by name to amtch the rest */
-    onDesignReorder(designRoute, orderUpdate) {
+    onDesignReorder(editorComponent, designRoute, orderUpdate) {
+        if ( typeof(editorComponent) != "string" ) { throw Error("onDesignChange call made with previous API, first arg is the editorCompponent")}
+
         // console.log("IwpDesignerContainer:74> onDesignReorder: event: ", designRoute, "  orderUpdate: ", orderUpdate, " ");
 
         // onDesignReorder
@@ -208,7 +215,7 @@ export default class IwpDesignerContainer extends React.Component {
 
         // Store it!
         if ( animationUpdate ) {
-            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignReorder", true);
+            this.applyAnimationUpdate(editorComponent, designRoute, animationUpdate, "onDesignReorder", true);
             // Could this rerender = false because of dragula dom updates? Likely, but want to always keep 100% fresh at bottom components.
         } else {
             throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
@@ -221,15 +228,17 @@ export default class IwpDesignerContainer extends React.Component {
      * Common Location for storing all animation changes after they have been gerneralized
      */
 
-    applyAnimationUpdate(designRoute, animationUpdate, eventMethod, rerender ) {
+    applyAnimationUpdate(editorComponent, designRoute, animationUpdate, eventMethod, rerender ) {
+        if ( typeof(editorComponent) != "string" ) { throw Error("onDesignChange call made with previous API, first arg is the editorCompponent")}
 
-        console.log("IwpDesignerContainer:193> applyAnimationUpdate: ", designRoute,  " animationUpdate: ", animationUpdate, "  eventMethod: " , eventMethod );
+        console.log("IwpDesignerContainer:193> applyAnimationUpdate: editorComponent: ", editorComponent, " designRoute: ", designRoute,  " animationUpdate: ", animationUpdate, "  eventMethod: " , eventMethod );
         // console.log("IwpDesignerContainer:195> state.animationRerenderIncrement: " , this.state.animationRerenderIncrement , "   adder: " , ( rerender ? 1 : 0 ));
 
         this.setState({
             animation: update(this.state.animation, animationUpdate),
             animationUpdates: update(this.state.animationUpdates, {
                 $push: [{
+                    editorComponent: editorComponent,
                     designRoute: designRoute,
                     designUpdate: animationUpdate,
                     eventMethod: eventMethod
