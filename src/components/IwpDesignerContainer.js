@@ -172,17 +172,52 @@ export default class IwpDesignerContainer extends React.Component {
 
 
 
-    /** Bubbles up from any design reordering */
-    onDesignReorder(designRoute, designUpdate) {
-        console.log("IwpDesignerContainer:74> onDesignReorder: event: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
+    /** Bubbles up from any design reordering - Changig this to by index -vs- by name to amtch the rest */
+    onDesignReorder(designRoute, orderUpdate) {
+        console.log("IwpDesignerContainer:74> onDesignReorder: event: ", designRoute, "  orderUpdate: ", orderUpdate, " ");
 
-        throw Error("TODO Implement Design Reorder using new animationChanges + DesisgnRoute Model");
-        /*
+        // onDesignReorder
+        let animationUpdate = undefined;
 
-        this.setState({
-            animationUpdates: update(this.state.animationUpdates, { $push: [{ [designRoute]: designUpdate }] })
-        })
-        */
+        if ( ! Array.isArray(designRoute) ) {
+            throw Error("DesignRoute was not an array: " + JSON.stringify(designRoute) );
+        } else {
+
+            if (designRoute[0] === "objects" && designRoute.length === 1) {
+
+                // Special reorder so I can do the entire immiutability set at once.
+                let reordered = new Array(this.state.animation.objects.length);
+
+                this.state.animation.objects.map( (object,objectOrder) => {
+
+                    let newOrder = ( orderUpdate.find( o => o.objectName === object.name ) );
+                    console.log("IwpDesignerConatiner:196> newOrder: ", newOrder );
+                    if ( newOrder && newOrder.newObjectOrder !== undefined ) {
+                        // Use new ordering
+                        return reordered[+newOrder.newObjectOrder] = object;
+                    } else {
+                        // Preserve ordering
+                        return reordered[+objectOrder] = object;
+                    }
+                });
+
+                // Full objects reset! SCary right?
+                animationUpdate = { objects: { $set : reordered } };
+
+
+            } else {
+                throw Error("DesignRoute[0] was not recognized as objects or was too long: " + JSON.stringify(designRoute));
+            }
+        }
+
+        // Store it!
+        if ( animationUpdate ) {
+            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignReorder", true);
+            // Could this rerender = false because of dragula dom updates? Likely, but want to always keep 100% fresh at bottom components.
+        } else {
+            throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
+        }
+
     }
 
 

@@ -20,6 +20,7 @@ export default class IwpObjectListEditor extends React.Component {
         if ( props.onDesignChange === undefined ) { throw Error("Missing Prop: onDesignChange")}
         if ( props.onDesignAdd === undefined ) { throw Error("Missing Prop: onDesignAdd")}
         if ( props.onDesignRemove === undefined ) { throw Error("Missing Prop: onDesignRemove")}
+        if ( props.onDesignReorder === undefined ) { throw Error("Missing Prop: onDesignRemove")}
         if ( props.animationRerenderIncrement === undefined ) { throw Error("Missing Prop: animationRerenderIncrement")}
         if ( props.objectTypeFilter === undefined ) { throw Error("Missing Prop: objectTypeFilter")}
         if ( props.objectTypeLabel  === undefined) { throw Error("Missing Prop: objectTypeLabel")}
@@ -101,20 +102,31 @@ export default class IwpObjectListEditor extends React.Component {
 
     onReorder(element, container) {
 
-        // Reach into the dom to determine the new order?
+        // Reach into the dom to determine the new order
+
         const childNodes =  Array.from(container.childNodes);
         // console.log("IwpObjectsEditor:63> ChildNodes is: " , childNodes);
-        const newObjectOrder = childNodes.map( input => {
-                const objectName = input.getAttribute("object-name");
-                return objectName;
+
+        // Create a sorted list of all previous Object Orders
+
+        const possibleOrder = childNodes.map( object => +object.getAttribute("object-order")).sort();
+
+        console.log("IwpObjectsEditor:114> possibleOrder: " , possibleOrder );
+
+        // Need to 'up-scale' the order, since the incoming list is only visible objects.
+        const newObjectOrder = childNodes.map( (object,newObjectOrder) => {
+                return { newObjectOrder: +possibleOrder[newObjectOrder],
+                         previousObjectOrder: +object.getAttribute("object-order"),
+                         objectName: object.getAttribute("object-name") };
             }
         );
 
-        // console.log("IwpObjectsEditor:71> Determined new Object Order: " , newInputOrder);
 
-        if(this.props.onDesignReorder) {
-            this.props.onDesignReorder("objects."+this.props.objectTypeFilter, newObjectOrder);
-        }
+        // Need to fill the arr
+        console.log("IwpObjectsEditor:71> Determined new Object Order: " , newObjectOrder);
+
+        this.props.onDesignReorder(["objects"], newObjectOrder);
+
     }
 
     onAdd(event) {
@@ -150,7 +162,7 @@ export default class IwpObjectListEditor extends React.Component {
 
                 let subEditor = this.constructSubEditor(object, objectOrder);
                 return (
-                    <div className={this.editorClassName+"-container"} key={this.props.animationRerenderIncrement+"-"+objectOrder} object-name={object.name}>
+                    <div className={this.editorClassName+"-container"} key={this.props.animationRerenderIncrement+"-"+objectOrder} object-order={objectOrder} object-name={object.name}>
                         {subEditor}
                     </div>
                 )

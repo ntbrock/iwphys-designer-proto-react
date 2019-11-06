@@ -44,7 +44,7 @@ export default class IwpSaveEditor extends React.Component {
             return (
                 <tr key={i}>
                     <td>{i}</td>
-                    <td>{JSON.stringify(animationUpdate.designRoute)}</td>
+                    <td>{animationUpdate.eventMethod}</td>
                     <td>{JSON.stringify(animationUpdate.designUpdate)}</td>
 
                 </tr>
