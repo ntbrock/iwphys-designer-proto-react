@@ -24,14 +24,13 @@ export default class IwpJsonViewEditor extends React.Component {
 
         console.log("IwpJsonViewEditor:25> Diffs: ", diffs );
 
-        let d = diffs.map ( d => {
+        let d = diffs.map ( (d,i) => {
 
             console.log("IwpJsonViewEditor:29> Diff: ", d );
 
-
             const p = d.path.join(".");
             return (
-                <li key={p}>{p} : {JSON.stringify(d)}</li>
+                <li key={i}>{p} : {JSON.stringify(d)}</li>
             );
         });
         if ( d.length === 0 ) { d = (<li key={0}>Zero Differences</li>)}

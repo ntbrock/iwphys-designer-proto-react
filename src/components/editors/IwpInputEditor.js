@@ -14,7 +14,7 @@ import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 export default class IwpInputEditor extends React.Component {
 
     constructor(props) {
-        console.log("IwpInputEditor:16> Constructing: props: " , props);
+        // console.log("IwpInputEditor:16> Constructing: props: " , props);
 
         super(props);
 

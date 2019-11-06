@@ -68,6 +68,7 @@ export default class IwpEditorPanel extends React.Component {
                                               objectTypeFilter="input"
                                               animation={this.props.animation}
                                               animationUpdates={this.props.animationUpdates}
+                                              animationRerenderIncrement={this.props.animationRerenderIncrement}
                                               onDesignChange={this.props.onDesignChange}
                                               onDesignAdd={this.props.onDesignAdd}
                                               onDesignRemove={this.props.onDesignRemove}
@@ -78,6 +79,7 @@ export default class IwpEditorPanel extends React.Component {
                                               objectTypeFilter="output"
                                               animation={this.props.animation}
                                               animationUpdates={this.props.animationUpdates}
+                                              animationRerenderIncrement={this.props.animationRerenderIncrement}
                                               onDesignChange={this.props.onDesignChange}
                                               onDesignAdd={this.props.onDesignAdd}
                                               onDesignRemove={this.props.onDesignRemove}
@@ -88,6 +90,7 @@ export default class IwpEditorPanel extends React.Component {
                                               objectTypeFilter="solid"
                                               animation={this.props.animation}
                                               animationUpdates={this.props.animationUpdates}
+                                              animationRerenderIncrement={this.props.animationRerenderIncrement}
                                               onDesignChange={this.props.onDesignChange}
                                               onDesignAdd={this.props.onDesignAdd}
                                               onDesignRemove={this.props.onDesignRemove}
@@ -96,7 +99,8 @@ export default class IwpEditorPanel extends React.Component {
             } else if ( focused === "json" ) {
                 editor = <IwpJsonViewEditor animation={this.props.animation}
                                             animationZero={this.props.animationZero}
-                                            animationUpdates={this.props.animationUpdates} />
+                                            animationUpdates={this.props.animationUpdates}
+                                            animationRerenderIncrement={this.props.animationRerenderIncrement} />
 
 
             }

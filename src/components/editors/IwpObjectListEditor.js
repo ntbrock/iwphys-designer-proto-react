@@ -17,8 +17,12 @@ export default class IwpObjectListEditor extends React.Component {
 
         // console.log("IwpInputsEditor:15> incoming animation: ", props.animation );
         // DEFENSE
-        if ( ! props.objectTypeFilter ) { throw Error("Missing Prop: 'objectTypeFilter'")}
-        if ( ! props.objectTypeLabel ) { throw Error("Missing Prop: 'objectTypeLabel'")}
+        if ( props.onDesignChange === undefined ) { throw Error("Missing Prop: onDesignChange")}
+        if ( props.onDesignAdd === undefined ) { throw Error("Missing Prop: onDesignAdd")}
+        if ( props.onDesignRemove === undefined ) { throw Error("Missing Prop: onDesignRemove")}
+        if ( props.animationRerenderIncrement === undefined ) { throw Error("Missing Prop: animationRerenderIncrement")}
+        if ( props.objectTypeFilter === undefined ) { throw Error("Missing Prop: objectTypeFilter")}
+        if ( props.objectTypeLabel  === undefined) { throw Error("Missing Prop: objectTypeLabel")}
 
         // This binding is necessary to make `this` work in the callback
         this.onAdd = this.onAdd.bind(this);
@@ -38,6 +42,7 @@ export default class IwpObjectListEditor extends React.Component {
             return (
                 <IwpInputEditor input={object}
                                 objectOrder={objectOrder}
+                                animationRerenderIncrement={this.props.animationRerenderIncrement}
                                 onDesignChange={this.props.onDesignChange}
                                 onDesignRemove={this.props.onDesignRemove}/>
             )
@@ -45,6 +50,7 @@ export default class IwpObjectListEditor extends React.Component {
             return (
                 <IwpOutputEditor output={object}
                                  objectOrder={objectOrder}
+                                 animationRerenderIncrement={this.props.animationRerenderIncrement}
                                  onDesignChange={this.props.onDesignChange}
                                  onDesignRemove={this.props.onDesignRemove}/>
             )
@@ -53,6 +59,7 @@ export default class IwpObjectListEditor extends React.Component {
             return (
                 <IwpSolidEditor solid={object}
                                 objectOrder={objectOrder}
+                                animationRerenderIncrement={this.props.animationRerenderIncrement}
                                 onDesignChange={this.props.onDesignChange}
                                 onDesignRemove={this.props.onDesignRemove}/>
             )
@@ -122,16 +129,14 @@ export default class IwpObjectListEditor extends React.Component {
             uniqueName = this.props.animation.objects.filter( o => o.name === inputNameAttempt ).length === 0;
         }
 
-        console.log("IwpInputEditor:42> onAddInput: Determined Unique INput Name: " , uniqueName);
+        // console.log("IwpInputEditor:42> onAddInput: Determined Unique INput Name: " , uniqueName);
 
+        // TODO - Different intiializer by each object type
 
-        if(this.props.onDesignAdd) {
+        const designRoute = [ "objects" ];
+        const newObject = { objectType: this.props.objectTypeFilter, name: objectName, hidden: false, initialValue: 0, text: "", units: "" };
 
-            // TODO - Pull The new attriobutes in a more generalized way?
-
-            this.props.onDesignAdd("objects."+this.props.objectTypeFilter+"[name="+objectName+"]",
-                { objectType: this.props.objectTypeFilter, name: objectName, hidden: false, initialValue: 0, text: "", units: "" })
-        }
+        this.props.onDesignAdd( designRoute, { $unshift: [ newObject ] } );
     }
 
 
@@ -144,7 +149,7 @@ export default class IwpObjectListEditor extends React.Component {
             let subEditor = this.constructSubEditor(object, objectOrder);
 
             return (
-                <div className={this.editorClassName+"-container"} key={objectOrder} object-name={object.name}>
+                <div className={this.editorClassName+"-container"} key={this.props.animationRerenderIncrement+"-"+objectOrder} object-name={object.name}>
                     {subEditor}
                 </div>
             )

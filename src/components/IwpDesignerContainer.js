@@ -22,6 +22,7 @@ export default class IwpDesignerContainer extends React.Component {
             // First Deep Copy is expensive on initialization to be sure we're 100% broken free. The immutabiltiy helper still had internal refs
             animationZero: JSON.parse(JSON.stringify(props.animation)),
             animationUpdates: [],
+            animationRerenderIncrement: 0,  // If objects are added and sub-components to be redrawn, increment this.
             focusedFeature: undefined,
             focusedObject: undefined,
         };
@@ -63,8 +64,6 @@ export default class IwpDesignerContainer extends React.Component {
 
         if ( ! Array.isArray(designRoute) ) {
             throw Error("DesignRoute was not an array: " + JSON.stringify(designRoute) );
-
-
         } else {
 
             if (designRoute[0] === "objects" && designRoute.length > 1) {
@@ -105,18 +104,10 @@ export default class IwpDesignerContainer extends React.Component {
         }
 
 
+        // Store it!
         if ( animationUpdate ) {
-
-            console.log("IwpDesignerContainer:108> setting state with animationUpdate: " , animationUpdate );
-
-            this.setState( {
-
-                animation: update(this.state.animation, animationUpdate),
-                animationUpdates: update(this.state.animationUpdates, { $push: [ { designRoute: designRoute, designUpdate: designUpdate, animationUpdate: animationUpdate } ] })
-            })
-
+            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignChange", false );
         } else {
-
             throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
         }
 
@@ -125,33 +116,34 @@ export default class IwpDesignerContainer extends React.Component {
 
 
 
-    /** Bubbles up from any design Addition */
+    /** Bubbles up from Additions that happen in IwpObjectList Editor */
     onDesignAdd(designRoute, designUpdate) {
         console.log("IwpDesignerContainer:43> Design Add: designRoute: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
 
-        throw Error("TODO Implement Design Add using new animationChanges + DesisgnRoute Model");
+        // This should become defined by the below router
+        let animationUpdate = undefined;
 
-        /*
-
-        // manipulate animation state, then pass that back down
-        let animation = this.state.animation;
-
-        if ( designRoute.startsWith("objects.input") ) {
-
-            animation.objects = update(animation.objects, {$unshift: [designUpdate] });
-
-            console.log("IwpDesignerContainer:54> new animation: " , animation);
-            this.setState({
-                animation: animation,
-                animationUpdates: update(this.state.animationUpdates, {$push: [{ [designRoute]: designUpdate}] })
-            });
-
-            // TODO update unsaved changes
-
+        if ( ! Array.isArray(designRoute) ) {
+            throw Error("DesignRoute was not an array: " + JSON.stringify(designRoute) );
         } else {
-            throw Error("onDesignAdd: unrecognized designRoute: '"+designRoute+ "'");
+
+            if (designRoute[0] === "objects" && designRoute.length === 1) {
+
+                animationUpdate = { objects: designUpdate };
+
+            } else {
+
+                throw Error("DesignRoute[0] was not recognized as objects or was too long: " + JSON.stringify(designRoute));
+            }
         }
-        */
+
+        // Store it!
+        if ( animationUpdate ) {
+            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignAdd", true);
+        } else {
+            throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
+        }
+
 
     }
 
@@ -188,6 +180,32 @@ export default class IwpDesignerContainer extends React.Component {
         })
         */
     }
+
+
+    /**
+     * Common Location for storing all animation changes after they have been gerneralized
+     */
+
+    applyAnimationUpdate(designRoute, animationUpdate, eventMethod, rerender ) {
+
+        console.log("IwpDesignerContainer:193> applyAnimationUpdate: ", designRoute,  " animationUpdate: ", animationUpdate, "  eventMethod: " , eventMethod );
+        // console.log("IwpDesignerContainer:195> state.animationRerenderIncrement: " , this.state.animationRerenderIncrement , "   adder: " , ( rerender ? 1 : 0 ));
+
+        this.setState({
+            animation: update(this.state.animation, animationUpdate),
+            animationUpdates: update(this.state.animationUpdates, {
+                $push: [{
+                    designRoute: designRoute,
+                    designUpdate: animationUpdate,
+                    eventMethod: eventMethod
+                }]
+            }),
+            animationRerenderIncrement: this.state.animationRerenderIncrement + ( rerender ? 1 : 0 )
+        })
+
+    }
+
+
 
 
     onAnimationSave(event) {
@@ -230,6 +248,7 @@ export default class IwpDesignerContainer extends React.Component {
                             animation={this.state.animation}
                             animationZero={this.state.animationZero}
                             animationUpdates={this.state.animationUpdates}
+                            animationRerenderIncrement={this.state.animationRerenderIncrement}
                             onDesignChange={this.onDesignChange}
                             onFeatureClicked={this.onFeatureClicked}
                             onObjectClicked={this.onObjectClicked} />
@@ -243,6 +262,7 @@ export default class IwpDesignerContainer extends React.Component {
                         <IwpEditorPanel animation={this.state.animation}
                                         animationZero={this.state.animationZero}
                                         animationUpdates={this.state.animationUpdates}
+                                        animationRerenderIncrement={this.state.animationRerenderIncrement}
                                         focusedFeature={this.state.focusedFeature}
                                         focusedObject={this.state.focusedObject}
                                         onDesignChange={this.onDesignChange}
