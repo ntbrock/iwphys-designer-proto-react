@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import {Button, ListGroup, ListGroupItem} from 'reactstrap';
 
 
 export default class IwpSidebarPanel extends React.Component {
@@ -43,9 +43,22 @@ export default class IwpSidebarPanel extends React.Component {
 
             <ListGroup>
 
+                <ListGroupItem style={{backgroundColor: "#ddd"}}>
+
+                    <form method="POST" target="_preview" action="http://localhost:8470/animation/preview">
+
+                        <input type="hidden" name="animationFilename" value="reactDesignerNeedsFilenames56.iwp.json"/>
+
+                        <input type="hidden" name="animationJson" value={JSON.stringify(this.props.animation)}/>
+
+                        <Button active={true} color="primary">Preview Animation</Button>
+
+                    </form>
+
+                </ListGroupItem>
+
                 {saveButton}
 
-                <ListGroupItem tag="a" href="#" feature="preview" onClick={this.onSidebarClicked}>Preview Animation</ListGroupItem>
 
                 <ListGroupItem tag="a" href="#" feature="settings" onClick={this.onSidebarClicked}>Settings</ListGroupItem>
 

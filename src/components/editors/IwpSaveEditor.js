@@ -58,22 +58,6 @@ export default class IwpSaveEditor extends React.Component {
             <div className="iwp-editor iwp-save-editor">
 
                 <br/>
-               <div>
-
-                   <form method="POST" target="_preview" action="http://localhost:8470/animation/preview">
-
-                       <input type="hidden" name="animationFilename" value="reactDesignerNeedsFilenames56.iwp.json"/>
-
-                       <input type="hidden" name="animationJson" value={JSON.stringify(this.props.animation)}/>
-
-                       <Button active={true} color="primary">Preview Animation</Button>
-
-                   </form>
-
-                   <br/><br/>
-
-
-               </div>
 
 
                 <div>
