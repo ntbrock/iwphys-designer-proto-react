@@ -74,7 +74,6 @@ export default class IwpDesignerContainer extends React.Component {
                 if (designRoute[1] === "name" && designRoute.length > 2 ) {
 
                     // Find the Objects index by its name property
-
                     const objectIndex = this.findIndexWithAttr( this.state.animation.objects, "name", designRoute[2] );
 
                     if ( objectIndex < 0 ) {
@@ -83,8 +82,11 @@ export default class IwpDesignerContainer extends React.Component {
                         animationUpdate = { objects: { [objectIndex]: designUpdate } };
                     }
 
-                } else if (designRoute[1] === "order") {
+                } else if (designRoute[1] === "order" && designRoute.length > 2 ) {
 
+                    const objectOrder = +designRoute[2];
+                    // We know the object order so can make a direct update.
+                    animationUpdate = { objects: { [objectOrder] : designUpdate } };
 
                 } else {
 

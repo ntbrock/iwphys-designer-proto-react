@@ -23,7 +23,7 @@ export default class IwpInputEditor extends React.Component {
 
         this.state = {
             // 2019Nov06_0820 Build the design route consistently on construction of component.
-            designRoute: [ "objects", "name", props.input.name ],
+            designRoute: [ "objects", "order", props.objectOrder ],
             input: JSON.parse(JSON.stringify(props.input))
         };
 
@@ -47,8 +47,7 @@ export default class IwpInputEditor extends React.Component {
         }
 
         // Special Case, AFTER the rename applied, we recalculate our design route so subsequent updates use new route.
-        this.setState({ designRoute: ["objects", "name", newInput.name] });
-
+        // this.setState({ designRoute: ["objects", "name", newInput.name] });
     }
 
 
