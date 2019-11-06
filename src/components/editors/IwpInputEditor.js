@@ -21,7 +21,7 @@ export default class IwpInputEditor extends React.Component {
         // D-Fence
         if ( props.objectOrder === undefined ) { throw Error("IwpInputEditor props missing 'objectOrder'")}
         if ( props.onDesignRemove === undefined ) { throw Error("IwpInputEditor props missing 'onDesignRemove'")}
-        if ( props.onDesignChange === undefined ) { throw Error("IwpInputEditor props missing 'onDesignRemove'")}
+        if ( props.onDesignChange === undefined ) { throw Error("IwpInputEditor props missing 'onDesignChange'")}
 
 
         // -------------- Be sure to update these constants -----------------------
@@ -79,11 +79,11 @@ export default class IwpInputEditor extends React.Component {
 
         return (
             <div className={"iwp-"+objectType+"-editor"}>
-                <form id={"iwp-output-order-"+this.state.objectOrder}>
+                <form id={"iwp-"+objectType+"-order-"+this.state.objectOrder}>
                 <Card className="iwp-editor-card">
                     <CardBody className="iwp-card-header">
                         <CardTitle className="drag-handle">
-                            <strong>{objectType}</strong>
+                            <strong>Input</strong>
 
                             &nbsp; &nbsp;
                             <FontAwesomeIcon icon={faArrowsAltV} />

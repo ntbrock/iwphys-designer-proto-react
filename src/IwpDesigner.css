@@ -4,6 +4,10 @@
  */
 
 
+.iwp-editor-card {
+    margin-bottom: 0.5rem;
+    background-color: white;
+}
 .iwp-editor-card input[type=text] {
     padding: 0.25rem;
     width: 400px;

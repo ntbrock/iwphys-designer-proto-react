@@ -95,11 +95,11 @@ export default class IwpOutputEditor extends React.Component {
 
         return (
             <div className={"iwp-" + objectType + "-editor"}>
-                <form id={"iwp-output-order-" + this.state.objectOrder}>
+                <form id={"iwp-"+objectType+"-order-"+this.state.objectOrder}>
                     <Card className="iwp-editor-card">
                         <CardBody className="iwp-card-header">
                             <CardTitle className="drag-handle">
-                                <strong>{objectType}</strong>
+                                <strong>Output</strong>
 
                                 &nbsp; &nbsp;
                                 <FontAwesomeIcon icon={faArrowsAltV}/>

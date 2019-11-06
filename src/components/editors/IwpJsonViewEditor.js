@@ -33,14 +33,15 @@ export default class IwpJsonViewEditor extends React.Component {
                 <tr key={i}>
                     <td>{d.kind}</td>
                     <td>{p}</td>
-                    <td style={{color: "red"}}>{d.lhs}</td>
-                    <td style={{color: "green"}}>{d.rhs}</td>
+                    <td style={{color: "red"}}>{JSON.stringify(d.lhs)}</td>
+                    <td style={{color: "green"}}>{JSON.stringify(d.rhs)}</td>
                 </tr>
             );
         });
 
         let diffTable = (
             <table className="iwp-json-diff-table">
+                <tbody>
                 <tr>
                     <td>T</td>
                     <td>Path</td>
@@ -48,6 +49,7 @@ export default class IwpJsonViewEditor extends React.Component {
                     <td>Now</td>
                 </tr>
                 {diffRows}
+                </tbody>
             </table>
         );
         if ( diffs.length === 0 ) { diffTable = (<li key={0}>Zero Differences</li>)}
