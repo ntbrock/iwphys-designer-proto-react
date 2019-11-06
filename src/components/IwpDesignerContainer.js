@@ -128,11 +128,35 @@ export default class IwpDesignerContainer extends React.Component {
         } else {
 
             if (designRoute[0] === "objects" && designRoute.length === 1) {
-
                 animationUpdate = { objects: designUpdate };
-
             } else {
+                throw Error("DesignRoute[0] was not recognized as objects or was too long: " + JSON.stringify(designRoute));
+            }
+        }
 
+        // Store it!
+        if ( animationUpdate ) {
+            this.applyAnimationUpdate(designRoute, animationUpdate, "onDesignAdd", true);
+        } else {
+            throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
+        }
+    }
+
+    /** Bubbles up from any design change */
+    onDesignRemove(designRoute, designUpdate) {
+        console.log("IwpDesignerContainer:69> Design Remove: event: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
+
+
+        // This should become defined by the below router
+        let animationUpdate = undefined;
+
+        if ( ! Array.isArray(designRoute) ) {
+            throw Error("DesignRoute was not an array: " + JSON.stringify(designRoute) );
+        } else {
+
+            if (designRoute[0] === "objects" && designRoute.length === 1) {
+                animationUpdate = { objects: designUpdate };
+            } else {
                 throw Error("DesignRoute[0] was not recognized as objects or was too long: " + JSON.stringify(designRoute));
             }
         }
@@ -144,29 +168,9 @@ export default class IwpDesignerContainer extends React.Component {
             throw Error("No Animation Update resulted from Design Route: " + JSON.stringify(designRoute));
         }
 
-
     }
 
-    /** Bubbles up from any design change */
-    onDesignRemove(designRoute, designUpdate) {
-        console.log("IwpDesignerContainer:69> Design Remove: event: ", designRoute, "  designUpdate: ", designUpdate, " to ss");
 
-        throw Error("TODO Implement Design Remove using new animationChanges + DesisgnRoute Model");
-
-        /*
-        // Manipulate the Animation to remove the object refernces
-        let animation = this.state.animation;
-        const filteredObjects = animation.objects.filter( o => o.name !== designUpdate.name );
-
-        animation.objects = update(animation.objects, {$set: filteredObjects });
-
-
-        this.setState({
-            animation: animation,
-            animationUpdates: update(this.state.animationUpdates, { $push: [{ [designRoute]: designUpdate }] })
-        })
-        */
-    }
 
     /** Bubbles up from any design reordering */
     onDesignReorder(designRoute, designUpdate) {

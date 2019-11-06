@@ -20,6 +20,9 @@ export default class IwpInputEditor extends React.Component {
 
         // D-Fence
         if ( props.objectOrder === undefined ) { throw Error("IwpInputEditor props missing 'objectOrder'")}
+        if ( props.onDesignRemove === undefined ) { throw Error("IwpInputEditor props missing 'onDesignRemove'")}
+        if ( props.onDesignChange === undefined ) { throw Error("IwpInputEditor props missing 'onDesignRemove'")}
+
 
         this.state = {
             // 2019Nov06_0820 Build the design route consistently on construction of component.
@@ -42,23 +45,17 @@ export default class IwpInputEditor extends React.Component {
 
         // Bubble Design Change Event
         const designCommand = { [targetName] : { $set : event.target.value } };
-        if (this.props.onDesignChange) {
-            this.props.onDesignChange(this.state.designRoute, designCommand);
-        }
+        this.props.onDesignChange(this.state.designRoute, designCommand);
 
+        // No Longer needed since we're now using object order as key.
         // Special Case, AFTER the rename applied, we recalculate our design route so subsequent updates use new route.
         // this.setState({ designRoute: ["objects", "name", newInput.name] });
     }
 
 
-
     onRemove(event) {
-        console.log("IwpInputEditor:59> Removal event: " , event);
-
-        // TODO - Design Remove
-        if (this.props.onDesignRemove) {
-            this.props.onDesignRemove( this.state.designRoute, this.state.input);
-        }
+        console.log("IwpInputEditor:59> Removal event: " , event, "  on objectOrder: " , this.props.objectOrder );
+        this.props.onDesignRemove( ["objects"], { $splice: [[this.props.objectOrder, 1]] });
     }
 
 

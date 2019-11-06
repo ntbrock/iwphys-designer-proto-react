@@ -141,18 +141,23 @@ export default class IwpObjectListEditor extends React.Component {
 
 
     render() {
-        const objects = this.props.animation.objects.filter( (o) => o.objectType === this.props.objectTypeFilter );
 
-        // console.log("IwpObjectListEditor:102> Render ", this.props.objectTypeFilter, " object.length: ", objects.length );
+        // Important ObjectOrderIs Global!  Don't limit it in by objectType.
 
-        let objectsDom = objects.map( (object, objectOrder) => {
-            let subEditor = this.constructSubEditor(object, objectOrder);
+        let objectsDom = this.props.animation.objects.map( (object, objectOrder) => {
 
-            return (
-                <div className={this.editorClassName+"-container"} key={this.props.animationRerenderIncrement+"-"+objectOrder} object-name={object.name}>
-                    {subEditor}
-                </div>
-            )
+            if ( object.objectType === this.props.objectTypeFilter ) {
+
+                let subEditor = this.constructSubEditor(object, objectOrder);
+                return (
+                    <div className={this.editorClassName+"-container"} key={this.props.animationRerenderIncrement+"-"+objectOrder} object-name={object.name}>
+                        {subEditor}
+                    </div>
+                )
+
+            } else {
+                return undefined;
+            }
         });
 
 
