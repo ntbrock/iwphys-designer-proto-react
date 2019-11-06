@@ -28,7 +28,6 @@ export default class IwpCalculatorEditor extends React.Component {
     /* Generalized Form Handler for All Inputs */
     onFormChange(event) {
 
-
         let newCalculator = this.state.calculator;
 
         // Generalized for all form fields

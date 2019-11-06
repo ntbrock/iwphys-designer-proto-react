@@ -48,7 +48,10 @@ export default class IwpSolidEditor extends React.Component {
         this.onFieldChange = this.onFieldChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
+        this.onCalculatorChange = this.onCalculatorChange.bind(this);
     }
+
+
 
 /*  Initial Logic Pass, Graveyard this code soon
     onFormChange(event) {
@@ -95,10 +98,33 @@ export default class IwpSolidEditor extends React.Component {
     }
 
 
-    onCalculatorChange(feature, calculator) {
-        console.log("IwpSolildEditor:61> onCalculatorChange: feature: " , feature, " newCalculator", calculator );
+    dotNotationToFeature(path, finalValue) {
+        // The vivification that kolodny talks about
+        let topFeature = {};
+        let feature = topFeature;
+        const parts = path.split(".");
+        const partsLength = parts.length-1;
+        // nesty
+        parts.map((part,i) => {
+            if ( i < partsLength || finalValue === undefined ) {
+                feature[part] = {};
+                feature = feature[part];
+            } else {
+                // At the end, set the value i defined
+                feature[part] = finalValue;
+            }
+            return part; // identity map
+        });
+        return topFeature;
+    }
 
-        const designCommand = {[feature]: {$set: calculator}};
+    onCalculatorChange(feature, calculator) {
+
+        // const designCommand = {[feature]: {$set: calculator}};
+
+        const designCommand = this.dotNotationToFeature(feature, { $set: calculator } );
+
+        console.log("IwpSolidEditor:127> onCalculatorChange: feature: " , feature,  "  newCalculator", calculator,  "  designRoute: " , this.state.designRoute,  " designCommand: " , designCommand );
 
         // Bubble Calculator Change Event
         this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
@@ -165,7 +191,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>X Path</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='xpath.calculator'
-                                                     calculator={this.state.object.xpath.calculator}
+                                                     calculator={object.xpath.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 
                             </div>
@@ -177,7 +203,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>Y Path</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='ypath.calculator'
-                                                     calculator={this.state.object.ypath.calculator}
+                                                     calculator={object.ypath.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 
                             </div>
@@ -199,14 +225,14 @@ export default class IwpSolidEditor extends React.Component {
 
                                 <label>Height</label>
                                 <IwpCalculatorEditor feature='shape.height'
-                                                     calculator={this.state.object.shape.height.calculator}
+                                                     calculator={object.shape.height.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
                                 <br/>
 
                                 <label>Width</label>
 
                                 <IwpCalculatorEditor feature='shape.width'
-                                                     calculator={this.state.object.shape.width.calculator}
+                                                     calculator={object.shape.width.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 
                                 <br/>
