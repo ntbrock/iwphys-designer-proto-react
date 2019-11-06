@@ -10,7 +10,8 @@ export default class IwpObjectList extends React.Component {
             animation: props.animation
         };
 
-        // console.log("IwpObjectList:13> Incoming Animation: " , props.animation );
+        // D-Fence
+        if ( ! Array.isArray(this.props.animationUpdates) ) { throw Error("IwpObjectLists Defense: props.animationUpdates was not an array"); }
 
         // This binding is necessary to make `this` work in the callback
         this.onFeatureClicked = this.onFeatureClicked.bind(this);
@@ -30,14 +31,13 @@ export default class IwpObjectList extends React.Component {
 
     render() {
 
-        const unsavedChangesCount = Object.keys(this.props.unsavedChanges).length;
+        const updateCount = this.props.animationUpdates.length;
 
-        // console.log("IwpObjectList:35> unsavedChanges: " , this.props.unsavedChanges);
         let saveButton;
-        if ( unsavedChangesCount === 0 ) {
+        if ( updateCount === 0 ) {
             saveButton = <ListGroupItem feature="save" onClick={this.onFeatureClicked}>Saved</ListGroupItem>
         } else {
-            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onFeatureClicked} color="primary" >Save {unsavedChangesCount} Changes</ListGroupItem>
+            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onFeatureClicked} color="primary" >Save {updateCount} Changes</ListGroupItem>
         }
 
         return (

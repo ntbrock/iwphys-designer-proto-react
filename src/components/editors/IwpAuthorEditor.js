@@ -1,5 +1,5 @@
 import React from 'react';
-import update from 'immutability-helper';
+// import update from 'immutability-helper';
 
 /**
  * Edit Author information
@@ -9,8 +9,11 @@ export default class IwpAuthorEditor extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            author: update(props.animation.author,{ cloned: { $set: true }}) // 1600 Attempt to CLONE for local editing.
+            // 2019Nov06_0820 Build the design route consistently on construction of component.
+            designRoute: [ "author" ],
+            author: JSON.parse(JSON.stringify(props.animation.author))
         };
 
         console.log("IwpAuthorEditor:15> Constructor: this.state = ", this.state.author );
@@ -19,25 +22,18 @@ export default class IwpAuthorEditor extends React.Component {
         this.onFormChange = this.onFormChange.bind(this);
     }
 
-    /* Generalized Form Handler for All Inputs */
     onFormChange(event) {
         const targetName = event.target.name;
 
-        if ( true ) {
-            let newAuthor = this.state.author;
-            //----------------------
-            // Generalized for all form fields
-            // Mutate our Local State
+        // Local State Management
+        let newAuthor = this.state.author;
+        newAuthor[targetName] = event.target.value;
+        this.setState({author: newAuthor});
 
-            newAuthor[targetName] = event.target.value;
-            this.setState({author: newAuthor});
-        }
-
-        // Send the Design Change up
-        const designRoute = 'author';
+        // Bubble Design Change Event
         const designCommand = { [targetName] : { $set : event.target.value } };
         if (this.props.onDesignChange) {
-            this.props.onDesignChange(designRoute, designCommand);
+            this.props.onDesignChange(this.state.designRoute, designCommand);
         }
 
     }

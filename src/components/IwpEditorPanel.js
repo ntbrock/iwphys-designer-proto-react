@@ -15,8 +15,10 @@ export default class IwpEditorPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            animation: props.animation };
+        };
 
+        // D-Fence
+        if ( ! Array.isArray(this.props.animationUpdates) ) { throw Error("IwpObjectLists Defense: props.animationUpdates was not an array"); }
 
         // console.log("IwpEditorPanel:20> Incoming Animation: " , props.animation );
 
@@ -46,51 +48,52 @@ export default class IwpEditorPanel extends React.Component {
                 editor = <IwpAuthorEditor animation={this.props.animation} onDesignChange={this.props.onDesignChange}/>
 
             } else if ( focused === "save" ) {
-                editor = <IwpSaveEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} onAnimationSave={this.props.onAnimationSave}/>
+                editor = <IwpSaveEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} onAnimationSave={this.props.onAnimationSave}/>
 
             } else if ( focused === "description" ) {
-                editor = <IwpDescriptionEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+                editor = <IwpDescriptionEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
 
             } else if ( focused === "window" ) {
-                editor = <IwpWindowEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+                editor = <IwpWindowEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
 
             } else if ( focused === "graphWindow" ) {
-                editor = <IwpGraphWindowEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+                editor = <IwpGraphWindowEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
 
             } else if ( focused === "time" ) {
-                editor = <IwpTimeEditor animation={this.props.animation} unsavedChanges={this.props.unsavedChanges} onDesignChange={this.props.onDesignChange} />
+                editor = <IwpTimeEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} onDesignChange={this.props.onDesignChange} />
 
             } else if ( focused === "inputs" ) {
-                editor = <IwpObjectListEditor animation={this.props.animation}
-                                          objectTypeLabel="Input"
-                                          objectTypeFilter="input"
-                                          unsavedChanges={this.props.unsavedChanges}
-                                          onDesignChange={this.props.onDesignChange}
-                                          onDesignAdd={this.props.onDesignAdd}
-                                          onDesignRemove={this.props.onDesignRemove}
-                                          onDesignReorder={this.props.onDesignReorder} />
+                editor = <IwpObjectListEditor objectTypeLabel="Input"
+                                              objectTypeFilter="input"
+                                              animation={this.props.animation}
+                                              animationUpdates={this.props.animationUpdates}
+                                              onDesignChange={this.props.onDesignChange}
+                                              onDesignAdd={this.props.onDesignAdd}
+                                              onDesignRemove={this.props.onDesignRemove}
+                                              onDesignReorder={this.props.onDesignReorder} />
 
             } else if ( focused === "outputs" ) {
-                editor = <IwpObjectListEditor animation={this.props.animation}
-                                          objectTypeLabel="Output"
-                                          objectTypeFilter="output"
-                                          unsavedChanges={this.props.unsavedChanges}
-                                          onDesignChange={this.props.onDesignChange}
-                                          onDesignAdd={this.props.onDesignAdd}
-                                          onDesignRemove={this.props.onDesignRemove}
-                                          onDesignReorder={this.props.onDesignReorder} />
+                editor = <IwpObjectListEditor objectTypeLabel="Output"
+                                              objectTypeFilter="output"
+                                              animation={this.props.animation}
+                                              animationUpdates={this.props.animationUpdates}
+                                              onDesignChange={this.props.onDesignChange}
+                                              onDesignAdd={this.props.onDesignAdd}
+                                              onDesignRemove={this.props.onDesignRemove}
+                                              onDesignReorder={this.props.onDesignReorder} />
 
             } else if ( focused === "solids" ) {
-                editor = <IwpObjectListEditor animation={this.props.animation}
-                                          objectTypeLabel="Solid"
-                                          objectTypeFilter="solid"
-                                          unsavedChanges={this.props.unsavedChanges}
-                                          onDesignChange={this.props.onDesignChange}
-                                          onDesignAdd={this.props.onDesignAdd}
-                                          onDesignRemove={this.props.onDesignRemove}
-                                          onDesignReorder={this.props.onDesignReorder}/>
+                editor = <IwpObjectListEditor objectTypeLabel="Solid"
+                                              objectTypeFilter="solid"
+                                              animation={this.props.animation}
+                                              animationUpdates={this.props.animationUpdates}
+                                              onDesignChange={this.props.onDesignChange}
+                                              onDesignAdd={this.props.onDesignAdd}
+                                              onDesignRemove={this.props.onDesignRemove}
+                                              onDesignReorder={this.props.onDesignReorder}/>
+
             } else if ( focused === "json" ) {
-                editor = <IwpJsonViewEditor animation={this.props.animation} animation0={this.props.animation0} />
+                editor = <IwpJsonViewEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates} />
 
 
             }

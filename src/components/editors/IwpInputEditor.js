@@ -7,7 +7,7 @@ import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 
 
 /**
- * Single Input Editor
+ * Single Input Editor contained by the generically typed IwpObjectListEditor
  */
 
 export default class IwpInputEditor extends React.Component {
@@ -15,27 +15,33 @@ export default class IwpInputEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            input: props.input };
+            // 2019Nov06_0820 Build the design route consistently on construction of component.
+            designRoute: [ "objects", "name", props.input.name ],
+            input: JSON.parse(JSON.stringify(props.input))
+        };
 
         // This binding is necessary to make `this` work in the callback
         this.onFormChange = this.onFormChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
     }
 
-    /* Generalized Form Handler for All Inputs */
     onFormChange(event) {
-        let newInput = this.state.input;
-        //----------------------
-        // Generalized for all form fields
         const targetName = event.target.name;
-        newInput[targetName] = event.target.value;
 
-        this.setState( { input: newInput } );
+        // Local State Management
+        let newInput = this.state.input;
+        newInput[targetName] = event.target.value; // NOte that this mutatess the global state!
+        this.setState({input: newInput});
 
+        // Bubble Design Change Event
+        const designCommand = { [targetName] : { $set : event.target.value } };
         if (this.props.onDesignChange) {
-            this.props.onDesignChange("objects.input[name="+newInput.name+"]", newInput);
+            this.props.onDesignChange(this.state.designRoute, designCommand);
         }
+
     }
+
+
 
     onRemove(event) {
         console.log("IwpInputEditor:59> Removal event: " , event);

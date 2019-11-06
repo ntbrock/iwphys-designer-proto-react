@@ -13,6 +13,9 @@ export default class IwpSaveEditor extends React.Component {
 
         };
 
+        // D-Fence
+        if ( ! Array.isArray(this.props.animationUpdates) ) { throw Error("IwpObjectLists Defense: props.animationUpdates was not an array"); }
+
         // This binding is necessary to make `this` work in the callback
         this.onSaveClick = this.onSaveClick.bind(this);
 
@@ -33,16 +36,21 @@ export default class IwpSaveEditor extends React.Component {
 
     render() {
 
-        // console.log("IwpSaveEditor:30> this.props: ", this.props );
-        let changeCount = Object.keys(this.props.unsavedChanges).length;
-        let changeRows = Object.keys(this.props.unsavedChanges).map((feature, i) => {
-            return ( <tr key={feature}>
-                <td>{i}</td>
-                    <td>{feature}</td>
-                    <td>{JSON.stringify(this.props.unsavedChanges[feature])}</td>
-                </tr> )
+        console.log("IwpSaveEditor:39> this.props: ", this.props );
 
-        })
+
+        let changeCount = this.props.animationUpdates.length;
+        let changeRows = this.props.animationUpdates.map((animationUpdate, i) => {
+            return (
+                <tr key={i}>
+                    <td>{i}</td>
+                    <td>{JSON.stringify(animationUpdate.designRoute)}</td>
+                    <td>{JSON.stringify(animationUpdate.designUpdate)}</td>
+
+                </tr>
+            )
+        }).reverse();
+
 
 
         return (
@@ -79,8 +87,8 @@ export default class IwpSaveEditor extends React.Component {
                     <thead>
                     <tr>
                         <th>Change #</th>
-                        <th>Feature</th>
-                        <th>New Value</th>
+                        <th>Design Route</th>
+                        <th>Update</th>
                     </tr>
                     </thead>
 

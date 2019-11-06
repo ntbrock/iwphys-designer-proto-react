@@ -12,22 +12,29 @@ export default class IwpJsonViewEditor extends React.Component {
         super(props);
         // this.state = { animation: props.animation };
         if ( ! props.animation ) { throw Error("Missing Prop: 'animation'")}
-        if ( ! props.animation0 ) { throw Error("Missing Prop: 'animation0'")}
+        if ( ! props.animationZero ) { throw Error("Missing Prop: 'animationZero'")}
     }
 
     // Card Mode
     render() {
 
-        // Compare animation-vs-animation0
+        // Compare animation-vs-animationZero
 
-        const diffs = diff(this.props.animation0, this.props.animation) || [];
+        const diffs = diff(this.props.animationZero, this.props.animation) || [];
+
+        console.log("IwpJsonViewEditor:25> Diffs: ", diffs );
+
         let d = diffs.map ( d => {
+
+            console.log("IwpJsonViewEditor:29> Diff: ", d );
+
+
             const p = d.path.join(".");
             return (
-                <li key={p}>{p} : {d.rhs}</li>
+                <li key={p}>{p} : {JSON.stringify(d)}</li>
             );
         });
-        if ( d.length == 0 ) { d = (<li key={0}>Zero Differences</li>)}
+        if ( d.length === 0 ) { d = (<li key={0}>Zero Differences</li>)}
 
         return (
             <div className="iwp-json-viewer">

@@ -134,7 +134,7 @@ export default class IwpObjectListEditor extends React.Component {
     render() {
         const objects = this.props.animation.objects.filter( (o) => o.objectType === this.props.objectTypeFilter );
 
-        console.log("IwpObjectListEditor:102> Render ", this.props.objectTypeFilter, " object.length: ", objects.length );
+        // console.log("IwpObjectListEditor:102> Render ", this.props.objectTypeFilter, " object.length: ", objects.length );
 
         let objectsDom = objects.map( (feature, i) => {
             const object = objects[i];
