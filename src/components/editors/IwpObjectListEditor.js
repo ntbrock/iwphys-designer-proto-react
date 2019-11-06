@@ -161,7 +161,98 @@ export default class IwpObjectListEditor extends React.Component {
         // TODO - Different intiializer by each object type
 
         const designRoute = [ "objects" ];
-        const newObject = { objectType: this.props.objectTypeFilter, name: objectName, hidden: false, initialValue: 0, text: "", units: "" };
+
+
+        const objectType = this.props.objectTypeFilter;
+        let newObject = undefined;
+
+        if ( objectType === "input" ) {
+            // Input
+            newObject = {
+                objectType: objectType,
+                name: objectName,
+                hidden: false,
+                initialValue: 0,
+                text: "",
+                units: ""
+            };
+        } else if ( objectType === "output" ) {
+            // Input
+            newObject = {
+                objectType: objectType,
+                name: objectName,
+                text: "",
+                units: "",
+                calculator: {
+                    calcType: "parametric",
+                    value: "0"
+                },
+                hidden: false
+            };
+        } else if ( objectType === "solid" ) {
+
+            newObject = {
+                objectType: objectType,
+                name: objectName,
+                shape: {
+                    shapeType: "rectangle",
+                    vectors: {
+                        xVel: false,
+                        yVel: false,
+                        xAccel: false,
+                        yAccel: false,
+                        Vel: false,
+                        Accel: false
+                    },
+                    width: {
+                        calculator: {
+                            calcType: "parametric",
+                            value: "1"
+                        }
+                    },
+                    height: {
+                        calculator: {
+                            calcType: "parametric",
+                            value: "1"
+                        }
+                    },
+                    graphOptions: {
+                        graphVisible: true,
+                        initiallyOn: {
+                            xPos: true,
+                            xVel: false,
+                            xAccel: false,
+                            yPos: true,
+                            yVel: false,
+                            yAccel: false
+                        }
+                    },
+                    isGraphable: true,
+                    drawTrails: false,
+                    drawVectors: false
+                },
+                color: {
+                    red: 51,
+                    green: 51,
+                    blue: 51
+                },
+                xpath: {
+                    calculator: {
+                        calcType: "parametric",
+                        value: "0"
+                    }
+                },
+                ypath: {
+                    calculator: {
+                        calcType: "parametric",
+                        value: "0"
+                    }
+                },
+            };
+
+        } else {
+            throw Error("IwpObjectListEditor:255> No new object constructor for type: " + objectType );
+        }
 
         this.props.onDesignAdd( this.state.editorClass, designRoute, { $unshift: [ newObject ] } );
     }

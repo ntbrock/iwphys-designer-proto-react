@@ -79,7 +79,7 @@ export default class EquationEditor extends React.Component {
                        readOnly={false}
                        onChange={this.evaluate}/>
 
-                <span className="equation-evaluation">{this.state.evaluation}</span>
+                <span className="equation-evaluation">{JSON.stringify(this.state.evaluation)}</span>
                 <span className="equation-exception">{this.state.exception}</span>
             </span>
         );

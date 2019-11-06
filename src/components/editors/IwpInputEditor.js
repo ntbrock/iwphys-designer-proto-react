@@ -9,13 +9,12 @@ import update from "immutability-helper";
 
 /**
  * Single Input Editor contained by the generically typed IwpObjectListEditor
- * 2019Nov06 Object Order is the new key so that editing the name keep focus.
+ * 2019Nov06 Refactor - Object Order is the new key so that editing the name keep focus.
  */
 
 export default class IwpInputEditor extends React.Component {
 
     constructor(props) {
-        // console.log("IwpInputEditor:16> Constructing: props: " , props);
 
         super(props);
 
@@ -56,7 +55,7 @@ export default class IwpInputEditor extends React.Component {
         // Special Checkbox Logic
         let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
 
-        console.log("IwpInputEditor:56> onFieldChange: event.target.name: ", event.target.name, "  event.target.value : " , event.target.value, " value: " ,value );
+        // console.log("IwpInputEditor:56> onFieldChange: event.target.name: ", event.target.name, "  event.target.value : " , event.target.value, " value: " ,value );
 
         const designCommand = { [event.target.name] : { $set : value } };
         // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );

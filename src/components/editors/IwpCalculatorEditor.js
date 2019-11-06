@@ -2,6 +2,8 @@ import React from 'react';
 import EquationEditor from "./EquationEditor";
 
 /**
+ * IwpCalculatorEditor
+ * 2019Nov06 Refactor
  * Congrats for making it here! This is where it all ties together.
  */
 
@@ -9,16 +11,15 @@ export default class IwpCalculatorEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {calculator: props.calculator};
 
+        // D-Fence
+        if ( props.feature === undefined ) { throw Error("IwpInputEditor props missing 'feature'")}
+        if ( props.calculator === undefined ) { throw Error("IwpInputEditor props missing 'calculator'")}
+        if ( props.onCalculatorChange === undefined ) { throw Error("IwpInputEditor props missing 'onCalculatorChange'")}
 
-        if (! props.designRoute) {
-            throw Error("IwpCalculatorEditor called with no designRoute prop")
-        }
-
-        if (! props.onDesignChange) {
-            throw Error("IwpCalculatorEditor called with no onDesignChange prop")
-        }
+        this.state = {
+            calculator: this.props.calculator
+        };
 
         // This binding is necessary to make `this` work in the callback
         this.onFormChange = this.onFormChange.bind(this);
@@ -26,14 +27,16 @@ export default class IwpCalculatorEditor extends React.Component {
 
     /* Generalized Form Handler for All Inputs */
     onFormChange(event) {
+
+
         let newCalculator = this.state.calculator;
-        //----------------------
+
         // Generalized for all form fields
         const targetName = event.target.name;
 
         // Targetnames remain globally unique so radiobuttons don't step on each other.
         // TODO Note the solid subobject recursion is slightly different.
-        const targetParts = targetName.split(".")
+        const targetParts = targetName.split(".");
         const subTargetName = targetParts[targetParts.length - 1];
 
         newCalculator[subTargetName] = event.target.value;
@@ -42,10 +45,8 @@ export default class IwpCalculatorEditor extends React.Component {
 
         this.setState( { calculator: newCalculator } );
 
-        if (this.props.onDesignChange) {
-            this.props.onDesignChange(this.props.designRoute+".calculator", newCalculator);
-        }
-
+        // 2019Nov06 Let my editor interpret the event into a Design Change on my behalf
+        this.props.onCalculatorChange(this.props.feature, newCalculator);
     }
 
 

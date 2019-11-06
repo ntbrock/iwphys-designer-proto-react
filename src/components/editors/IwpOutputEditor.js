@@ -5,125 +5,161 @@ import { Card, CardBody, CardTitle, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
 import IwpCalculatorEditor from "./IwpCalculatorEditor";
-
+import update from "immutability-helper";
 
 /**
  * Single Output Editor
+ * 2019Nov06 Refactor - Object Order is the new key so that editing the name keep focus.
  */
 
 export default class IwpOutputEditor extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.state = { output: props.output };
 
-        if (! props.designRoute) {
-            throw Error("IwpCalculatorEditor called with no designRoute prop")
+        super(props);
+
+        // D-Fence
+        if (props.objectOrder === undefined) {
+            throw Error("IwpOutputEditor props missing 'objectOrder'")
         }
-        if (! props.onDesignChange) {
-            throw Error("IwpCalculatorEditor called with no onDesignChange prop")
+        if (props.onDesignRemove === undefined) {
+            throw Error("IwpOutputEditor props missing 'onDesignRemove'")
         }
+        if (props.onDesignChange === undefined) {
+            throw Error("IwpOutputEditor props missing 'onDesignRemove'")
+        }
+
+
+        // -------------- Be sure to update these constants -----------------------
+
+        let objectType = "output";
+        let editorClass = "IwpOutputEditor";
+
+        // -------------- ------------------ -----------------------
+
+        // Parent Determines Order
+        let objectOrder = props.objectOrder;
+        let object = props.animation.objects[objectOrder];
+
+        this.state = {
+            editorClass: editorClass,
+            objectType: objectType,
+            objectOrder: objectOrder,
+            object: object,
+            designRoute: ["objects", "order", objectOrder]
+        };
 
         // This binding is necessary to make `this` work in the callback
-        this.onFormChange = this.onFormChange.bind(this);
+        this.onFieldChange = this.onFieldChange.bind(this);
+        this.onCalculatorChange = this.onCalculatorChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
     }
 
-    /* Generalized Form Handler for All Inputs */
-    onFormChange(event) {
-        let newOutput = this.state.output;
-        //----------------------
-        // Generalized for all form fields
-        const targetName = event.target.name;
-        newOutput[targetName] = event.target.value;
 
-        //-----------------------
+    /** Handle Field Changes Super Generically 2019Nov06 */
+    onFieldChange(event) {
+        // Special Checkbox Logic
+        let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
 
-        this.setState( { output: newOutput } );
+        // console.log("IwpOutputEditor:56> onFieldChange: event.target.name: ", event.target.name, "  event.target.value : " , event.target.value, " value: " ,value );
 
-        if (this.props.onDesignChange) {
-            this.props.onDesignChange(this.props.designRoute, newOutput);
-        }
+        const designCommand = {[event.target.name]: {$set: value}};
+        // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
+
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand)});
+
+        // Bubble Design Change Event
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
+    }
+
+
+    onCalculatorChange(feature, calculator) {
+        console.log("IwpOutputEditor:61> onCalculatorChange: feature: " , feature, " newCalculator", calculator );
+
+        const designCommand = {[feature]: {$set: calculator}};
+
+        // Bubble Calculator Change Event
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
     }
 
     onRemove(event) {
-        console.log("IwpOutputEditor:59> Removal event: " , event);
-
-        if (this.props.onDesignRemove) {
-            this.props.onDesignRemove(this.props.designRoute, this.state.output);
-        }
+        // console.log("IwpOutputEditor:59> Removal event: " , event, "  on objectOrder: " , this.props.objectOrder );
+        this.props.onDesignRemove(this.state.editorClass, ["objects"], {$splice: [[this.props.objectOrder, 1]]});
     }
 
 
     // Card Mode
     render() {
-        // Shorthand
-        const output = this.state.output;
+        const objectType = this.state.objectType;
 
         return (
-            <div className="iwp-output-editor">
-                <form id="iwp-output-{this.state.output.name}">
-                <Card className="iwp-editor-card">
-                    <CardBody className="iwp-output-card-header">
-                        <CardTitle className="drag-handle">
-                            <strong>Output</strong>
+            <div className={"iwp-" + objectType + "-editor"}>
+                <form id={"iwp-output-order-" + this.state.objectOrder}>
+                    <Card className="iwp-editor-card">
+                        <CardBody className="iwp-card-header">
+                            <CardTitle className="drag-handle">
+                                <strong>{objectType}</strong>
 
-                            &nbsp; &nbsp;
-                            <FontAwesomeIcon icon={faArrowsAltV} />
+                                &nbsp; &nbsp;
+                                <FontAwesomeIcon icon={faArrowsAltV}/>
 
-                            <Button style={{float: "right"}} onClick={this.onRemove} size="sm">Remove</Button>
-                        </CardTitle>
-                    </CardBody>
+                                <Button style={{float: "right"}} onClick={this.onRemove} size="sm">Remove</Button>
+                            </CardTitle>
+                        </CardBody>
 
-                    <CardBody>
-                        <div>
-                            <label>Output Name</label>
-                            <input type="text"
-                                   name="name"
-                                   value={output.name}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
-                        </div>
-                        <div>
-                            <label>Text</label>
-                            <input type="text"
-                                   name="text"
-                                   value={output.text}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
-                        </div>
 
-                        <div>
-                            <label>Calculator</label>
-                            <div className="iwp-editor-card-field">
-                            <IwpCalculatorEditor designRoute={this.props.designRoute+".calculator"} calculator={output.calculator} onDesignChange={this.props.onDesignChange} />
+                        <CardBody>
+                            <div>
+                                <label>Output Name</label>
+                                <input type="text"
+                                       name="name"
+                                       value={this.state.object.name}
+                                       onChange={this.onFieldChange}/>
                             </div>
 
-                        </div>
-                        <div>
-                            <label>Units</label>
-                            <input type="text"
-                                   name="units"
-                                   value={output.units}
-                                   readOnly={false}
-                                   onChange={this.onFormChange}/>
-                        </div>
-                        <div>
-                            <label>Hidden</label>
 
-                            <input
-                                name="hidden"
-                                type="checkbox"
-                                checked={output.hidden}
-                                onChange={this.onFormChange} />
-                        </div>
+                            <div>
+                                <label>Text</label>
+                                <input type="text"
+                                       name="text"
+                                       value={this.state.object.text}
+                                       onChange={this.onFieldChange}/>
+                            </div>
 
-                    </CardBody>
-                </Card>
+                            <div>
+                                <label>Calculator</label>
+                                <div className="iwp-editor-card-field">
+                                    <IwpCalculatorEditor feature='calculator'
+                                                         calculator={this.state.object.calculator}
+                                                         onCalculatorChange={this.onCalculatorChange}/>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <label>Units</label>
+                                <input type="text"
+                                       name="units"
+                                       value={this.state.object.units}
+                                       onChange={this.onFieldChange}/>
+                            </div>
+                            <div>
+                                <label>Hidden</label>
+
+                                <input
+                                    name="hidden"
+                                    type="checkbox"
+                                    checked={this.state.object.hidden}
+                                    onChange={this.onFieldChange}/>
+                            </div>
+
+
+                        </CardBody>
+                    </Card>
                 </form>
             </div>
         );
     }
-
 
 }
