@@ -70,7 +70,9 @@ export default class IwpSidebarPanel extends React.Component {
 
                 <ListGroupItem tag="a" href="#" feature="solids" onClick={this.onSidebarClicked}>Solids</ListGroupItem>
 
+                {/*
                 <ListGroupItem tag="a" href="#" feature="dataTable" onClick={this.onSidebarClicked}>Data Table</ListGroupItem>
+                */}
 
                 <ListGroupItem tag="a" href="#" feature="json" onClick={this.onSidebarClicked}>Json Differences</ListGroupItem>
 
