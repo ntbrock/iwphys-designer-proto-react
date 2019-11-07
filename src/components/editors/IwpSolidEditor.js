@@ -242,7 +242,7 @@ export default class IwpSolidEditor extends React.Component {
                                     <option value="circle">Circle</option>
                                     <option value="line">Line</option>
                                     <option value="vector">Vector</option>
-                                    <option value="bitmap">Bitmap</option>
+                                    <option value="bitmap">Bitmap (Todo)</option>
                                 </select>
 
 
