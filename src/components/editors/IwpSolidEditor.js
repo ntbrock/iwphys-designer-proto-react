@@ -217,53 +217,41 @@ export default class IwpSolidEditor extends React.Component {
                             <div className="iwp-editor-card-field">
 
                                 <input type="text"
-                                       name="shape.shapeType"
+                                       name="shapeType"
+                                       readOnly={true}
                                        value={object.shape.shapeType}
-                                       onChange={this.onFieldChange}/> TODO:ddl
+                                       onChange={this.onFieldChange}/> (TODO)
 
                                 <br/>
 
+                            </div>
 
-                                <label>Height</label>
+                            <label>Height</label>
+
+
+                            <div className="iwp-editor-card-field">
+
                                 <IwpCalculatorEditor feature='shape.height'
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.shape.height.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
                                 <br/>
+                            </div>
 
-                                <label>Width</label>
 
+                            <label>Width</label>
+                            <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='shape.width'
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.shape.width.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 
                                 <br/>
+                            </div>
 
-                                <label>
-                                    Graphable?
-                                </label>
-                                <input type="text" name="shape.isGraphable" value={object.shape.isGraphable} onChange={this.onFieldChange}/>
+                            <label>Color</label>
 
-                                <br/>
-
-                                <label>
-                                    Draw Trails?
-                                </label>
-                                <input type="text" name="shape.drawTrails" value={object.shape.drawTrails} onChange={this.onFieldChange}/>
-
-                                <br/>
-
-                                <label>
-                                    Draw Vectors?
-                                </label>
-                                <input type="text" name="shape.drawVectors" value={object.shape.drawVectors} onChange={this.onFieldChange}/>
-
-                                <br/>
-                                <i>Shape TODO: GraphOptions, Vectors, (Complex SubTables)</i>
-
-
-                                <label>Color</label>
+                            <div className="iwp-editor-card-field">
 
                                 <input type="text"
                                        value={object.color.red + " " + object.color.green + " " + object.color.blue }
@@ -272,6 +260,40 @@ export default class IwpSolidEditor extends React.Component {
                                 <SketchPicker color={object.color} onChangeComplete={this.onColorChange}/>
 
                             </div>
+
+
+                            <label>
+                                Graphable?
+                            </label>
+
+                            <div className="iwp-editor-card-field">
+
+                                <input type="text" name="shape.isGraphable" value={object.shape.isGraphable} onChange={this.onFieldChange}/>
+                            </div>
+
+
+
+                            <label>
+                                Draw Trails?
+                            </label>
+                            <div className="iwp-editor-card-field">
+                                <input type="text" name="shape.drawTrails" value={object.shape.drawTrails} onChange={this.onFieldChange}/>
+                            </div>
+
+
+
+                                <label>
+                                    Draw Vectors?
+                                </label>
+                            <div className="iwp-editor-card-field">
+                                <input type="text" name="shape.drawVectors" value={object.shape.drawVectors} onChange={this.onFieldChange}/>
+                            </div>
+
+                            <br/>
+                            <i>(TODO: Complex Subtabless for GraphOptions, Vectors Components)</i>
+
+
+
                         </div>
 
                     </CardBody>
