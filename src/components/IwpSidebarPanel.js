@@ -28,6 +28,12 @@ export default class IwpSidebarPanel extends React.Component {
 
 
     render() {
+        // Fun - Object Type Counts.
+        const inputCount = this.props.animation.objects.filter( o => o.objectType === 'input' ).length;
+        const outputCount = this.props.animation.objects.filter( o => o.objectType === 'output' ).length;
+        const solidCount = this.props.animation.objects.filter( o => o.objectType === 'solid' ).length;
+
+
 
         const updateCount = this.props.animationUpdates.length;
 
@@ -64,11 +70,11 @@ export default class IwpSidebarPanel extends React.Component {
 
                 {/* Build the Dynamic Object List */}
 
-                <ListGroupItem tag="a" href="#" feature="inputs" onClick={this.onSidebarClicked}>Inputs</ListGroupItem>
+                <ListGroupItem tag="a" href="#" feature="inputs" onClick={this.onSidebarClicked}>{inputCount} Inputs</ListGroupItem>
 
-                <ListGroupItem tag="a" href="#" feature="outputs" onClick={this.onSidebarClicked}>Outputs</ListGroupItem>
+                <ListGroupItem tag="a" href="#" feature="outputs" onClick={this.onSidebarClicked}>{outputCount} Outputs</ListGroupItem>
 
-                <ListGroupItem tag="a" href="#" feature="solids" onClick={this.onSidebarClicked}>Solids</ListGroupItem>
+                <ListGroupItem tag="a" href="#" feature="solids" onClick={this.onSidebarClicked}>{solidCount} Solids</ListGroupItem>
 
                 {/*
                 <ListGroupItem tag="a" href="#" feature="dataTable" onClick={this.onSidebarClicked}>Data Table</ListGroupItem>

@@ -109,7 +109,7 @@ export default class IwpInputEditor extends React.Component {
                         </div>
 
                         <div>
-                            <label>Input Equation</label>
+                            <label>Initial Value</label>
 
                             <input type="text"
                                    name="initialValue"
