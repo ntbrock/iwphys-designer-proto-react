@@ -15,6 +15,11 @@
     padding: 0.25rem;
     width: 400px;
 }
+.iwp-editor-card input[type=number] {
+    padding: 0.25rem;
+    width: 300px;
+}
+
 
 .iwp-editor-card label {
     vertical-align: top;
@@ -54,6 +59,11 @@
 .iwp-editor-panel input[type=text] {
     padding: 0.25rem;
 }
+
+.iwp-editor-panel input[type=number] {
+    padding: 0.25rem;
+}
+
 
 /**
  * For Complex inputs in the editor cards next to labels.

@@ -58,8 +58,8 @@ export default class IwpOutputEditor extends React.Component {
 
     /** Handle Field Changes Super Generically 2019Nov06 */
     onFieldChange(event) {
-        // Special Checkbox Logic
-        let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        // Special Checkbox + Number Logic
+        let value = event.target.type === 'checkbox' ? event.target.checked : ( event.target.type === 'number' ? +event.target.value : event.target.value );
 
         // console.log("IwpOutputEditor:56> onFieldChange: event.target.name: ", event.target.name, "  event.target.value : " , event.target.value, " value: " ,value );
 

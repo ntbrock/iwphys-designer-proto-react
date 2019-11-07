@@ -20,16 +20,16 @@ export default function emptyAnimation() {
             "xmax": 10,
             "ymin": -5,
             "ymax": 5,
-            "xgrid": 1,
-            "ygrid": 1,
+            "xgrid": 2,
+            "ygrid": 2,
             "objectType": "graphWindow"
         }, {
             "xmin": -10,
             "xmax": 10,
             "ymin": -10,
             "ymax": 10,
-            "xgrid": 1,
-            "ygrid": 10,
+            "xgrid": 2,
+            "ygrid": 2,
             "xunit": "meters",
             "yunit": "meters",
             "objectType": "window"
