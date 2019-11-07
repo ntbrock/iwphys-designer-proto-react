@@ -191,6 +191,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>X Path</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='xpath.calculator'
+                                                     designRoute={this.state.designRoute}
                                                      calculator={object.xpath.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 
@@ -203,6 +204,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>Y Path</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='ypath.calculator'
+                                                     designRoute={this.state.designRoute}
                                                      calculator={object.ypath.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 
@@ -225,6 +227,7 @@ export default class IwpSolidEditor extends React.Component {
 
                                 <label>Height</label>
                                 <IwpCalculatorEditor feature='shape.height'
+                                                     designRoute={this.state.designRoute}
                                                      calculator={object.shape.height.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
                                 <br/>
@@ -232,6 +235,7 @@ export default class IwpSolidEditor extends React.Component {
                                 <label>Width</label>
 
                                 <IwpCalculatorEditor feature='shape.width'
+                                                     designRoute={this.state.designRoute}
                                                      calculator={object.shape.width.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
 

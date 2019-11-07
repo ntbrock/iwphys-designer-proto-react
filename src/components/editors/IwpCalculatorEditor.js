@@ -16,6 +16,7 @@ export default class IwpCalculatorEditor extends React.Component {
         if ( props.feature === undefined ) { throw Error("IwpInputEditor props missing 'feature'")}
         if ( props.calculator === undefined ) { throw Error("IwpInputEditor props missing 'calculator'")}
         if ( props.onCalculatorChange === undefined ) { throw Error("IwpInputEditor props missing 'onCalculatorChange'")}
+        if ( props.designRoute === undefined ) { throw Error("IwpInputEditor props missing 'designRoute'")}
 
         this.state = {
             calculator: this.props.calculator
@@ -50,6 +51,12 @@ export default class IwpCalculatorEditor extends React.Component {
 
 
     render() {
+
+        // Make a simple deterministic string so that my form namespace is unique - for checkboxes!
+        const designRouteFlat = this.props.designRoute.join(".") + "." + this.props.feature;
+        // console.log("IwpCalculatorEuler:57> Rendering with designRouteFlat: " , designRouteFlat );
+
+
         // Shorthand
         const calc = this.state.calculator;
         let equationForm = undefined;
@@ -94,12 +101,12 @@ export default class IwpCalculatorEditor extends React.Component {
 
                 <div className="iwp-editor-card-field">
                     <label>
-                        <input type="radio" name={this.props.designRoute+".calcType"} value="parametric" onChange={this.onFormChange} checked={calc.calcType==="parametric"  }/>
+                        <input type="radio" name={designRouteFlat+".calcType"} value="parametric" onChange={this.onFormChange} checked={calc.calcType==="parametric"  }/>
                         &nbsp; Parametric
                     </label>
 
                     <label>
-                        <input type="radio" name={this.props.designRoute+".calcType"} value="euler" onChange={this.onFormChange}  checked={calc.calcType==="euler" }/>
+                        <input type="radio" name={designRouteFlat+".calcType"} value="euler" onChange={this.onFormChange}  checked={calc.calcType==="euler" }/>
                         &nbsp; Euler
                     </label>
                 </div>
