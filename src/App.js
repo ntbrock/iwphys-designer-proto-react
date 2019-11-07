@@ -10,17 +10,13 @@ import './App.css';
 import './IwpDesigner.css';
 import IwpDesignerContainer from "./components/IwpDesignerContainer";
 
-
-
-import collisionElastic3 from "./animations/Collision-Elastic-3";
+// import collisionElastic3 from "./animations/Collision-Elastic-3";
+import emptyAnimation from "./animations/EmptyAnimation";
 
 
 function App() {
 
-  const animationObject = collisionElastic3();
-
-
-
+  const animationObject = emptyAnimation();
   return (
 
       <IwpDesignerContainer animation={animationObject} />

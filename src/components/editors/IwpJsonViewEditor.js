@@ -62,7 +62,7 @@ export default class IwpJsonViewEditor extends React.Component {
                 <br/>
 
                 <h3>JSON Viewer</h3>
-                <textarea readOnly={true} style={{width: '100%', height: '550px', padding: "0.5rem"}} defaultValue={JSON.stringify(this.props.animation)}>
+                <textarea readOnly={true} style={{width: '100%', height: '550px', padding: "0.5rem"}} defaultValue={JSON.stringify(this.props.animation, null, 2)}>
 
                 </textarea>
             </div>

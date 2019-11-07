@@ -54,7 +54,16 @@ export default class IwpAuthorEditor extends React.Component {
         return (
             <div className={"iwp-"+objectType+"-editor"}>
 
-                <h3>Author</h3>
+                <h3>Author Information</h3>
+
+                <div>
+                    <label>Username</label>
+                    <input type="text"
+                           name="username"
+                           value={this.state.object.username}
+                           onChange={this.onFieldChange} />
+                </div>
+
                 <div>
                     <label>Email</label>
                     <input type="text"
@@ -79,13 +88,6 @@ export default class IwpAuthorEditor extends React.Component {
                            onChange={this.onFieldChange} />
                 </div>
 
-                <div>
-                    <label>Username</label>
-                    <input type="text"
-                           name="username"
-                           value={this.state.object.username}
-                           onChange={this.onFieldChange} />
-                </div>
 
             </div>
         );

@@ -3,6 +3,9 @@
  * Each Subcomponent Css defined side by side in Components
  */
 
+.iwp-sidebar-container {
+    margin-top: 1rem;
+}
 
 .iwp-editor-card {
     margin-bottom: 0.5rem;

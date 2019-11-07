@@ -10,12 +10,15 @@ export default class IwpEditorPanel extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
 
         // D-Fence
-        if ( this.props.animationZero === undefined ) { throw Error("IwpEditorPanel Defense: props.animationZero was not passed."); }
-        if ( ! Array.isArray(this.props.animationUpdates) ) { throw Error("IwpEditorPanel Defense: props.animationUpdates was not an array"); }
+        if (this.props.animationZero === undefined) {
+            throw Error("IwpEditorPanel Defense: props.animationZero was not passed.");
+        }
+        if (!Array.isArray(this.props.animationUpdates)) {
+            throw Error("IwpEditorPanel Defense: props.animationUpdates was not an array");
+        }
 
         // console.log("IwpEditorPanel:20> Incoming Animation: " , props.animation );
 
@@ -25,7 +28,9 @@ export default class IwpEditorPanel extends React.Component {
 
     /** Bubbles up from any design change */
     onObjectClicked(event) {
-        if ( this.props.onObjectClicked ) { this.props.onObjectClicked(event); }
+        if (this.props.onObjectClicked) {
+            this.props.onObjectClicked(event);
+        }
     }
 
 
@@ -37,20 +42,20 @@ export default class IwpEditorPanel extends React.Component {
 
         let editor;
 
-        if ( focused ) {
+        if (focused) {
 
             // TODO Refactor combine all these into a 'settings' Editor.
 
 
-            if ( focused === "save" ) {
+            if (focused === "save") {
                 editor = <IwpSaveEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates}
                                         onDesignChange={this.props.onDesignChange}
                                         onAnimationSave={this.props.onAnimationSave}/>
-            } else if ( focused === "settings" ) {
+            } else if (focused === "settings") {
                 // Collapsed Author, Time, Description, etc down into a single editor
                 editor = <IwpSettingsEditor {...this.props} />
 
-            } else if ( focused === "inputs" ) {
+            } else if (focused === "inputs") {
                 editor = <IwpObjectListEditor objectTypeLabel="Input"
                                               objectTypeFilter="input"
                                               animation={this.props.animation}
@@ -59,9 +64,9 @@ export default class IwpEditorPanel extends React.Component {
                                               onDesignChange={this.props.onDesignChange}
                                               onDesignAdd={this.props.onDesignAdd}
                                               onDesignRemove={this.props.onDesignRemove}
-                                              onDesignReorder={this.props.onDesignReorder} />
+                                              onDesignReorder={this.props.onDesignReorder}/>
 
-            } else if ( focused === "outputs" ) {
+            } else if (focused === "outputs") {
                 editor = <IwpObjectListEditor objectTypeLabel="Output"
                                               objectTypeFilter="output"
                                               animation={this.props.animation}
@@ -70,9 +75,9 @@ export default class IwpEditorPanel extends React.Component {
                                               onDesignChange={this.props.onDesignChange}
                                               onDesignAdd={this.props.onDesignAdd}
                                               onDesignRemove={this.props.onDesignRemove}
-                                              onDesignReorder={this.props.onDesignReorder} />
+                                              onDesignReorder={this.props.onDesignReorder}/>
 
-            } else if ( focused === "solids" ) {
+            } else if (focused === "solids") {
                 editor = <IwpObjectListEditor objectTypeLabel="Solid"
                                               objectTypeFilter="solid"
                                               animation={this.props.animation}
@@ -83,17 +88,17 @@ export default class IwpEditorPanel extends React.Component {
                                               onDesignRemove={this.props.onDesignRemove}
                                               onDesignReorder={this.props.onDesignReorder}/>
 
-            } else if ( focused === "json" ) {
+            } else if (focused === "json") {
                 editor = <IwpJsonViewEditor animation={this.props.animation}
                                             animationZero={this.props.animationZero}
                                             animationUpdates={this.props.animationUpdates}
-                                            animationRerenderIncrement={this.props.animationRerenderIncrement} />
+                                            animationRerenderIncrement={this.props.animationRerenderIncrement}/>
 
 
             }
         }
 
-        if ( ! editor ) {
+        if (!editor) {
             editor = <IwpWelcomeEditor animation={this.props.animation}/>
         }
 
@@ -101,15 +106,9 @@ export default class IwpEditorPanel extends React.Component {
 
         return (
 
-            <div>
-
-                <h3>IWP Editor Panel</h3>
-                <div className="iwp-editor-panel">
+            <div className="iwp-editor-panel">
                 {editor}
-                </div>
-
             </div>
-
         );
     }
 }
