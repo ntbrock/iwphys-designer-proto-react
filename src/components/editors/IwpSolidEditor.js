@@ -122,7 +122,7 @@ export default class IwpSolidEditor extends React.Component {
 
         // const designCommand = {[feature]: {$set: calculator}};
 
-        const designCommand = this.dotNotationToFeature(feature, { $set: calculator } );
+        const designCommand = this.dotNotationToFeature(feature+".calculator", { $set: calculator } );
 
         console.log("IwpSolidEditor:127> onCalculatorChange: feature: " , feature,  "  newCalculator", calculator,  "  designRoute: " , this.state.designRoute,  " designCommand: " , designCommand );
 
