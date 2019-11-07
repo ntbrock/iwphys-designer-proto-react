@@ -21,6 +21,12 @@
 }
 
 
+.iwp-editor-card select {
+    padding: 0.25rem;
+    width: 250px;
+}
+
+
 .iwp-editor-card label {
     vertical-align: top;
     width: 150px;
