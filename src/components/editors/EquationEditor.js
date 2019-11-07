@@ -31,35 +31,43 @@ export default class EquationEditor extends React.Component {
         let newExpression = this.state.expression;
 
         // Store the new expression if user edits
-        if ( event ) {
+        if (event) {
             const target = event.target;
             console.log("EquationEditor:26> evaluatee, target: ", target); // this.state: " ,  this.state );
 
-            this.setState((state,props) => ({ expression: target.value }));
+            this.setState((state, props) => ({expression: target.value}));
             newExpression = target.value;
         }
 
-        // Perform Mathematical Calculation
 
-        try {
-            let evaluatedTo = 0;
-            // Zero out empty expressions
-            if ( newExpression ) {
-                evaluatedTo = this.math.evaluate(newExpression);
+
+        const CONFIG_evaluationOn = false;
+
+        if ( CONFIG_evaluationOn ) {
+            
+            // Perform Mathematical Calculation
+
+            try {
+                let evaluatedTo = 0;
+                // Zero out empty expressions
+                if (newExpression) {
+                    evaluatedTo = this.math.evaluate(newExpression);
+                }
+                this.setState((state, props) => ({evaluation: evaluatedTo, exception: undefined}));
+
+                // Notify listener
+                if (this.props.onEvaluated) {
+                    this.props.onEvaluated(evaluatedTo);
+                }
+            } catch (x) {
+
+                this.setState((state, props) => ({evaluation: undefined, exception: x + ""}));
+
+                // console.log("EquationEditor:58> Exception in calculation: " , x );
+
             }
-            this.setState((state, props) => ({evaluation: evaluatedTo, exception: undefined}));
-
-            // Notify listener
-            if (this.props.onEvaluated) {
-                this.props.onEvaluated(evaluatedTo);
-            }
-        } catch(x) {
-
-            this.setState((state, props) => ({evaluation: undefined, exception: x+""}));
-
-            // console.log("EquationEditor:58> Exception in calculation: " , x );
-
         }
+
 
         // Bubble Event up component stack
         // console.log("EquationEditor:65> On Form Change: for event: ", event, "  onFormChange: ", this.props.onFormChange );
