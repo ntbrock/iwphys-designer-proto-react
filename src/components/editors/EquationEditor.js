@@ -44,7 +44,7 @@ export default class EquationEditor extends React.Component {
         const CONFIG_evaluationOn = false;
 
         if ( CONFIG_evaluationOn ) {
-            
+
             // Perform Mathematical Calculation
 
             try {

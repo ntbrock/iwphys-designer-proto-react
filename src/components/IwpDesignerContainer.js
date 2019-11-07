@@ -23,6 +23,7 @@ export default class IwpDesignerContainer extends React.Component {
             animationZero: JSON.parse(JSON.stringify(props.animation)),
             animationUpdates: [],
             animationRerenderIncrement: 0,  // If objects are added and sub-components to be redrawn, increment this.
+            animationFilename: "newAnimation.iwp.json",
             focusedEditor: undefined
         };
 
@@ -33,6 +34,7 @@ export default class IwpDesignerContainer extends React.Component {
         this.onDesignAdd = this.onDesignAdd.bind(this);
         this.onDesignRemove = this.onDesignRemove.bind(this);
         this.onDesignReorder = this.onDesignReorder.bind(this);
+        this.onAnimationFilename = this.onAnimationFilename.bind(this);
         this.onAnimationSave = this.onAnimationSave.bind(this);
         this.onSidebarClicked = this.onSidebarClicked.bind(this);
     }
@@ -251,6 +253,15 @@ export default class IwpDesignerContainer extends React.Component {
 
 
 
+    onAnimationFilename(event) {
+
+        // Special Checkbox + Number Logic
+        let value = event.target.type === 'checkbox' ? event.target.checked : ( event.target.type === 'number' ? +event.target.value : event.target.value );
+
+        this.setState({
+            animationFilename: value
+        });
+    }
 
     onAnimationSave(event) {
         // TODO: Network POST back to play
@@ -286,6 +297,7 @@ export default class IwpDesignerContainer extends React.Component {
                             animationZero={this.state.animationZero}
                             animationUpdates={this.state.animationUpdates}
                             animationRerenderIncrement={this.state.animationRerenderIncrement}
+                            animationFilename={this.state.animationFilename}
                             onDesignChange={this.onDesignChange}
                             onSidebarClicked={this.onSidebarClicked} />
 
@@ -299,12 +311,14 @@ export default class IwpDesignerContainer extends React.Component {
                                         animationZero={this.state.animationZero}
                                         animationUpdates={this.state.animationUpdates}
                                         animationRerenderIncrement={this.state.animationRerenderIncrement}
+                                        animationFilename={this.state.animationFilename}
                                         focusedEditor={this.state.focusedEditor}
                                         onDesignChange={this.onDesignChange}
                                         onDesignAdd={this.onDesignAdd}
                                         onDesignRemove={this.onDesignRemove}
                                         onDesignReorder={this.onDesignReorder}
-                                        onAnimationSave={this.onAnimationSave}/>
+                                        onAnimationSave={this.onAnimationSave}
+                                        onAnimationFilename={this.onAnimationFilename} />
 
                     </Col>
 

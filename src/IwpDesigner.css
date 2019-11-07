@@ -143,3 +143,10 @@
 .iwp-json-diff-table {
     width: 100%;
 }
+
+/**
+Save
+ */
+.iwp-save-editor input[type=text] {
+    width: 400px;
+}

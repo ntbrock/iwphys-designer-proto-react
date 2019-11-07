@@ -57,8 +57,15 @@ export default class IwpSaveEditor extends React.Component {
         return (
             <div className="iwp-editor iwp-save-editor">
 
-                <br/>
+                <h3>Animation Filename</h3>
 
+                <input type="text"
+                       name="animationFilename"
+                       value={this.props.animationFilename}
+                       onChange={this.props.onAnimationFilename} />
+
+                   <br/>
+                   <br/>
 
                 <div>
                     <Button active={true} color="secondary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
@@ -66,7 +73,7 @@ export default class IwpSaveEditor extends React.Component {
 
                 <br/><br/>
 
-                <h3>Unsaved Changes</h3>
+                <h3>Unsaved Change Log</h3>
 
                 <Table>
                     <thead>

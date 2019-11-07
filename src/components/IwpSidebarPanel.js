@@ -51,9 +51,9 @@ export default class IwpSidebarPanel extends React.Component {
 
                 <ListGroupItem style={{backgroundColor: "#ddd"}}>
 
-                    <form method="POST" target="_preview" action="http://localhost:8470/animation/preview">
+                    <form method="POST" target="_preview" action="https://www.iwphys.org/animation/preview">
 
-                        <input type="hidden" name="animationFilename" value="reactDesignerNeedsFilenames56.iwp.json"/>
+                        <input type="hidden" name="animationFilename" value={this.props.animationFilename}/>
 
                         <input type="hidden" name="animationJson" value={JSON.stringify(this.props.animation)}/>
 

@@ -48,9 +48,12 @@ export default class IwpEditorPanel extends React.Component {
 
 
             if (focused === "save") {
-                editor = <IwpSaveEditor animation={this.props.animation} animationUpdates={this.props.animationUpdates}
+                editor = <IwpSaveEditor animation={this.props.animation}
+                                        animationUpdates={this.props.animationUpdates}
+                                        animationFilename={this.props.animationFilename}
                                         onDesignChange={this.props.onDesignChange}
-                                        onAnimationSave={this.props.onAnimationSave}/>
+                                        onAnimationFilename={this.props.onAnimationFilename}
+                                        onAnimationSave={this.props.onAnimationSave} />
             } else if (focused === "settings") {
                 // Collapsed Author, Time, Description, etc down into a single editor
                 editor = <IwpSettingsEditor {...this.props} />

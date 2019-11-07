@@ -96,10 +96,13 @@ npm install --save reactstrap react react-dom
 
 $ npm run build
 
+$ rsync -ravP build/* iwp6.iwphys.org:/var/www/iwp6.iwphys.org/designer-preview/
 
 
-- Want to get to a solid editor
 
+
+
+-------------------
 
 NOTE the Hotel biz center has an AWESOME cannon printer. Can I do my print work here in teh AM? for free?!
 
