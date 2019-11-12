@@ -265,7 +265,7 @@ export default class IwpSolidEditor extends React.Component {
 
                             <div className="iwp-editor-card-field">
 
-                                <IwpCalculatorEditor feature='shape.height'
+                                <IwpCalculatorEditor feature='shape.height.calculator'
                                                      labelText="H = "
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.shape.height.calculator}
@@ -276,7 +276,7 @@ export default class IwpSolidEditor extends React.Component {
 
                             <label>Width</label>
                             <div className="iwp-editor-card-field">
-                                <IwpCalculatorEditor feature='shape.width'
+                                <IwpCalculatorEditor feature='shape.width.calculator'
                                                      labelText="W = "
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.shape.width.calculator}
