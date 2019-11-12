@@ -63,25 +63,34 @@ export default class IwpCalculatorEditor extends React.Component {
 
         if ( calc.calcType === "parametric") {
 
+            let labelText = '';
+            if ( this.props.labelText !== undefined && this.props.labelText ) {
+                labelText = this.props.labelText;
+            }
+
             equationForm = (
-                <EquationEditor name="value" expression={calc.value} onFormChange={this.onFormChange}/>
+                <div>
+                    <span>{labelText}</span>
+                    <EquationEditor name="value" expression={calc.value} onFormChange={this.onFormChange}/>
+                </div>
             )
 
-        } else if ( calc.calcType === "euler" ) {
+
+        } else if ( calc.calcType === "MCalculator_Euler" ) {
 
             equationForm = (
                 <div>
 
                     <div>
-                        <label>Init Disp</label>
+                        <label>Init Disp = </label>
                         <EquationEditor name="displacement" expression={calc.displacement} onFormChange={this.onFormChange}/>
                     </div>
                     <div>
-                        <label>Init Vel</label>
+                        <label>Init Vel = </label>
                         <EquationEditor name="velocity" expression={calc.velocity} onFormChange={this.onFormChange}/>
                     </div>
                     <div>
-                        <label>Accel</label>
+                        <label>Accel = </label>
                         <EquationEditor name="acceleration" expression={calc.acceleration} onFormChange={this.onFormChange}/>
                     </div>
                 </div>
@@ -106,7 +115,7 @@ export default class IwpCalculatorEditor extends React.Component {
                     </label>
 
                     <label>
-                        <input type="radio" name={designRouteFlat+".calcType"} value="euler" onChange={this.onFormChange}  checked={calc.calcType==="euler" }/>
+                        <input type="radio" name={designRouteFlat+".calcType"} value="MCalculator_Euler" onChange={this.onFormChange}  checked={calc.calcType==="MCalculator_Euler" }/>
                         &nbsp; Euler
                     </label>
                 </div>

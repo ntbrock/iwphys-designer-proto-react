@@ -36,13 +36,15 @@ export default class IwpGraphWindowEditor extends React.Component {
     /** Handle Field Changes Super Generically 2019Nov06 */
     onFieldChange(event) {
         const designCommand = { [event.target.name] : { $set : event.target.value } };
+        const designCommandNumerical = { [event.target.name] : { $set : +event.target.value } };
+
         // console.log(this.state.editorClass + ":38> onFieldChange, designCommand: " , designCommand );
 
         // Local State Management Immutable
         this.setState({object: update(this.state.object, designCommand ) });
 
         // Bubble Design Change Event
-        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommandNumerical);
     }
 
 

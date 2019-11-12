@@ -83,7 +83,7 @@ export default class EquationEditor extends React.Component {
             <span className="equation-editor">
                 <input type="text"
                        name={this.props.name}
-                       value={this.state.expression ? this.state.expression : 0 }
+                       value={this.state.expression}
                        readOnly={false}
                        onChange={this.evaluate}/>
 

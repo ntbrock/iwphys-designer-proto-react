@@ -208,6 +208,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>X Path</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='xpath.calculator'
+                                                     labelText="X = "
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.xpath.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
@@ -221,6 +222,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>Y Path</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='ypath.calculator'
+                                                     labelText="Y = "
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.ypath.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
@@ -264,6 +266,7 @@ export default class IwpSolidEditor extends React.Component {
                             <div className="iwp-editor-card-field">
 
                                 <IwpCalculatorEditor feature='shape.height'
+                                                     labelText="H = "
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.shape.height.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
@@ -274,6 +277,7 @@ export default class IwpSolidEditor extends React.Component {
                             <label>Width</label>
                             <div className="iwp-editor-card-field">
                                 <IwpCalculatorEditor feature='shape.width'
+                                                     labelText="W = "
                                                      designRoute={this.state.designRoute}
                                                      calculator={object.shape.width.calculator}
                                                      onCalculatorChange={this.onCalculatorChange} />
