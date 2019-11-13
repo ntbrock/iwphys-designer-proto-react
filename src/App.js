@@ -13,13 +13,23 @@ import IwpDesignerContainer from "./components/IwpDesignerContainer";
 // import collisionElastic3 from "./animations/Collision-Elastic-3";
 import emptyAnimation from "./animations/EmptyAnimation";
 
+// Quick until we dive into react routing
+// https://davidwalsh.name/query-string-javascript
+function getUrlParameter(name) {
+  // eslint-disable-next-line no-useless-escape
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  const results = regex.exec(window.location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
 
 function App() {
 
   const animationObject = emptyAnimation();
   return (
 
-      <IwpDesignerContainer animation={animationObject} />
+      <IwpDesignerContainer animation={animationObject} token={getUrlParameter('token')}/>
 
   );
 }

@@ -27,6 +27,11 @@ export default class IwpSaveEditor extends React.Component {
 
         console.log("IwpSaveEditor:25> Animation: ", this.props.animation);
 
+        // Do an API post!
+
+
+
+
 
         // Bubble back up
         this.props.onAnimationSave(event);
@@ -56,6 +61,13 @@ export default class IwpSaveEditor extends React.Component {
 
         return (
             <div className="iwp-editor iwp-save-editor">
+
+                <h3>User Authentication</h3>
+
+                <div>
+                    Token: {this.props.token}
+                </div>
+                <br/>
 
                 <h3>Animation Filename</h3>
 

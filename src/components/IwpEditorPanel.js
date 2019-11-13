@@ -48,7 +48,8 @@ export default class IwpEditorPanel extends React.Component {
 
 
             if (focused === "save") {
-                editor = <IwpSaveEditor animation={this.props.animation}
+                editor = <IwpSaveEditor token={this.props.token}
+                                        animation={this.props.animation}
                                         animationUpdates={this.props.animationUpdates}
                                         animationFilename={this.props.animationFilename}
                                         onDesignChange={this.props.onDesignChange}

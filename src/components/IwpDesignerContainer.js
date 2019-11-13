@@ -293,6 +293,7 @@ export default class IwpDesignerContainer extends React.Component {
                     <Col md={3} className="iwp-sidebar-container">
 
                         <IwpSidebarPanel
+                            token={this.props.token}
                             animation={this.state.animation}
                             animationZero={this.state.animationZero}
                             animationUpdates={this.state.animationUpdates}
@@ -307,7 +308,8 @@ export default class IwpDesignerContainer extends React.Component {
 
                     <Col md={9} className="iwp-editor-container">
 
-                        <IwpEditorPanel animation={this.state.animation}
+                        <IwpEditorPanel token={this.props.token}
+                                        animation={this.state.animation}
                                         animationZero={this.state.animationZero}
                                         animationUpdates={this.state.animationUpdates}
                                         animationRerenderIncrement={this.state.animationRerenderIncrement}
