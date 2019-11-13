@@ -31,12 +31,14 @@ export default class IwpSaveEditor extends React.Component {
         // Do an API post!
 
         const filename = encodeURI(this.props.animationFilename);
-        const url = "http://localhost:8470/designer/api1/save/" + filename;
+        const url = "/designer/api1/save/" + filename;
 
         console.log("IwpSaveEditor:36> Post url: ", url);
-
+        // TODO configurabilitiy
+        // http://localhost:8470
+        // https://www.iwphys.org
         const a = axios.create({
-            baseURL: 'http://localhost:8470',
+            baseURL: 'https://www.iwphys.org',
             timeout: 5000,
             headers: {'X-Token': this.props.token}
         });
