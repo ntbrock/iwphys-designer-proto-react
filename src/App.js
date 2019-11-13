@@ -29,7 +29,7 @@ function App() {
   const animationObject = emptyAnimation();
   return (
 
-      <IwpDesignerContainer animation={animationObject} token={getUrlParameter('token')}/>
+      <IwpDesignerContainer animation={animationObject} animationFilename={getUrlParameter('filename')} token={getUrlParameter('token')}/>
 
   );
 }

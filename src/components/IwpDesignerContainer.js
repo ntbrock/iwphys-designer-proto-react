@@ -23,7 +23,7 @@ export default class IwpDesignerContainer extends React.Component {
             animationZero: JSON.parse(JSON.stringify(props.animation)),
             animationUpdates: [],
             animationRerenderIncrement: 0,  // If objects are added and sub-components to be redrawn, increment this.
-            animationFilename: "newAnimation.iwp.json",
+            animationFilename: this.props.animationFilename || "newAnimation.iwp.json",
             focusedEditor: undefined
         };
 

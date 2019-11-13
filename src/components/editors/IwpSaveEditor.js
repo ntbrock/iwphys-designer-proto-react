@@ -42,7 +42,7 @@ export default class IwpSaveEditor extends React.Component {
         });
 
         const onSuccess = this.props.onAnimationSave;
-        
+
         a.post(url, this.props.animation)
             .then( function(response) {
               // Bubble back up
@@ -75,16 +75,33 @@ export default class IwpSaveEditor extends React.Component {
         }).reverse();
 
 
+        // Save button requires an access token
+        let authenticatedChangeButton = (
+            <div>
+                <h3>Unauthenticated User</h3>
+                <p>Please sign in at <a href="https://www.iwphys.org/sign-in">https://www.iwphys.org/sign-in/</a> to enable saving your animations.</p>
+                <p>Any changes made in this session <strong>will be lost</strong> when you leave or refresh this page!</p>
+        </div> );
+
+        if ( this.props.token !== undefined && this.props.token !== "") {
+            authenticatedChangeButton = (
+                <div>
+                <h3>User Authentication</h3>
+                    <div>
+                            Token: {this.props.token}
+                    </div>
+                    <br/>
+                    <div>
+                    <Button active={true} color="secondary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
+                    </div>
+                </div>
+            )
+        }
+
 
         return (
             <div className="iwp-editor iwp-save-editor">
 
-                <h3>User Authentication</h3>
-
-                <div>
-                    Token: {this.props.token}
-                </div>
-                <br/>
 
                 <h3>Animation Filename</h3>
 
@@ -96,10 +113,7 @@ export default class IwpSaveEditor extends React.Component {
                    <br/>
                    <br/>
 
-                <div>
-                    <Button active={true} color="secondary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
-                </div>
-
+                {authenticatedChangeButton}
                 <br/><br/>
 
                 <h3>Unsaved Change Log</h3>
