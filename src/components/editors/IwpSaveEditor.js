@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Table } from 'reactstrap';
+import * as axios from "axios";
 
 /**
  * Edit Author information
@@ -23,18 +24,34 @@ export default class IwpSaveEditor extends React.Component {
 
 
     onSaveClick(event) {
-        alert("IwpSaveEditor:23> Todo, Push Animation Back to Server");
+        // alert("IwpSaveEditor:23> Todo, Push Animation Back to Server");
 
         console.log("IwpSaveEditor:25> Animation: ", this.props.animation);
 
         // Do an API post!
 
+        const filename = encodeURI(this.props.animationFilename);
+        const url = "http://localhost:8470/designer/api1/save/" + filename;
 
+        console.log("IwpSaveEditor:36> Post url: ", url);
 
+        const a = axios.create({
+            baseURL: 'http://localhost:8470',
+            timeout: 5000,
+            headers: {'X-Token': this.props.token}
+        });
 
-
-        // Bubble back up
-        this.props.onAnimationSave(event);
+        const onSuccess = this.props.onAnimationSave;
+        
+        a.post(url, this.props.animation)
+            .then( function(response) {
+              // Bubble back up
+              onSuccess(event);
+            })
+            .catch( function(response) {
+                console.log("IwpSaveEditor:50> Failure Saving: ", response)
+                alert("Failure Saving: " + response);
+            });
     }
 
 
