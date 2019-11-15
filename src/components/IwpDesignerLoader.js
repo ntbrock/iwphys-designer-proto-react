@@ -22,7 +22,7 @@ export default class IwpDesignerLoader extends React.Component {
     async componentDidMount() {
 
         const animationUrl = this.props.animationUrl;
-        const animationFilename = this.props.animationFilename;
+        let animationFilename = this.props.animationFilename;
         const token = this.props.token;
 
         const axiosClient = axios.create({
@@ -43,6 +43,16 @@ export default class IwpDesignerLoader extends React.Component {
 
             if ( response.status >= 200 && response.status < 300 ) {
                 animation = response.data;
+
+                // Special case, when pullinig from URL, sest the last past as animationFilename
+
+                const urlparts = animationUrl.split("/");
+                if ( urlparts.length > 1 ) {
+
+                    animationFilename = decodeURI(urlparts[urlparts.length-1]);
+                    console.log("IwpDesignerLoaader:52> found AnimationFilename: " , animationFilename);
+                }
+
             } else {
                 failureMessage =  "Error Response " + response.status + " : " + JSON.stringify(response.data);
             }
@@ -69,7 +79,8 @@ export default class IwpDesignerLoader extends React.Component {
         // Default behavior, empty animation
         this.setState({
             animation: animation,
-            failureMessage: failureMessage
+            failureMessage: failureMessage,
+            animationFilename: animationFilename
         });
 
         // Do we have a token + filename?  try to get existing animation.
@@ -98,7 +109,10 @@ export default class IwpDesignerLoader extends React.Component {
         } else {
 
             return (
-                <IwpDesignerContainer animation={this.state.animation} {...this.props}/>
+                <IwpDesignerContainer animation={this.state.animation}
+                                      animationFilename={this.state.animationFilename}
+                                      token={this.props.token} />
+
             )
 
         }
