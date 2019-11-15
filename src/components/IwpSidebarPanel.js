@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, ListGroup, ListGroupItem} from 'reactstrap';
+import * as config from "../config.json"
 
 
 export default class IwpSidebarPanel extends React.Component {
@@ -39,7 +40,7 @@ export default class IwpSidebarPanel extends React.Component {
 
         let saveButton;
         if ( updateCount === 0 ) {
-            saveButton = <ListGroupItem feature="save" onClick={this.onSidebarClicked}>Saved</ListGroupItem>
+            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onSidebarClicked}>Save 0 Changes</ListGroupItem>
         } else {
             saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onSidebarClicked} color="primary" >Save {updateCount} Changes</ListGroupItem>
         }
@@ -51,7 +52,7 @@ export default class IwpSidebarPanel extends React.Component {
 
                 <ListGroupItem style={{backgroundColor: "#ddd"}}>
 
-                    <form method="POST" target="_preview" action="https://www.iwphys.org/animation/preview">
+                    <form method="POST" target="_preview" action={config.api.baseURL + "/animation/preview"}>
 
                         <input type="hidden" name="animationFilename" value={this.props.animationFilename}/>
 

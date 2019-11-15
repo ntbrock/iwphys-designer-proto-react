@@ -10,9 +10,7 @@ import './App.css';
 import './IwpDesigner.css';
 import IwpDesignerContainer from "./components/IwpDesignerContainer";
 
-// import collisionElastic3 from "./animations/Collision-Elastic-3";
-import emptyAnimation from "./animations/EmptyAnimation";
-import * as axios from "axios";
+import IwpDesignerLoader from "./components/IwpDesignerLoader";
 
 // Quick until we dive into react routing
 // https://davidwalsh.name/query-string-javascript
@@ -27,34 +25,24 @@ function getUrlParameter(name) {
 
 function App() {
 
-  let animationObject = emptyAnimation();
-  // Do we have a token + filename?  try to get existing animation.
-
-
   const filename = getUrlParameter('filename');
   const token = getUrlParameter('token');
+  const url = getUrlParameter('url');
 
   if ( filename !== undefined && token !== undefined ) {
     // Load content!
 
-
-    const axiosClient = axios.create({
-      baseURL: 'https://www.iwphys.org',
-      timeout: 5000,
-      headers: {'X-Token': token}
-    });
-
-
     console.log("App.js:38> Loading existing animation content: filename: " , filename, "  token: ", token);
-
-    axiosClient.get("/designer/api1/json/" + encodeURI(filename));
 
 
   }
 
   return (
 
+      <IwpDesignerLoader animationUrl={url} animationFilename={filename} token={token}/>
+  /*
       <IwpDesignerContainer animation={animationObject} animationFilename={filename} token={token}/>
+  */
 
   );
 }

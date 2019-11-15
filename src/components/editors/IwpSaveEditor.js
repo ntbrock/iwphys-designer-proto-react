@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Table } from 'reactstrap';
 import * as axios from "axios";
+import * as config from "../../config.json"
 
 /**
  * Edit Author information
@@ -32,13 +33,8 @@ export default class IwpSaveEditor extends React.Component {
 
         const filename = encodeURI(this.props.animationFilename);
         const url = "/designer/api1/save/" + filename;
-
-        console.log("IwpSaveEditor:36> Post url: ", url);
-        // TODO configurabilitiy
-        // http://localhost:8470
-        // https://www.iwphys.org
         const a = axios.create({
-            baseURL: 'https://www.iwphys.org',
+            baseURL: config.api.baseURL,
             timeout: 5000,
             headers: {'X-Token': this.props.token}
         });
@@ -87,15 +83,13 @@ export default class IwpSaveEditor extends React.Component {
 
         if ( this.props.token !== undefined && this.props.token !== "") {
             authenticatedChangeButton = (
+
                 <div>
-                <h3>User Authentication</h3>
                     <div>
-                            Token: {this.props.token}
+                        <Button active={true} color="primary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
                     </div>
                     <br/>
-                    <div>
-                    <Button active={true} color="secondary" onClick={this.onSaveClick}>Save {changeCount} Changes</Button>
-                    </div>
+
                 </div>
             )
         }
