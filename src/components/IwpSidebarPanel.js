@@ -67,7 +67,7 @@ export default class IwpSidebarPanel extends React.Component {
                 {saveButton}
 
 
-                <ListGroupItem tag="a" href="#" feature="settings" onClick={this.onSidebarClicked}>Settings</ListGroupItem>
+                <ListGroupItem tag="a" href="#" feature="settings" onClick={this.onSidebarClicked}>Animation Settings</ListGroupItem>
 
                 {/* Build the Dynamic Object List */}
 
