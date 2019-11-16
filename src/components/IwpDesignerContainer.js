@@ -292,6 +292,9 @@ export default class IwpDesignerContainer extends React.Component {
                     {/* Object Tree */}
                     <Col md={3} className="iwp-sidebar-container">
 
+
+                        <div className="sticky-top">
+
                         <IwpSidebarPanel
                             token={this.props.token}
                             animation={this.state.animation}
@@ -301,6 +304,8 @@ export default class IwpDesignerContainer extends React.Component {
                             animationFilename={this.state.animationFilename}
                             onDesignChange={this.onDesignChange}
                             onSidebarClicked={this.onSidebarClicked} />
+
+                        </div>
 
                     </Col>
 

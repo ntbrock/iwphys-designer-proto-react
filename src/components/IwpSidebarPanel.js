@@ -23,8 +23,10 @@ export default class IwpSidebarPanel extends React.Component {
     /** Bubbles up from any sidebar click an tells the main layout to swap the editor panel */
 
     onSidebarClicked(event) {
-        let feature = event.target.attributes["feature"].value;
-        this.props.onSidebarClicked(feature, event);
+        if ( event.target.attributes["feature"] ) { // Function reference clicks do nothing
+            let feature = event.target.attributes["feature"].value;
+            this.props.onSidebarClicked(feature, event);
+        }
     }
 
 
@@ -87,11 +89,11 @@ export default class IwpSidebarPanel extends React.Component {
                     <i>Equation Reference</i>
 
                     <ul style={{paddingLeft: "20px"}}>
+                        <li><a href="https://mathjs.org/docs/reference/functions.html" target="_mathjs">math.js</a></li>
                         <li>pi</li>
                         <li>step()</li>
                         <li>toRadians()</li>
                         <li>toDegrees()</li>
-                        <li><a href="https://mathjs.org/docs/reference/functions.html" target="_mathjs">math.js</a></li>
                     </ul>
 
 

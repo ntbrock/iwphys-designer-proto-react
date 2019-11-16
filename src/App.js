@@ -8,7 +8,6 @@ import styles from 'dragula/dist/dragula.css';
 
 import './App.css';
 import './IwpDesigner.css';
-import IwpDesignerContainer from "./components/IwpDesignerContainer";
 
 import IwpDesignerLoader from "./components/IwpDesignerLoader";
 
