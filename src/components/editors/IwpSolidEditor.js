@@ -46,6 +46,7 @@ export default class IwpSolidEditor extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.onFieldChange = this.onFieldChange.bind(this);
+        this.onCheckboxChange = this.onCheckboxChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
         this.onCalculatorChange = this.onCalculatorChange.bind(this);
@@ -90,6 +91,23 @@ export default class IwpSolidEditor extends React.Component {
 
         // Bubble Design Change Event
         this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
+    }
+
+    /* Last night before launch, special hander for checkboxess in solids to avoid breakage */
+    onCheckboxChange(event) {
+
+        let value = event.target.type === 'checkbox' ? event.target.checked : ( event.target.type === 'number' ? +event.target.value : event.target.value );
+
+        let designCommand = this.dotNotationToFeature(event.target.name, { $set : value } );
+
+        console.log("IwpSolidEditor:98> onCheckboxChange: ", event.target.name, "  designCommand: " , designCommand,  " checked: " , event.target.checked, "  value: " ,value );
+
+        // Local State Management Immutable
+        this.setState({object: update(this.state.object, designCommand ) });
+
+        // Bubble Design Change Event
+        this.props.onDesignChange(this.state.editorClass, this.state.designRoute, designCommand);
+
     }
 
     onRemove(event) {
@@ -300,34 +318,72 @@ export default class IwpSolidEditor extends React.Component {
 
                             <br/><br/>
 
-                            <div style={{backgroundColor: "#eee"}}>
-                                <i>(Todo Area: Complex Subtabless for GraphOptions, Vectors Components)</i>
-                                <br/>
 
-                                <label>
-                                    Graphable?
-                                </label>
+                            <label>Draw Trails</label>
 
-                                <div className="iwp-editor-card-field">
+                            <div className="iwp-editor-card-field">
+                                <input type="checkbox" name="shape.drawTrails" value={true} checked={object.shape.drawTrails} onChange={this.onCheckboxChange}/>
+                            </div>
 
-                                    <input type="text" name="shape.isGraphable" value={object.shape.isGraphable} onChange={this.onFieldChange}/>
+                            {/* TODO  needs animator code change
+                            <label>Draw Vectors</label>
+
+                            <div className="iwp-editor-card-field">
+                                <input type="checkbox" name="shape.drawVectors" value={true} checked={object.shape.drawVectors} onChange={this.onCheckboxChange}/>
+                            </div>
+                            */}
+
+                            <label>Graphable</label>
+
+                            <div className="iwp-editor-card-field">
+                                <input type="checkbox" name="shape.graphOptions.graphVisible" value={true} checked={object.shape.graphOptions.graphVisible} onChange={this.onCheckboxChange}/>
+                            </div>
+
+
+                            <label>Graph Initially</label>
+
+                            <div className="iwp-editor-card-field">
+
+                                <div className="row">
+
+                                    <div className="col-md-6">
+
+                                        <input type="checkbox" name="shape.graphOptions.initiallyOn.xPos" value={true} checked={object.shape.graphOptions.initiallyOn.xPos} onChange={this.onCheckboxChange}/>
+                                        &nbsp; X Position
+                                        <br/>
+
+                                        <input type="checkbox" name="shape.graphOptions.initiallyOn.xVel" value={true} checked={object.shape.graphOptions.initiallyOn.xVel} onChange={this.onCheckboxChange}/>
+                                        &nbsp; X Velocity
+                                        <br/>
+
+                                        <input type="checkbox" name="shape.graphOptions.initiallyOn.xAccel" value={true} checked={object.shape.graphOptions.initiallyOn.xAccel} onChange={this.onCheckboxChange}/>
+                                        &nbsp; X Acceleration
+
+                                    </div>
+
+                                    <div className="col-md-6">
+
+                                        <input type="checkbox" name="shape.graphOptions.initiallyOn.yPos" value={true} checked={object.shape.graphOptions.initiallyOn.yPos} onChange={this.onCheckboxChange}/>
+                                        &nbsp; Y Position
+                                        <br/>
+
+                                        <input type="checkbox" name="shape.graphOptions.initiallyOn.yVel" value={true} checked={object.shape.graphOptions.initiallyOn.yVel} onChange={this.onCheckboxChange}/>
+                                        &nbsp; Y Velocity
+                                        <br/>
+
+                                        <input type="checkbox" name="shape.graphOptions.initiallyOn.yAccel" value={true} checked={object.shape.graphOptions.initiallyOn.yAccel} onChange={this.onCheckboxChange}/>
+                                        &nbsp; Y Acceleration
+
+                                    </div>
+
+
                                 </div>
 
-                                <label>
-                                    Draw Trails?
-                                </label>
-                                <div className="iwp-editor-card-field">
-                                    <input type="text" name="shape.drawTrails" value={object.shape.drawTrails} onChange={this.onFieldChange}/>
-                                </div>
-
-                                <label>
-                                    Draw Vectors?
-                                </label>
-                                <div className="iwp-editor-card-field">
-                                    <input type="text" name="shape.drawVectors" value={object.shape.drawVectors} onChange={this.onFieldChange}/>
-                                </div>
 
                             </div>
+
+
+                            <br/><br/>
 
                         </div>
 

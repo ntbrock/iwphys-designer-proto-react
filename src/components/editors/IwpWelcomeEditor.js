@@ -32,8 +32,7 @@ export default class IwpWelcomeEditor extends React.Component {
 
                 <p><strong>Outputs</strong> render calculations in numerical form with units to your users.</p>
 
-                <p><strong>Solids</strong> render calculations in numerical form with units to your users.</p>
-
+                <p><strong>Solids</strong> render visual objects with motion, color, vectors, and trails.</p>
 
                 <p><i>Json Differences</i> is a technical interface we use for testsing and debugging, showing the object structure of your entire animation.</p>
 

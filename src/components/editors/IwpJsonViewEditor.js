@@ -56,12 +56,12 @@ export default class IwpJsonViewEditor extends React.Component {
 
         return (
             <div className="iwp-json-viewer">
-                <h3>Json Diffs</h3>
+                <h3>Json Differences</h3>
 
                 {diffTable}
                 <br/>
 
-                <h3>JSON Viewer</h3>
+                <h3>Json Viewer</h3>
                 <textarea readOnly={true} style={{width: '100%', height: '550px', padding: "0.5rem"}} defaultValue={JSON.stringify(this.props.animation, null, 2)}>
 
                 </textarea>
