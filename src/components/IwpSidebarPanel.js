@@ -83,6 +83,20 @@ export default class IwpSidebarPanel extends React.Component {
 
                 <ListGroupItem tag="a" href="#" feature="json" onClick={this.onSidebarClicked}>Json Differences</ListGroupItem>
 
+                <ListGroupItem feature="functions" onClick={this.onSidebarClicked}>
+                    <i>Equation Reference</i>
+
+                    <ul style={{paddingLeft: "20px"}}>
+                        <li>pi</li>
+                        <li>step()</li>
+                        <li>toRadians()</li>
+                        <li>toDegrees()</li>
+                        <li><a href="https://mathjs.org/docs/reference/functions.html" target="_mathjs">math.js</a></li>
+                    </ul>
+
+
+                </ListGroupItem>
+
 
             </ListGroup>
 
