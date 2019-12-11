@@ -42,9 +42,9 @@ export default class IwpSidebarPanel extends React.Component {
 
         let saveButton;
         if ( updateCount === 0 ) {
-            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onSidebarClicked}>Save 0 Changes</ListGroupItem>
+            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onSidebarClicked}>Review 0 Changes</ListGroupItem>
         } else {
-            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onSidebarClicked} color="primary" >Save {updateCount} Changes</ListGroupItem>
+            saveButton = <ListGroupItem tag="a" href="#" feature="save" onClick={this.onSidebarClicked} color="primary" >Review {updateCount} Changes</ListGroupItem>
         }
 
         return (
