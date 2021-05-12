@@ -12,7 +12,7 @@
     "deep-diff": "^1.0.2",
     "draft-js": "^0.11.1",
     "immutability-helper": "^3.0.1",
-    "mathjs": "^6.2.2",
+    "mathjs": "^7.5.1",
     "react": "^16.10.1",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-color": "^2.17.3",
